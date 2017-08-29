@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,11 +16,19 @@ public class FieldBoard : MonoBehaviour {
     private float edgeWeight;
     [SerializeField]
     private Material fieldMaterial, gridMaterial;
+
+    [SerializeField]
+    private float fieldTimeUpdateFreq;  //フィールド時間を更新する頻度(秒)
     #endregion
 
     #region インスタンス変数
+    //ゲーム進行データ群
     private Dictionary<Vector2Int, Facility> facilities;    //施設データ
+    private DateTime fieldTime; //フィールド上の時間データ
+    private TimeSpan fieldTimeUpdateAddSpan;  //フィールド時間を更新するたびに加算される時間(Serialize不可)
+    private bool fieldTimeEnabled;  //フィールド時間が動いているか止まっているか
 
+    //エンジン基盤部
     private MeshFilter fieldMeshFilter; //メッシュフィルタ保存用
     private MeshRenderer fieldMeshRenderer; //メッシュレンダラ保存用
     private GameObject fieldGrid;   //グリッド描画用オブジェクト、このオブジェクトの子
@@ -33,6 +42,13 @@ public class FieldBoard : MonoBehaviour {
     {
         //施設データリセット
         facilities = new Dictionary<Vector2Int, Facility>();
+        //時間は2000年1月1日にリセット
+        fieldTime = new DateTime(2000, 1, 1);
+
+        //TimeSpanを初期化
+        fieldTimeUpdateAddSpan = new TimeSpan(1, 0, 0);
+        //時間を有効化
+        fieldTimeEnabled = true;
     }
     // 初期化関数（グラフィック系、GetComponent系）
     void Start () {
@@ -54,6 +70,39 @@ public class FieldBoard : MonoBehaviour {
     void Update () {
 
 	}
+    #endregion
+
+    #region 独自時間コルーチン
+    IEnumerator FieldTimeUpdate()
+    {
+        //ループ
+        while (true)
+        {
+            //時間の加算
+            fieldTime.Add(fieldTimeUpdateAddSpan);
+
+            //毎年行われる処理
+
+            //毎月行われる処理
+
+            //毎日行われる処理
+
+            //毎時行われる処理
+
+            //毎分行われる処理
+
+            //毎秒行われる処理
+
+            //Enabledの判定
+            while (!fieldTimeEnabled)
+            {
+                //fieldTimeEnabledがfalseなら永遠にここを回り続ける
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(fieldTimeUpdateFreq);
+        }
+    }
     #endregion
 
     #region 自作メソッド
