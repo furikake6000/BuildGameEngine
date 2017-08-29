@@ -12,16 +12,25 @@ public class FieldBoard : MonoBehaviour {
     [SerializeField]
     private float widthOfTile, heightOfTile;
     [SerializeField]
-    private Color backColor, edgeColor;
+    private float edgeWeight;
+    [SerializeField]
+    private Material fieldMaterial, gridMaterial;
+    #endregion
+
+    #region インスタンス変数
+    private GameObject fieldGrid;   //グリッド描画用オブジェクト、このオブジェクトの子
     #endregion
 
     #region Unity専用関数
     // Use this for initialization
     void Start () {
-        var fieldMesh = new Mesh();
 
+        //フィールドのメッシュ作成
+        var fieldMesh = new Mesh();
+        var fieldMeshFilter = GetComponent<MeshFilter>();
+        var fieldMeshRenderer = GetComponent<MeshRenderer>();
         //頂点配列を作成（ xマスの数+1 * yマスの数+1 個）
-        List<Vector3> points = new List<Vector3>();
+        var points = new List<Vector3>();
         for(var x = 0; x < xTileSize + 1; x++)
         {
             for(var y = 0; y < yTileSize + 1; y++)
@@ -31,9 +40,8 @@ public class FieldBoard : MonoBehaviour {
             }
         }
         fieldMesh.vertices = points.ToArray();
-
         //四角形メッシュ配列を作成（三角形が xマスの数 * yマスの数 個）
-        List<int> triangles = new List<int>();
+        var triangles = new List<int>();
         for (var x = 0; x < xTileSize; x++)
         {
             for (var y = 0; y < yTileSize; y++)
@@ -50,19 +58,79 @@ public class FieldBoard : MonoBehaviour {
             }
         }
         fieldMesh.triangles = triangles.ToArray();
-
         //法線の再計算
         fieldMesh.RecalculateNormals();
-
-        //Filterの作成
-        var fieldMeshFilter = GetComponent<MeshFilter>();
+        //MeshやMaterialを実際の値に設定
         fieldMeshFilter.sharedMesh = fieldMesh;
+        fieldMeshRenderer.material = fieldMaterial;
+        //フィールドのメッシュ作成　ここまで
 
+        //フィールドグリッドのメッシュ作成
+        var gridMesh = new Mesh();
+        //子オブジェクトとしてフィールドグリッドオブジェクト作成
+        fieldGrid = new GameObject("FieldGrid");
+        fieldGrid.transform.parent = this.transform;
+        var gridMeshRenderer = fieldGrid.AddComponent<MeshRenderer>();
+        var gridMeshFilter = fieldGrid.AddComponent<MeshFilter>();
+        //頂点配列の作成（グリッドなので隅の点だけでよい）
+        var gridPoints = new List<Vector3>();
+        for (var x = 0; x < xTileSize + 1; x++)
+        {
+            //上端2点
+            gridPoints.Add(mapPosToWorldPos(new Vector2((float)x - 0.5f - edgeWeight / 2, -0.5f - edgeWeight / 2)));
+            gridPoints.Add(mapPosToWorldPos(new Vector2((float)x - 0.5f + edgeWeight / 2, -0.5f - edgeWeight / 2)));
+
+            //下端2点
+            gridPoints.Add(mapPosToWorldPos(new Vector2((float)x - 0.5f - edgeWeight / 2, (float)yTileSize - 0.5f + edgeWeight / 2)));
+            gridPoints.Add(mapPosToWorldPos(new Vector2((float)x - 0.5f + edgeWeight / 2, (float)yTileSize - 0.5f + edgeWeight / 2)));
+        }
+        for (var y = 0; y < yTileSize + 1; y++)
+        {
+            //左端2点
+            gridPoints.Add(mapPosToWorldPos(new Vector2(-0.5f - edgeWeight / 2, (float)y - 0.5f - edgeWeight / 2)));
+            gridPoints.Add(mapPosToWorldPos(new Vector2(-0.5f - edgeWeight / 2, (float)y - 0.5f + edgeWeight / 2)));
+
+            //右端2点
+            gridPoints.Add(mapPosToWorldPos(new Vector2((float)xTileSize - 0.5f - edgeWeight / 2, (float)y - 0.5f - edgeWeight / 2)));
+            gridPoints.Add(mapPosToWorldPos(new Vector2((float)xTileSize - 0.5f - edgeWeight / 2, (float)y - 0.5f + edgeWeight / 2)));
+        }
+        gridMesh.vertices = gridPoints.ToArray();
+        //四角形メッシュ配列を作成
+        var gridTriangles = new List<int>();
+        for (var x = 0; x < xTileSize + 1; x++)
+        {
+            //三角形ひとつめ
+            gridTriangles.Add(x * 4);
+            gridTriangles.Add(x * 4 + 2);
+            gridTriangles.Add(x * 4 + 1);
+            //三角形ふたつめ
+            gridTriangles.Add(x * 4 + 1);
+            gridTriangles.Add(x * 4 + 2);
+            gridTriangles.Add(x * 4 + 3);
+        }
+        for (var y = 0; y < yTileSize + 1; y++)
+        {
+            //三角形ひとつめ
+            gridTriangles.Add((xTileSize + 1) * 4 + y * 4);
+            gridTriangles.Add((xTileSize + 1) * 4 + y * 4 + 2);
+            gridTriangles.Add((xTileSize + 1) * 4 + y * 4 + 1);
+            //三角形ふたつめ
+            gridTriangles.Add((xTileSize + 1) * 4 + y * 4 + 1);
+            gridTriangles.Add((xTileSize + 1) * 4 + y * 4 + 2);
+            gridTriangles.Add((xTileSize + 1) * 4 + y * 4 + 3);
+        }
+        gridMesh.triangles = gridTriangles.ToArray();
+        //法線の再計算
+        gridMesh.RecalculateNormals();
+        //MeshやMaterialを実際の値に設定
+        gridMeshFilter.sharedMesh = gridMesh;
+        gridMeshRenderer.material = gridMaterial;
+        //フィールドグリッドのメッシュ作成　ここまで
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
     #endregion
