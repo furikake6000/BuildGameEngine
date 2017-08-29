@@ -18,22 +18,69 @@ public class FieldBoard : MonoBehaviour {
     #endregion
 
     #region インスタンス変数
+    private MeshFilter fieldMeshFilter; //メッシュフィルタ保存用
+    private MeshRenderer fieldMeshRenderer; //メッシュレンダラ保存用
     private GameObject fieldGrid;   //グリッド描画用オブジェクト、このオブジェクトの子
+    private MeshFilter gridMeshFilter; //グリッド用メッシュフィルタ保存用
+    private MeshRenderer gridMeshRenderer; //グリッド用メッシュレンダラ保存用
     #endregion
 
     #region Unity専用関数
     // Use this for initialization
     void Start () {
+        //GetComponent系
+        fieldMeshFilter = GetComponent<MeshFilter>();
+        fieldMeshRenderer = GetComponent<MeshRenderer>();
+        //子オブジェクトとしてフィールドグリッドオブジェクト作成
+        fieldGrid = new GameObject("FieldGrid");
+        fieldGrid.transform.parent = this.transform;
+        gridMeshRenderer = fieldGrid.AddComponent<MeshRenderer>();
+        gridMeshFilter = fieldGrid.AddComponent<MeshFilter>();
 
+        //メッシュのリフレッシュ
+        RefreshMeshes();
+
+    }
+
+    // Update is called once per frame
+    void Update () {
+
+        RefreshMeshes();
+		
+	}
+    #endregion
+
+    #region 自作メソッド
+    /// <summary>
+    /// マップにおける座標からワールド座標への変換
+    /// </summary>
+    /// <param name="mapPos">マップ上の座標(マスの中心座標)</param>
+    /// <returns>ワールド座標</returns>
+    private Vector3 mapPosToWorldPos(Vector2 mapPos)
+    {
+        //マップの中心座標との相対位置を求める
+        Vector2 mapPosRelativeFromCenter = new Vector2(mapPos.x - (float)(xTileSize - 1) / 2, mapPos.y - (float)(yTileSize - 1) / 2);
+        
+        //WorldPos.x = ( mapPosRFC.x - mapPosRFC.y ) / -2f
+        //WorldPos.y = ( mapPosRFC.x + mapPosRFC.y ) / -2f
+        //WorldPos.z = 0f
+        Vector3 worldPos = new Vector3(
+            (mapPosRelativeFromCenter.x - mapPosRelativeFromCenter.y) / -2f * widthOfTile,
+            (mapPosRelativeFromCenter.x + mapPosRelativeFromCenter.y) / -2f * heightOfTile,
+            0f);
+
+        return worldPos;
+    }
+
+    private void RefreshMeshes()
+    {
         //フィールドのメッシュ作成
         var fieldMesh = new Mesh();
-        var fieldMeshFilter = GetComponent<MeshFilter>();
-        var fieldMeshRenderer = GetComponent<MeshRenderer>();
         //頂点配列を作成（ xマスの数+1 * yマスの数+1 個）
         var points = new List<Vector3>();
-        for(var x = 0; x < xTileSize + 1; x++)
+        for (var y = 0; y < yTileSize + 1; y++)
         {
-            for(var y = 0; y < yTileSize + 1; y++)
+            for (var x = 0; x < xTileSize + 1; x++)
             {
                 //各タイルの頂点をインプット（中心点ではなく頂点なので0.5fずらしている）
                 points.Add(mapPosToWorldPos(new Vector2((float)x - 0.5f, (float)y - 0.5f)));
@@ -67,11 +114,6 @@ public class FieldBoard : MonoBehaviour {
 
         //フィールドグリッドのメッシュ作成
         var gridMesh = new Mesh();
-        //子オブジェクトとしてフィールドグリッドオブジェクト作成
-        fieldGrid = new GameObject("FieldGrid");
-        fieldGrid.transform.parent = this.transform;
-        var gridMeshRenderer = fieldGrid.AddComponent<MeshRenderer>();
-        var gridMeshFilter = fieldGrid.AddComponent<MeshFilter>();
         //頂点配列の作成（グリッドなので隅の点だけでよい）
         var gridPoints = new List<Vector3>();
         for (var x = 0; x < xTileSize + 1; x++)
@@ -126,35 +168,6 @@ public class FieldBoard : MonoBehaviour {
         gridMeshFilter.sharedMesh = gridMesh;
         gridMeshRenderer.material = gridMaterial;
         //フィールドグリッドのメッシュ作成　ここまで
-
-    }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
-    #endregion
-
-    #region 自作メソッド
-    /// <summary>
-    /// マップにおける座標からワールド座標への変換
-    /// </summary>
-    /// <param name="mapPos">マップ上の座標(マスの中心座標)</param>
-    /// <returns>ワールド座標</returns>
-    private Vector3 mapPosToWorldPos(Vector2 mapPos)
-    {
-        //マップの中心座標との相対位置を求める
-        Vector2 mapPosRelativeFromCenter = new Vector2(mapPos.x - (float)(xTileSize - 1) / 2, mapPos.y - (float)(yTileSize - 1) / 2);
-        
-        //WorldPos.x = ( mapPosRFC.x - mapPosRFC.y ) / -2f
-        //WorldPos.y = ( mapPosRFC.x + mapPosRFC.y ) / -2f
-        //WorldPos.z = 0f
-        Vector3 worldPos = new Vector3(
-            (mapPosRelativeFromCenter.x - mapPosRelativeFromCenter.y) / -2f * widthOfTile,
-            (mapPosRelativeFromCenter.x + mapPosRelativeFromCenter.y) / -2f * heightOfTile,
-            0f);
-
-        return worldPos;
     }
     #endregion
 }

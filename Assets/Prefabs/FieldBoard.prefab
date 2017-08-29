@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4915670936950640}
   - component: {fileID: 33908250690551596}
   - component: {fileID: 23002676336463294}
+  - component: {fileID: 114442911020273222}
   m_Layer: 0
   m_Name: FieldBoard
   m_TagString: FieldGrid
@@ -80,3 +81,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1219329832940856}
   m_Mesh: {fileID: 0}
+--- !u!114 &114442911020273222
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1219329832940856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d77ea60925256a44d8f9115d15f3a918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xTileSize: 10
+  yTileSize: 10
+  widthOfTile: 1
+  heightOfTile: 0.5
+  edgeWeight: 0.05
+  fieldMaterial: {fileID: 0}
+  gridMaterial: {fileID: 0}
