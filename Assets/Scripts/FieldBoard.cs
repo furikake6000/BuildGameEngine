@@ -18,6 +18,8 @@ public class FieldBoard : MonoBehaviour {
     #endregion
 
     #region インスタンス変数
+    private Dictionary<Vector2Int, Facility> facilities;    //施設データ
+
     private MeshFilter fieldMeshFilter; //メッシュフィルタ保存用
     private MeshRenderer fieldMeshRenderer; //メッシュレンダラ保存用
     private GameObject fieldGrid;   //グリッド描画用オブジェクト、このオブジェクトの子
@@ -26,7 +28,13 @@ public class FieldBoard : MonoBehaviour {
     #endregion
 
     #region Unity専用関数
-    // Use this for initialization
+    // 初期化関数
+    private void Awake()
+    {
+        //施設データリセット
+        facilities = new Dictionary<Vector2Int, Facility>();
+    }
+    // 初期化関数（グラフィック系、GetComponent系）
     void Start () {
         //GetComponent系
         fieldMeshFilter = GetComponent<MeshFilter>();
@@ -45,8 +53,6 @@ public class FieldBoard : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        RefreshMeshes();
-		
 	}
     #endregion
 
