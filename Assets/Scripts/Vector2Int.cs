@@ -7,8 +7,8 @@ public class Vector2Int
     const int HashTimeX = 1;    //ハッシュ値を求める際にXにかける係数
     const int HashTimeY = 9973; //ハッシュ値を求める際にYにかける係数
 
-    public int x { get; set; }
-    public int y { get; set; }
+    public int x;
+    public int y;
 
     /// <summary>
     /// コンストラクタ
@@ -21,14 +21,26 @@ public class Vector2Int
         this.y = y;
     }
 
-    /// <summary>
-    /// Vector2型へのキャスト
-    /// </summary>
-    /// <param name="value">Vector2型の値</param>
+    #region キャスト
+
+    //Vector2 <-> Vector2Int
     public static implicit operator Vector2(Vector2Int value)
     {
         return new Vector2((float)value.x, (float)value.y);
     }
+
+    public static implicit operator Vector2Int(Vector2 value)
+    {
+        return new Vector2Int((int)value.x, (int)value.y);
+    }
+
+    //Vector2Int <- Unity.Object
+    public static implicit operator Vector2Int(UnityEngine.Object obj)
+    {
+        //一度System.Objectに直してからキャスト
+        return (Vector2Int)((System.Object)obj);
+    }
+    #endregion
 
     #region 演算子定義
     public static Vector2Int operator +(Vector2Int v1, Vector2Int v2)
