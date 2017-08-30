@@ -4,6 +4,9 @@ using UnityEngine;
 [Serializable]
 public class Vector2Int
 {
+    const int HashTimeX = 1;    //ハッシュ値を求める際にXにかける係数
+    const int HashTimeY = 9973; //ハッシュ値を求める際にYにかける係数
+
     public int x { get; set; }
     public int y { get; set; }
 
@@ -74,6 +77,23 @@ public class Vector2Int
     public static bool operator !=(Vector2Int v1, Vector2Int v2)
     {
         return !(v1 == v2);
+    }
+
+    public override bool Equals(System.Object v)
+    {
+        if(v is Vector2Int)
+        {
+            return this == (v as Vector2Int);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public override int GetHashCode()
+    {
+        return x * HashTimeX + y * HashTimeY;
     }
     #endregion
 }
