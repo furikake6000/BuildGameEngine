@@ -108,7 +108,7 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &1266000882
+--- !u!1001 &909483600
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -125,19 +125,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4915670936950640, guid: c4d85d067989aa74da7b8a643ee66cc9, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 4915670936950640, guid: c4d85d067989aa74da7b8a643ee66cc9, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4915670936950640, guid: c4d85d067989aa74da7b8a643ee66cc9, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4915670936950640, guid: c4d85d067989aa74da7b8a643ee66cc9, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4915670936950640, guid: c4d85d067989aa74da7b8a643ee66cc9, type: 2}
       propertyPath: m_LocalRotation.w
@@ -146,36 +146,6 @@ Prefab:
     - target: {fileID: 4915670936950640, guid: c4d85d067989aa74da7b8a643ee66cc9, type: 2}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114442911020273222, guid: c4d85d067989aa74da7b8a643ee66cc9,
-        type: 2}
-      propertyPath: fieldMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: faf26a04b1a3ad54490fa25e124b966f, type: 2}
-    - target: {fileID: 114442911020273222, guid: c4d85d067989aa74da7b8a643ee66cc9,
-        type: 2}
-      propertyPath: gridMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 787d2b434a0d17b4fb471b9bb6a85f39, type: 2}
-    - target: {fileID: 114442911020273222, guid: c4d85d067989aa74da7b8a643ee66cc9,
-        type: 2}
-      propertyPath: edgeWeight
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 114442911020273222, guid: c4d85d067989aa74da7b8a643ee66cc9,
-        type: 2}
-      propertyPath: widthOfTile
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114442911020273222, guid: c4d85d067989aa74da7b8a643ee66cc9,
-        type: 2}
-      propertyPath: heightOfTile
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114442911020273222, guid: c4d85d067989aa74da7b8a643ee66cc9,
-        type: 2}
-      propertyPath: xTileSize
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c4d85d067989aa74da7b8a643ee66cc9, type: 2}
@@ -240,7 +210,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3
+  orthographic size: 2
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -263,7 +233,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1717802840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

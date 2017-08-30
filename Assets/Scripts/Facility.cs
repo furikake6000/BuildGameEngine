@@ -4,11 +4,25 @@ using UnityEngine;
 
 public class Facility : MonoBehaviour {
 
+    #region インスペクタ表示変数
     [SerializeField]
-    private Sprite graphic;
+    private Vector2Int size = new Vector2Int(1,1); //施設のサイズ
+    public Vector2Int Size
+    {
+        get
+        {
+            return size;
+        }
 
-	// Use this for initialization
-	void Start () {
+        set
+        {
+            size = value;
+        }
+    }
+    #endregion
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -16,4 +30,8 @@ public class Facility : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    #region オリジナル関数群
+
+    #endregion
 }

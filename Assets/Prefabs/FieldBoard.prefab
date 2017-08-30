@@ -95,7 +95,10 @@ MonoBehaviour:
   xTileSize: 10
   yTileSize: 10
   widthOfTile: 1
-  heightOfTile: 0.5
+  aspectRatioOfTile: 0.5
   edgeWeight: 0.05
-  fieldMaterial: {fileID: 0}
-  gridMaterial: {fileID: 0}
+  fieldMaterial: {fileID: 2100000, guid: faf26a04b1a3ad54490fa25e124b966f, type: 2}
+  gridMaterial: {fileID: 2100000, guid: 787d2b434a0d17b4fb471b9bb6a85f39, type: 2}
+  fieldTimeUpdateFreq: 0
+  debugFacility: {fileID: 1665688183263238, guid: bc61789e4d2ae4d4584d5a98ef6fc339,
+    type: 2}

@@ -11,7 +11,7 @@ public class FieldBoard : MonoBehaviour {
     [SerializeField]
     private int xTileSize, yTileSize;
     [SerializeField]
-    private float widthOfTile, heightOfTile;
+    private float widthOfTile, aspectRatioOfTile;
     [SerializeField]
     private float edgeWeight;
     [SerializeField]
@@ -19,6 +19,9 @@ public class FieldBoard : MonoBehaviour {
 
     [SerializeField]
     private float fieldTimeUpdateFreq;  //フィールド時間を更新する頻度(秒)
+
+    [SerializeField]
+    private GameObject debugFacility;
     #endregion
 
     #region インスタンス変数
@@ -34,6 +37,8 @@ public class FieldBoard : MonoBehaviour {
     private GameObject fieldGrid;   //グリッド描画用オブジェクト、このオブジェクトの子
     private MeshFilter gridMeshFilter; //グリッド用メッシュフィルタ保存用
     private MeshRenderer gridMeshRenderer; //グリッド用メッシュレンダラ保存用
+
+    private float heightOfTile; //WidthとAspectから算出したマス高さ
     #endregion
 
     #region Unity専用関数
@@ -49,6 +54,9 @@ public class FieldBoard : MonoBehaviour {
         fieldTimeUpdateAddSpan = new TimeSpan(1, 0, 0);
         //時間を有効化
         fieldTimeEnabled = true;
+
+        //マス高さ算出
+        heightOfTile = widthOfTile * aspectRatioOfTile;
     }
     // 初期化関数（グラフィック系、GetComponent系）
     void Start () {
@@ -58,11 +66,16 @@ public class FieldBoard : MonoBehaviour {
         //子オブジェクトとしてフィールドグリッドオブジェクト作成
         fieldGrid = new GameObject("FieldGrid");
         fieldGrid.transform.parent = this.transform;
+        //ちょっとだけ前に表示
+        fieldGrid.transform.position = this.transform.position + Vector3.back * 0.01f;
         gridMeshRenderer = fieldGrid.AddComponent<MeshRenderer>();
         gridMeshFilter = fieldGrid.AddComponent<MeshFilter>();
 
         //メッシュのリフレッシュ
         RefreshMeshes();
+
+        //※デバッグ用
+        PutFacility(debugFacility, new Vector2Int(0, 0));
 
     }
 
@@ -111,7 +124,7 @@ public class FieldBoard : MonoBehaviour {
     /// </summary>
     /// <param name="mapPos">マップ上の座標(マスの中心座標)</param>
     /// <returns>ワールド座標</returns>
-    private Vector3 mapPosToWorldPos(Vector2 mapPos)
+    private Vector3 MapPosToWorldPos(Vector2 mapPos)
     {
         //マップの中心座標との相対位置を求める
         Vector2 mapPosRelativeFromCenter = new Vector2(mapPos.x - (float)(xTileSize - 1) / 2, mapPos.y - (float)(yTileSize - 1) / 2);
@@ -127,6 +140,9 @@ public class FieldBoard : MonoBehaviour {
         return worldPos;
     }
 
+    /// <summary>
+    /// フィールド・グリッドのメッシュ作成
+    /// </summary>
     private void RefreshMeshes()
     {
         //フィールドのメッシュ作成
@@ -138,7 +154,7 @@ public class FieldBoard : MonoBehaviour {
             for (var x = 0; x < xTileSize + 1; x++)
             {
                 //各タイルの頂点をインプット（中心点ではなく頂点なので0.5fずらしている）
-                points.Add(mapPosToWorldPos(new Vector2((float)x - 0.5f, (float)y - 0.5f)));
+                points.Add(MapPosToWorldPos(new Vector2((float)x - 0.5f, (float)y - 0.5f)));
             }
         }
         fieldMesh.vertices = points.ToArray();
@@ -174,22 +190,22 @@ public class FieldBoard : MonoBehaviour {
         for (var x = 0; x < xTileSize + 1; x++)
         {
             //上端2点
-            gridPoints.Add(mapPosToWorldPos(new Vector2((float)x - 0.5f - edgeWeight / 2, -0.5f - edgeWeight / 2)));
-            gridPoints.Add(mapPosToWorldPos(new Vector2((float)x - 0.5f + edgeWeight / 2, -0.5f - edgeWeight / 2)));
+            gridPoints.Add(MapPosToWorldPos(new Vector2((float)x - 0.5f - edgeWeight / 2, -0.5f - edgeWeight / 2)));
+            gridPoints.Add(MapPosToWorldPos(new Vector2((float)x - 0.5f + edgeWeight / 2, -0.5f - edgeWeight / 2)));
 
             //下端2点
-            gridPoints.Add(mapPosToWorldPos(new Vector2((float)x - 0.5f - edgeWeight / 2, (float)yTileSize - 0.5f + edgeWeight / 2)));
-            gridPoints.Add(mapPosToWorldPos(new Vector2((float)x - 0.5f + edgeWeight / 2, (float)yTileSize - 0.5f + edgeWeight / 2)));
+            gridPoints.Add(MapPosToWorldPos(new Vector2((float)x - 0.5f - edgeWeight / 2, (float)yTileSize - 0.5f + edgeWeight / 2)));
+            gridPoints.Add(MapPosToWorldPos(new Vector2((float)x - 0.5f + edgeWeight / 2, (float)yTileSize - 0.5f + edgeWeight / 2)));
         }
         for (var y = 0; y < yTileSize + 1; y++)
         {
             //左端2点
-            gridPoints.Add(mapPosToWorldPos(new Vector2(-0.5f - edgeWeight / 2, (float)y - 0.5f - edgeWeight / 2)));
-            gridPoints.Add(mapPosToWorldPos(new Vector2(-0.5f - edgeWeight / 2, (float)y - 0.5f + edgeWeight / 2)));
+            gridPoints.Add(MapPosToWorldPos(new Vector2(-0.5f - edgeWeight / 2, (float)y - 0.5f - edgeWeight / 2)));
+            gridPoints.Add(MapPosToWorldPos(new Vector2(-0.5f - edgeWeight / 2, (float)y - 0.5f + edgeWeight / 2)));
 
             //右端2点
-            gridPoints.Add(mapPosToWorldPos(new Vector2((float)xTileSize - 0.5f - edgeWeight / 2, (float)y - 0.5f - edgeWeight / 2)));
-            gridPoints.Add(mapPosToWorldPos(new Vector2((float)xTileSize - 0.5f - edgeWeight / 2, (float)y - 0.5f + edgeWeight / 2)));
+            gridPoints.Add(MapPosToWorldPos(new Vector2((float)xTileSize - 0.5f - edgeWeight / 2, (float)y - 0.5f - edgeWeight / 2)));
+            gridPoints.Add(MapPosToWorldPos(new Vector2((float)xTileSize - 0.5f - edgeWeight / 2, (float)y - 0.5f + edgeWeight / 2)));
         }
         gridMesh.vertices = gridPoints.ToArray();
         //四角形メッシュ配列を作成
@@ -223,6 +239,78 @@ public class FieldBoard : MonoBehaviour {
         gridMeshFilter.sharedMesh = gridMesh;
         gridMeshRenderer.material = gridMaterial;
         //フィールドグリッドのメッシュ作成　ここまで
+    }
+
+    private bool CanIPutFacility(Facility facilityPrefab, Vector2Int location)
+    {
+        //範囲外チェック
+        if (
+            location.x + facilityPrefab.Size.x > xTileSize - 1 || 
+            location.y + facilityPrefab.Size.y > yTileSize - 1 ||
+            location.x < 0 || 
+            location.y < 0)
+        {
+            return false;
+        }
+
+        //Facilityのサイズ範囲内の全てのマスを見る
+        for (var y = 0; y < facilityPrefab.Size.y; y++)
+        {
+            for(var x = 0; x < facilityPrefab.Size.x; x++)
+            {
+                //既存施設チェック
+                if (facilities.ContainsKey(location + new Vector2Int(x, y)))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// 施設設置関数
+    /// </summary>
+    /// <param name="facilityPrefab">設置するFacilityのPrefab</param>
+    /// <param name="location">設置する位置（Int型2DVector）</param>
+    /// <returns>設置成功判定（trueで成功）</returns>
+    private bool PutFacility(GameObject facilityPrefab, Vector2Int location)
+    {
+        if (CanIPutFacility(facilityPrefab.GetComponent<Facility>(), location))
+        {
+            //施設設置成功
+
+            //設置座標の計算
+            Vector3 newFacilityPos = MapPosToWorldPos((Vector2)location);
+            //縦向きのズレを算出
+            SpriteRenderer facilityPrefabRenderer = facilityPrefab.GetComponent<SpriteRenderer>();
+            float yGap = ( facilityPrefabRenderer.bounds.size.y - facilityPrefabRenderer.bounds.size.x * aspectRatioOfTile ) / 2 * widthOfTile;
+            //ズレ適用
+            newFacilityPos.y += yGap;
+
+            Facility newFacility = GameObject.Instantiate(
+                facilityPrefab,     //Prefabを複製
+                newFacilityPos,    //位置はlocationをWorld変換したもの
+                Quaternion.identity,    //回転はなし
+                this.transform  //親はこのGameObject（FieldBoard）
+                ).GetComponent<Facility>();
+
+            //Facilityのサイズ範囲内の全てのマスにDictionary情報を付与
+            for (var y = 0; y < newFacility.Size.y; y++)
+            {
+                for (var x = 0; x < newFacility.Size.x; x++)
+                {
+                    facilities.Add(location + new Vector2Int(x, y), newFacility);
+                }
+            }
+            return true;
+        }
+        else
+        {
+            //既に施設が存在するため施設設置失敗
+            return false;
+        }
     }
     #endregion
 }
