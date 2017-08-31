@@ -275,25 +275,27 @@ public class FieldBoard : MonoBehaviour {
     /// <summary>
     /// 施設設置関数
     /// </summary>
-    /// <param name="facilityPrefab">設置するFacilityのPrefab</param>
+    /// <param name="prefab">設置するFacilityのPrefab</param>
     /// <param name="location">設置する位置（Int型2DVector）</param>
     /// <returns>設置成功判定（trueで成功）</returns>
-    private bool PutFacility(GameObject facilityPrefab, Vector2Int location)
+    private bool PutFacility(GameObject prefab, Vector2Int location)
     {
-        if (CanIPutFacility(facilityPrefab.GetComponent<Facility>(), location))
+        Facility prefabFacility = prefab.GetComponent<Facility>();
+
+        if (CanIPutFacility(prefabFacility, location))
         {
             //施設設置成功
 
-            //設置座標の計算
-            Vector3 newFacilityPos = MapPosToWorldPos((Vector2)location);
+            //設置座標の計算(facility自体のサイズも考慮)
+            Vector3 newFacilityPos = MapPosToWorldPos((Vector2)location + (Vector2)(prefabFacility.Size - new Vector2Int(1,1)) / 2);
             //縦向きのズレを算出
-            SpriteRenderer facilityPrefabRenderer = facilityPrefab.GetComponent<SpriteRenderer>();
+            SpriteRenderer facilityPrefabRenderer = prefab.GetComponent<SpriteRenderer>();
             float yGap = ( facilityPrefabRenderer.bounds.size.y - facilityPrefabRenderer.bounds.size.x * aspectRatioOfTile ) / 2 * widthOfTile;
             //ズレ適用
             newFacilityPos.y += yGap;
 
             Facility newFacility = GameObject.Instantiate(
-                facilityPrefab,     //Prefabを複製
+                prefab,     //Prefabを複製
                 newFacilityPos,    //位置はlocationをWorld変換したもの
                 Quaternion.identity,    //回転はなし
                 this.transform  //親はこのGameObject（FieldBoard）
