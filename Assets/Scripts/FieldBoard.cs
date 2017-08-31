@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshFilter))]
@@ -77,6 +78,8 @@ public class FieldBoard : MonoBehaviour {
         //※デバッグ用
         PutFacility(debugFacility, new Vector2Int(0, 0));
 
+        //Menuシーンの読み込み
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
     }
 
     // Update is called once per frame
