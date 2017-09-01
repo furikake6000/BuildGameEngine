@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshFilter))]
@@ -23,6 +24,7 @@ public class FieldBoard : MonoBehaviour {
 
     [SerializeField]
     private GameObject debugFacility;
+    public Text debugText;
     #endregion
 
     #region インスタンス変数
@@ -84,7 +86,12 @@ public class FieldBoard : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePosInField = WorldPosToMapPos(mousePos);
+        debugText.text =
+            "Mouse Pos: " + Input.mousePosition.ToString() + "\n" +
+            "Mouse Pos(World): " + mousePos.ToString() + "\n" +
+            "Mouse Pos(Field): " + mousePosInField.ToString();
 	}
     #endregion
 
@@ -141,6 +148,21 @@ public class FieldBoard : MonoBehaviour {
             0f);
 
         return worldPos;
+    }
+
+    private Vector2 WorldPosToMapPos(Vector3 worldPos)
+    {
+        //マップのゼロ点からの位置ベクトルを求める
+        Vector3 worldPosVecFromZero = worldPos - MapPosToWorldPos(Vector2.zero);
+
+        //X、Yそれぞれの軸においてworldPosVecFromZeroの要素が何マス分にあたるか計算
+        float xFromZero = worldPosVecFromZero.x / widthOfTile;
+        float yFromZero = worldPosVecFromZero.y / heightOfTile;
+
+        //二次元ベクトルに変換
+        Vector2 mapPos = new Vector2(-xFromZero - yFromZero, xFromZero - yFromZero);
+
+        return mapPos;
     }
 
     /// <summary>
