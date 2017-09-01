@@ -76,7 +76,7 @@ public class FieldBoard : MonoBehaviour {
         RefreshMeshes();
 
         //※デバッグ用
-        PutFacility(debugFacility, new Vector2Int(0, 0));
+        PutFacility(debugFacility.GetComponent<Facility>(), new Vector2Int(0, 0));
 
         //Menuシーンの読み込み
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
@@ -244,7 +244,13 @@ public class FieldBoard : MonoBehaviour {
         //フィールドグリッドのメッシュ作成　ここまで
     }
 
-    private bool CanIPutFacility(Facility facilityPrefab, Vector2Int location)
+    /// <summary>
+    /// 施設設置が可能かどうか
+    /// </summary>
+    /// <param name="facilityPrefab">施設のPrefab</param>
+    /// <param name="location">設置座標</param>
+    /// <returns></returns>
+    public bool CanIPutFacility(Facility facilityPrefab, Vector2Int location)
     {
         //範囲外チェック
         if (
@@ -278,10 +284,8 @@ public class FieldBoard : MonoBehaviour {
     /// <param name="prefab">設置するFacilityのPrefab</param>
     /// <param name="location">設置する位置（Int型2DVector）</param>
     /// <returns>設置成功判定（trueで成功）</returns>
-    private bool PutFacility(GameObject prefab, Vector2Int location)
+    private bool PutFacility(Facility prefabFacility, Vector2Int location)
     {
-        Facility prefabFacility = prefab.GetComponent<Facility>();
-
         if (CanIPutFacility(prefabFacility, location))
         {
             //施設設置成功
@@ -289,13 +293,13 @@ public class FieldBoard : MonoBehaviour {
             //設置座標の計算(facility自体のサイズも考慮)
             Vector3 newFacilityPos = MapPosToWorldPos((Vector2)location + (Vector2)(prefabFacility.Size - new Vector2Int(1,1)) / 2);
             //縦向きのズレを算出
-            SpriteRenderer facilityPrefabRenderer = prefab.GetComponent<SpriteRenderer>();
+            SpriteRenderer facilityPrefabRenderer = prefabFacility.gameObject.GetComponent<SpriteRenderer>();
             float yGap = ( facilityPrefabRenderer.bounds.size.y - facilityPrefabRenderer.bounds.size.x * aspectRatioOfTile ) / 2 * widthOfTile;
             //ズレ適用
             newFacilityPos.y += yGap;
 
             Facility newFacility = GameObject.Instantiate(
-                prefab,     //Prefabを複製
+                prefabFacility.gameObject,     //Prefabを複製
                 newFacilityPos,    //位置はlocationをWorld変換したもの
                 Quaternion.identity,    //回転はなし
                 this.transform  //親はこのGameObject（FieldBoard）
