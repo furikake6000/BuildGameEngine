@@ -34,6 +34,12 @@ public class Vector2Int
         return new Vector2Int((int)value.x, (int)value.y);
     }
 
+    //Vector2 -> Vector2Int（四捨五入）
+    public static Vector2Int Sishagonyu(Vector2 value)
+    {
+        return new Vector2Int((int)(value.x + 0.5f), (int)(value.y + 0.5f));
+    }
+
     //Vector2Int <- Unity.Object
     public static implicit operator Vector2Int(UnityEngine.Object obj)
     {
@@ -108,4 +114,9 @@ public class Vector2Int
         return x * HashTimeX + y * HashTimeY;
     }
     #endregion
+
+    public override string ToString()
+    {
+        return "(" + x + ", " + y + ")";
+    }
 }
