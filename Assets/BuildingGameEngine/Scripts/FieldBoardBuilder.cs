@@ -56,6 +56,7 @@ public class FieldBoardBuilder : MonoBehaviour {
         Facility[] facilityPrefabs = Resources.LoadAll<Facility>("Facilities");
         foreach(var facPrefab in facilityPrefabs)
         {
+            //
             Debug.Log("Loaded: " + facPrefab.name);
         }
     }
