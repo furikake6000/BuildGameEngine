@@ -6,6 +6,8 @@ public class Facility : MonoBehaviour {
 
     #region インスペクタ表示変数
     [SerializeField]
+    private string facilityName;    //名前
+    [SerializeField]
     private Vector2Int size = new Vector2Int(1,1); //施設のサイズ
     public Vector2Int Size
     {
