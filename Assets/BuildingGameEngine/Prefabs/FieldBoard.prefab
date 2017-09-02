@@ -21,7 +21,8 @@ GameObject:
   - component: {fileID: 4915670936950640}
   - component: {fileID: 33908250690551596}
   - component: {fileID: 23002676336463294}
-  - component: {fileID: 114442911020273222}
+  - component: {fileID: 114043828405313740}
+  - component: {fileID: 114332923768178760}
   m_Layer: 0
   m_Name: FieldBoard
   m_TagString: FieldGrid
@@ -81,7 +82,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1219329832940856}
   m_Mesh: {fileID: 0}
---- !u!114 &114442911020273222
+--- !u!114 &114043828405313740
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -89,7 +90,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1219329832940856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d77ea60925256a44d8f9115d15f3a918, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c758a837511282469b1ce9343548aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   xTileSize: 10
@@ -97,8 +98,22 @@ MonoBehaviour:
   widthOfTile: 1
   aspectRatioOfTile: 0.5
   edgeWeight: 0.05
-  fieldMaterial: {fileID: 2100000, guid: faf26a04b1a3ad54490fa25e124b966f, type: 2}
-  gridMaterial: {fileID: 2100000, guid: 787d2b434a0d17b4fb471b9bb6a85f39, type: 2}
+  fieldMaterial: {fileID: 2100000, guid: 68766cf2c3917154a89429bbef2c9d18, type: 2}
+  gridMaterial: {fileID: 2100000, guid: 0e4f17d59a4c05042bafac3eb6773d3f, type: 2}
   fieldTimeUpdateFreq: 0
-  debugFacility: {fileID: 1665688183263238, guid: bc61789e4d2ae4d4584d5a98ef6fc339,
+  debugFacility: {fileID: 1143093878119858, guid: ea40604d13651094da0b6f55b3c6951c,
+    type: 2}
+  debugText: {fileID: 0}
+--- !u!114 &114332923768178760
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1219329832940856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 119e7cb462738c8479f66f8ead3caecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstSelectedFacility: {fileID: 1143093878119858, guid: ea40604d13651094da0b6f55b3c6951c,
     type: 2}
