@@ -63,6 +63,12 @@ public class FieldBoardBuilder : MonoBehaviour {
             if (myBoard.CanIPutFacility(SelectedFacility, nowPointingLocation))
             {
                 previewFacilityObject.transform.position = myBoard.CalcFacilityWorldPos(SelectedFacility, nowPointingLocation);
+                
+                //マウスが押されていたら施設配置
+                if (Input.GetMouseButton(0))
+                {
+                    myBoard.PutFacility(SelectedFacility, nowPointingLocation);
+                }
             }
             else
             {

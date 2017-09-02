@@ -79,6 +79,8 @@ public class FieldBoard : MonoBehaviour {
 
         //※デバッグ用
         PutFacility(debugFacility.GetComponent<Facility>(), new Vector2Int(0, 0));
+        PutFacility(debugFacility.GetComponent<Facility>(), new Vector2Int(3, 3));
+        PutFacility(debugFacility.GetComponent<Facility>(), new Vector2Int(5, 8));
 
         //Menuシーンの読み込み
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
@@ -139,14 +141,14 @@ public class FieldBoard : MonoBehaviour {
     {
         //マップの中心座標との相対位置を求める
         Vector2 mapPosRelativeFromCenter = new Vector2(mapPos.x - (float)(xTileSize - 1) / 2, mapPos.y - (float)(yTileSize - 1) / 2);
-        
+
         //WorldPos.x = ( mapPosRFC.x - mapPosRFC.y ) / -2f
         //WorldPos.y = ( mapPosRFC.x + mapPosRFC.y ) / -2f
-        //WorldPos.z = 0f
+        //WorldPos.z = ( mapPosRFC.x + mapPosRFC.y ) / -200f(yに比例)
         Vector3 worldPos = new Vector3(
             (mapPosRelativeFromCenter.x - mapPosRelativeFromCenter.y) / -2f * widthOfTile,
             (mapPosRelativeFromCenter.x + mapPosRelativeFromCenter.y) / -2f * heightOfTile,
-            0f);
+            (mapPosRelativeFromCenter.x + mapPosRelativeFromCenter.y) / -200f);
 
         return worldPos;
     }
