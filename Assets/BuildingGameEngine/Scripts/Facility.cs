@@ -7,6 +7,18 @@ public class Facility : MonoBehaviour {
     #region インスペクタ表示変数
     [SerializeField]
     private string facilityName;    //名前
+    public string FacilityName
+    {
+        get
+        {
+            return facilityName;
+        }
+
+        set
+        {
+            facilityName = value;
+        }
+    }
     [SerializeField]
     private Vector2Int size = new Vector2Int(1,1); //施設のサイズ
     public Vector2Int Size
