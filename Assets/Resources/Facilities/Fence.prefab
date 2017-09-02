@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4613594552018538}
   - component: {fileID: 212065206888525896}
-  - component: {fileID: 114030411856730638}
+  - component: {fileID: 114790721014946154}
   m_Layer: 0
   m_Name: Fence
   m_TagString: Untagged
@@ -71,7 +71,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114030411856730638
+--- !u!114 &114790721014946154
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -79,7 +79,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1445717235180794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b617a5a737bb2654ca519531f51752ba, type: 3}
+  m_Script: {fileID: 11500000, guid: 46200d902e84c9a4c899b3e637030791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   size:
