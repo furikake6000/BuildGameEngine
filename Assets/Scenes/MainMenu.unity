@@ -228,7 +228,6 @@ GameObject:
   - component: {fileID: 126384051}
   - component: {fileID: 126384053}
   - component: {fileID: 126384052}
-  - component: {fileID: 126384054}
   m_Layer: 0
   m_Name: BuildingButtonBase
   m_TagString: Untagged
@@ -289,18 +288,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 126384050}
---- !u!114 &126384054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 126384050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050e5874aa34afe40b144a09ab6de67e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attachedButtonAnimator: {fileID: 0}
 --- !u!1 &609227257
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,7 +321,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 635.00006, y: -182.99982}
+  m_AnchoredPosition: {x: 635, y: -183}
   m_SizeDelta: {x: 574, y: 98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &609227259
@@ -1067,3 +1054,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachedButtonAnimator: {fileID: 1692583723}
+  facilityButtonPrefab: {fileID: 1087208306219012, guid: 2bfbdea15acef6643a1b59dc8b9eccd5,
+    type: 2}
