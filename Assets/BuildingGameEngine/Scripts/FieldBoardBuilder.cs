@@ -51,7 +51,14 @@ public class FieldBoardBuilder : MonoBehaviour {
 
         //初期選択施設を選択（デバッグ用）
         SelectedFacility = firstSelectedFacility.GetComponent<Facility>();
-	}
+
+        //登録されているFaciitiesを一括取得
+        Facility[] facilityPrefabs = Resources.LoadAll<Facility>("Facilities");
+        foreach(var facPrefab in facilityPrefabs)
+        {
+            Debug.Log("Loaded: " + facPrefab.name);
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
