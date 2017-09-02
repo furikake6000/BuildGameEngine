@@ -7,12 +7,9 @@ public class FieldBoardBuilder : MonoBehaviour {
     //オブジェクトを視認外に移動させたい時の座標（定数）
     private static readonly Vector3 HidePosition = new Vector3(-999f, -999f, -999f);
 
-    [SerializeField]
-    private GameObject firstSelectedFacility; //初期選択施設（デバッグ用）
-
-    private FieldBoard myBoard; //自分のFieldBoardコンポーネント
-    private Facility selectedFacility;   //現在設置選択しているファシリティ
-    public Facility SelectedFacility
+    private static FieldBoard myBoard; //自分のFieldBoardコンポーネント
+    private static Facility selectedFacility;   //現在設置選択しているファシリティ
+    public static Facility SelectedFacility
     {
         get
         {
@@ -39,7 +36,7 @@ public class FieldBoardBuilder : MonoBehaviour {
         }
     }
 
-    private GameObject previewFacilityObject; //プレビューのファシリティ
+    private static GameObject previewFacilityObject; //プレビューのファシリティ
 
     // Use this for initialization
     void Start () {
@@ -48,17 +45,7 @@ public class FieldBoardBuilder : MonoBehaviour {
 
         //無を選択
         SelectedFacility = null;
-
-        //初期選択施設を選択（デバッグ用）
-        SelectedFacility = firstSelectedFacility.GetComponent<Facility>();
-
-        //登録されているFaciitiesを一括取得
-        Facility[] facilityPrefabs = Resources.LoadAll<Facility>("Facilities");
-        foreach(var facPrefab in facilityPrefabs)
-        {
-            //
-            Debug.Log("Loaded: " + facPrefab.name);
-        }
+        
     }
 	
 	// Update is called once per frame
