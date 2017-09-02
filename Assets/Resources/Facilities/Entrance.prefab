@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46200d902e84c9a4c899b3e637030791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  facilityName: entrance
   size:
     x: 3
     y: 3
