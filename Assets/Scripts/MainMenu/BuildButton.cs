@@ -39,6 +39,11 @@ public class BuildButton : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
+        //自分のボタンイベントの設定
+        Button myButton = GetComponent<Button>();
+        myButton.onClick.AddListener(OnPressed);
+
 	}
 	
 	// Update is called once per frame
