@@ -23,8 +23,7 @@ public class FieldBoard : MonoBehaviour {
     private float fieldTimeUpdateFreq;  //フィールド時間を更新する頻度(秒)
 
     [SerializeField]
-    private GameObject debugFacility;
-    public Text debugText;
+    private Text debugText;
     #endregion
 
     #region インスタンス変数
@@ -76,11 +75,6 @@ public class FieldBoard : MonoBehaviour {
 
         //メッシュのリフレッシュ
         RefreshMeshes();
-
-        //※デバッグ用
-        PutFacility(debugFacility.GetComponent<Facility>(), new Vector2Int(0, 0));
-        PutFacility(debugFacility.GetComponent<Facility>(), new Vector2Int(3, 3));
-        PutFacility(debugFacility.GetComponent<Facility>(), new Vector2Int(5, 8));
 
         //Menuシーンの読み込み
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
@@ -144,11 +138,11 @@ public class FieldBoard : MonoBehaviour {
 
         //WorldPos.x = ( mapPosRFC.x - mapPosRFC.y ) / -2f
         //WorldPos.y = ( mapPosRFC.x + mapPosRFC.y ) / -2f
-        //WorldPos.z = ( mapPosRFC.x + mapPosRFC.y ) / -200f(yに比例)
+        //WorldPos.z = ( mapPosRFC.x + mapPosRFC.y ) / -100f(1段下に降りるごとに0.01fだけ変化)
         Vector3 worldPos = new Vector3(
             (mapPosRelativeFromCenter.x - mapPosRelativeFromCenter.y) / -2f * widthOfTile,
             (mapPosRelativeFromCenter.x + mapPosRelativeFromCenter.y) / -2f * heightOfTile,
-            (mapPosRelativeFromCenter.x + mapPosRelativeFromCenter.y) / -200f);
+            (mapPosRelativeFromCenter.x + mapPosRelativeFromCenter.y) / -100f);
 
         return worldPos;
     }
@@ -318,6 +312,16 @@ public class FieldBoard : MonoBehaviour {
         float yGap = (facilityPrefabRenderer.bounds.size.y - facilityPrefabRenderer.bounds.size.x * aspectRatioOfTile) / 2 * widthOfTile;
         //ズレ適用
         newFacilityPos.y += yGap;
+
+        //Facilityサイズによって微妙にZ座標を調整する
+        if(facilityPrefab.Size.x > facilityPrefab.Size.y)
+        {
+            newFacilityPos.z -= location.y * 0.0001f;
+        }
+        else if(facilityPrefab.Size.y > facilityPrefab.Size.x)
+        {
+            newFacilityPos.z -= location.x * 0.0001f;
+        }
 
         return newFacilityPos;
     }
