@@ -93,8 +93,8 @@ public class FieldBoard : MonoBehaviour {
         //メッシュのリフレッシュ
         RefreshMeshes();
 
-        //Menuシーンの読み込み
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
+        ////Menuシーンの読み込み
+        //SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
     }
 
     // Update is called once per frame
