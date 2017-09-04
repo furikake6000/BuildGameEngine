@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class FieldBoard : MonoBehaviour {
 
     #region Inspector表示変数
+    [Header("Graphic data")]
     [SerializeField]
     private int xTileSize, yTileSize;
     [SerializeField]
@@ -22,6 +23,17 @@ public class FieldBoard : MonoBehaviour {
     [SerializeField]
     private float fieldTimeUpdateFreq;  //フィールド時間を更新する頻度(秒)
 
+    [Header("System data")]
+    [SerializeField]
+    private int defaultMoney;   //初期資金
+
+    [Header("UI data")]
+    [SerializeField]
+    private Text moneyLabel;
+    [SerializeField]
+    private Text statisticLabel;    //各情報表示窓
+
+    [Header("Debug data")]
     [SerializeField]
     private Text debugText;
     #endregion
@@ -32,6 +44,8 @@ public class FieldBoard : MonoBehaviour {
     private DateTime fieldTime; //フィールド上の時間データ
     private TimeSpan fieldTimeUpdateAddSpan;  //フィールド時間を更新するたびに加算される時間(Serialize不可)
     private bool fieldTimeEnabled;  //フィールド時間が動いているか止まっているか
+
+    private int money;  //資金
 
     //エンジン基盤部
     private MeshFilter fieldMeshFilter; //メッシュフィルタ保存用
@@ -59,6 +73,9 @@ public class FieldBoard : MonoBehaviour {
 
         //マス高さ算出
         heightOfTile = widthOfTile * aspectRatioOfTile;
+
+        //資金設定
+        money = defaultMoney;
     }
     // 初期化関数（グラフィック系、GetComponent系）
     void Start () {
@@ -82,13 +99,18 @@ public class FieldBoard : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 mousePosInField = WorldPosToMapPos(mousePos);
-        debugText.text =
-            "Mouse Pos: " + Input.mousePosition.ToString() + "\n" +
-            "Mouse Pos(World): " + mousePos.ToString() + "\n" +
-            "Mouse Pos(Field): " + mousePosInField.ToString() + "\n" + 
-            "Mouse Pos(Field_Int): " + ((Vector2Int)mousePosInField).ToString() ;
+
+        //資金表示
+        moneyLabel.text = money + "円";
+
+        ////DebugTextについて
+        //Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Vector2 mousePosInField = WorldPosToMapPos(mousePos);
+        //debugText.text =
+        //    "Mouse Pos: " + Input.mousePosition.ToString() + "\n" +
+        //    "Mouse Pos(World): " + mousePos.ToString() + "\n" +
+        //    "Mouse Pos(Field): " + mousePosInField.ToString() + "\n" + 
+        //    "Mouse Pos(Field_Int): " + ((Vector2Int)mousePosInField).ToString() ;
 	}
     #endregion
 
