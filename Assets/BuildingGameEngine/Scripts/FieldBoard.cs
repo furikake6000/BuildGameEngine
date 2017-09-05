@@ -23,9 +23,20 @@ public class FieldBoard : MonoBehaviour {
     [SerializeField]
     private float fieldTimeUpdateFreq;  //フィールド時間を更新する頻度(秒)
 
-    [Header("System data")]
+    [Header("Money data")]
     [SerializeField]
     private int defaultMoney;   //初期資金
+
+    [Header("Virtual clock data")]
+    [SerializeField]
+    private VirtualClock startTime;  //初期時間
+    [SerializeField]
+    private bool yearEventActivate, monthEventActivate, dailyEventActivate, 
+        hourEventActivate, minuteEventActivate, secondEventActivate;
+    [SerializeField]
+    private VirtualClock fieldTimeUpdateAddSpan;  //フィールド時間を更新するたびに加算される時間
+    [SerializeField]
+    private bool fieldTimeEnabled;  //フィールド時間が動いているか止まっているか
 
     [Header("UI data")]
     [SerializeField]
@@ -41,9 +52,8 @@ public class FieldBoard : MonoBehaviour {
     #region インスタンス変数
     //ゲーム進行データ群
     private Dictionary<Vector2Int, Facility> facilities;    //施設データ
-    private DateTime fieldTime; //フィールド上の時間データ
-    private TimeSpan fieldTimeUpdateAddSpan;  //フィールド時間を更新するたびに加算される時間(Serialize不可)
-    private bool fieldTimeEnabled;  //フィールド時間が動いているか止まっているか
+
+    private VirtualClock fieldTime; //フィールド上の時間データ
 
     private int money;  //資金
 
