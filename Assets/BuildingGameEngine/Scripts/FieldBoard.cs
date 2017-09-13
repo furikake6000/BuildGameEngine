@@ -20,23 +20,9 @@ public class FieldBoard : MonoBehaviour {
     [SerializeField]
     private Material fieldMaterial, gridMaterial;
 
-    [SerializeField]
-    private float fieldTimeUpdateFreq;  //フィールド時間を更新する頻度(秒)
-
     [Header("Money data")]
     [SerializeField]
     private int defaultMoney;   //初期資金
-
-    [Header("Virtual clock data")]
-    [SerializeField]
-    private VirtualClock startTime;  //初期時間
-    [SerializeField]
-    private bool yearEventActivate, monthEventActivate, dailyEventActivate, 
-        hourEventActivate, minuteEventActivate, secondEventActivate;
-    [SerializeField]
-    private VirtualClock fieldTimeUpdateAddSpan;  //フィールド時間を更新するたびに加算される時間
-    [SerializeField]
-    private bool fieldTimeEnabled;  //フィールド時間が動いているか止まっているか
 
     [Header("UI data")]
     [SerializeField]
@@ -52,8 +38,13 @@ public class FieldBoard : MonoBehaviour {
     #region インスタンス変数
     //ゲーム進行データ群
     private Dictionary<Vector2Int, Facility> facilities;    //施設データ
-
-    private VirtualClock fieldTime; //フィールド上の時間データ
+    public Dictionary<Vector2Int, Facility> Facilities
+    {
+        get
+        {
+            return facilities;
+        }
+    }   //get only
 
     private int money;  //資金
 
@@ -65,6 +56,7 @@ public class FieldBoard : MonoBehaviour {
     private MeshRenderer gridMeshRenderer; //グリッド用メッシュレンダラ保存用
 
     private float heightOfTile; //WidthとAspectから算出したマス高さ
+    
     #endregion
 
     #region Unity専用関数
@@ -72,14 +64,7 @@ public class FieldBoard : MonoBehaviour {
     private void Awake()
     {
         //施設データリセット
-        facilities = new Dictionary<Vector2Int, Facility>();
-        //時間は2000年1月1日にリセット
-        fieldTime = new DateTime(2000, 1, 1);
-
-        //TimeSpanを初期化
-        fieldTimeUpdateAddSpan = new TimeSpan(1, 0, 0);
-        //時間を有効化
-        fieldTimeEnabled = true;
+        Facilities = new Dictionary<Vector2Int, Facility>();
 
         //マス高さ算出
         heightOfTile = widthOfTile * aspectRatioOfTile;
@@ -112,49 +97,7 @@ public class FieldBoard : MonoBehaviour {
 
         //資金表示
         moneyLabel.text = money + "円";
-
-        ////DebugTextについて
-        //Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Vector2 mousePosInField = WorldPosToMapPos(mousePos);
-        //debugText.text =
-        //    "Mouse Pos: " + Input.mousePosition.ToString() + "\n" +
-        //    "Mouse Pos(World): " + mousePos.ToString() + "\n" +
-        //    "Mouse Pos(Field): " + mousePosInField.ToString() + "\n" + 
-        //    "Mouse Pos(Field_Int): " + ((Vector2Int)mousePosInField).ToString() ;
 	}
-    #endregion
-
-    #region 独自時間コルーチン
-    IEnumerator FieldTimeUpdate()
-    {
-        //ループ
-        while (true)
-        {
-            //時間の加算
-            fieldTime.Add(fieldTimeUpdateAddSpan);
-
-            //毎年行われる処理
-
-            //毎月行われる処理
-
-            //毎日行われる処理
-
-            //毎時行われる処理
-
-            //毎分行われる処理
-
-            //毎秒行われる処理
-
-            //Enabledの判定
-            while (!fieldTimeEnabled)
-            {
-                //fieldTimeEnabledがfalseなら永遠にここを回り続ける
-                yield return null;
-            }
-
-            yield return new WaitForSeconds(fieldTimeUpdateFreq);
-        }
-    }
     #endregion
 
     #region 自作メソッド
@@ -319,7 +262,7 @@ public class FieldBoard : MonoBehaviour {
             for(var x = 0; x < facilityPrefab.Size.x; x++)
             {
                 //既存施設チェック
-                if (facilities.ContainsKey(location + new Vector2Int(x, y)))
+                if (Facilities.ContainsKey(location + new Vector2Int(x, y)))
                 {
                     return false;
                 }
@@ -380,7 +323,7 @@ public class FieldBoard : MonoBehaviour {
             {
                 for (var x = 0; x < newFacility.Size.x; x++)
                 {
-                    facilities.Add(location + new Vector2Int(x, y), newFacility);
+                    Facilities.Add(location + new Vector2Int(x, y), newFacility);
                 }
             }
             return true;
