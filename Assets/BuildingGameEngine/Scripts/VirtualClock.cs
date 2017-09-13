@@ -163,6 +163,17 @@ public class VirtualClock : System.Object {
         year += addedYear;
     }
 
+    public void Add(VirtualClockSpan addedSpan)
+    {
+        //秒から順に足していく（逆だとうるう年の処理などが多少変わる）
+        AddSecond(addedSpan.second);
+        AddMinute(addedSpan.minute);
+        AddHour(addedSpan.hour);
+        AddDay(addedSpan.day);
+        AddMonth(addedSpan.month);
+        AddYear(addedSpan.year);
+    }
+
     #endregion
 
     private int DaysOfMonth()
