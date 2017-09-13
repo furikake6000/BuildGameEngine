@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23002676336463294}
   - component: {fileID: 114043828405313740}
   - component: {fileID: 114332923768178760}
+  - component: {fileID: 114741082872754746}
   m_Layer: 0
   m_Name: FieldBoard
   m_TagString: FieldGrid
@@ -100,9 +101,9 @@ MonoBehaviour:
   edgeWeight: 0.05
   fieldMaterial: {fileID: 2100000, guid: 68766cf2c3917154a89429bbef2c9d18, type: 2}
   gridMaterial: {fileID: 2100000, guid: 0e4f17d59a4c05042bafac3eb6773d3f, type: 2}
-  fieldTimeUpdateFreq: 0
-  debugFacility: {fileID: 1143093878119858, guid: ea40604d13651094da0b6f55b3c6951c,
-    type: 2}
+  defaultMoney: 0
+  moneyLabel: {fileID: 0}
+  statisticLabel: {fileID: 0}
   debugText: {fileID: 0}
 --- !u!114 &114332923768178760
 MonoBehaviour:
@@ -115,5 +116,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119e7cb462738c8479f66f8ead3caecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstSelectedFacility: {fileID: 1143093878119858, guid: ea40604d13651094da0b6f55b3c6951c,
-    type: 2}
+--- !u!114 &114741082872754746
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1219329832940856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8189fc6131af4b147ab980288cdaee79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fieldTimeUpdateFreq: 0
+  startTime:
+    year: 2000
+    month: 1
+    day: 1
+    hour: 0
+    minute: 0
+    second: 0
+  yearEventActivate: 0
+  monthEventActivate: 0
+  dailyEventActivate: 0
+  hourEventActivate: 0
+  minuteEventActivate: 0
+  secondEventActivate: 0
+  fieldTimeUpdateAddSpan:
+    year: 0
+    month: 0
+    day: 0
+    hour: 0
+    minute: 0
+    second: 0
+  morningHour: 6
+  dayHour: 8
+  eveningHour: 18
+  nightHour: 20
+  morningBack: {fileID: 0}
+  dayBack: {fileID: 0}
+  eveningBack: {fileID: 0}
+  nightBack: {fileID: 0}
+  fieldTimeEnabled: 0
+  dateLabel: {fileID: 0}
+  timeLabel: {fileID: 0}
