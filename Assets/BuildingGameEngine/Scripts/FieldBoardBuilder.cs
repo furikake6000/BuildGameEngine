@@ -98,6 +98,10 @@ public class FieldBoardBuilder : MonoBehaviour {
                     myBoard.Facilities.Add(location + new Vector2Int(x, y), newFacility);
                 }
             }
+
+            //金銭処理
+            myBoard.Money -= facilityPrefab.Cost;
+
             return true;
         }
         else

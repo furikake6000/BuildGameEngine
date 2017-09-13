@@ -33,6 +33,21 @@ public class Facility : MonoBehaviour {
             size = value;
         }
     }
+    [SerializeField]
+    private int cost;
+    public int Cost
+    {
+        get
+        {
+            return cost;
+        }
+
+        set
+        {
+            cost = value;
+        }
+    }
+
     #endregion
 
     // Use this for initialization
