@@ -64,7 +64,7 @@ public class FieldBoard : MonoBehaviour {
     private void Awake()
     {
         //施設データリセット
-        Facilities = new Dictionary<Vector2Int, Facility>();
+        facilities = new Dictionary<Vector2Int, Facility>();
 
         //マス高さ算出
         heightOfTile = widthOfTile * aspectRatioOfTile;
@@ -299,40 +299,6 @@ public class FieldBoard : MonoBehaviour {
         }
 
         return newFacilityPos;
-    }
-    /// <summary>
-    /// 施設設置関数
-    /// </summary>
-    /// <param name="facilityPrefab">施設のPrefab</param>
-    /// <param name="location">設置する位置（Vector2Int）</param>
-    /// <returns>設置成功判定（trueで成功）</returns>
-    public bool PutFacility(Facility facilityPrefab, Vector2Int location)
-    {
-        if (CanIPutFacility(facilityPrefab, location))
-        {
-            //施設設置成功
-            Facility newFacility = GameObject.Instantiate(
-                facilityPrefab.gameObject,     //Prefabを複製
-                CalcFacilityWorldPos(facilityPrefab, location),    //位置はlocationをWorld変換したもの
-                Quaternion.identity,    //回転はなし
-                this.transform  //親はこのGameObject（FieldBoard）
-                ).GetComponent<Facility>();
-
-            //Facilityのサイズ範囲内の全てのマスにDictionary情報を付与
-            for (var y = 0; y < newFacility.Size.y; y++)
-            {
-                for (var x = 0; x < newFacility.Size.x; x++)
-                {
-                    Facilities.Add(location + new Vector2Int(x, y), newFacility);
-                }
-            }
-            return true;
-        }
-        else
-        {
-            //既に施設が存在するため施設設置失敗
-            return false;
-        }
     }
     #endregion
 }
