@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 4613594552018538}
   - component: {fileID: 212065206888525896}
   - component: {fileID: 114790721014946154}
+  - component: {fileID: 114951564804266864}
   m_Layer: 0
   m_Name: Fence
   m_TagString: Untagged
@@ -86,6 +87,27 @@ MonoBehaviour:
   size:
     x: 2
     y: 2
+  cost: 0
+--- !u!114 &114951564804266864
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1445717235180794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f0a6206f0ab1be4ba540427b18ef09f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creaturePrefab: {fileID: 1410513827216524, guid: 0e94e9ce7f3fab94ebb7323040accda9,
+    type: 2}
+  creationDate:
+    year: 2000
+    month: 1
+    day: 1
+    hour: 0
+    minute: 0
+    second: 0
 --- !u!212 &212065206888525896
 SpriteRenderer:
   m_ObjectHideFlags: 1
