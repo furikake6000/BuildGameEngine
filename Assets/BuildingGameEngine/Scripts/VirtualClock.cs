@@ -176,6 +176,146 @@ public class VirtualClock : System.Object {
 
     #endregion
 
+    #region 演算子
+    public static bool operator ==(VirtualClock v1, VirtualClock v2)
+    {
+        //nullの確認
+        if (object.ReferenceEquals(v1, v2))
+        {
+            return true;
+        }
+        if (((object)v1 == null) || ((object)v2 == null))
+        {
+            return false;
+        }
+
+        return (v1.year == v2.year) && (v1.month == v2.month) && (v1.day == v2.day)
+            && (v1.hour == v2.hour) && (v1.minute == v2.minute) && (v1.second == v2.second);
+    }
+
+    public static bool operator !=(VirtualClock v1, VirtualClock v2)
+    {
+        return !(v1 == v2);
+    }
+
+    public static bool operator >(VirtualClock v1, VirtualClock v2)
+    {
+        //nullの確認
+        if (object.ReferenceEquals(v1, v2))
+        {
+            return false;
+        }
+        if (((object)v1 == null) || ((object)v2 == null))
+        {
+            return false;
+        }
+
+        //あたまのわるい比較関数
+        if (v1.year > v2.year)
+        {
+            return true;
+        }
+        else if(v1.year == v2.year)
+        {
+            if (v1.month > v2.month)
+            {
+                return true;
+            }
+            else if (v1.month == v2.month)
+            {
+                if(v1.day > v2.day)
+                {
+                    return true;
+                }
+                else if(v1.day == v2.day)
+                {
+                    if (v1.hour > v2.hour)
+                    {
+                        return true;
+                    }
+                    else if(v1.hour == v2.hour)
+                    {
+                        if(v1.minute > v2.minute)
+                        {
+                            return true;
+                        }
+                        else if(v1.minute == v2.minute)
+                        {
+                            return v1.second > v2.second;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+            
+    }
+
+    public static bool operator <(VirtualClock v1, VirtualClock v2)
+    {
+        //nullの確認
+        if (object.ReferenceEquals(v1, v2))
+        {
+            return false;
+        }
+        if (((object)v1 == null) || ((object)v2 == null))
+        {
+            return false;
+        }
+
+        //あたまのわるい比較関数
+        if (v1.year < v2.year)
+        {
+            return true;
+        }
+        else if (v1.year == v2.year)
+        {
+            if (v1.month < v2.month)
+            {
+                return true;
+            }
+            else if (v1.month == v2.month)
+            {
+                if (v1.day < v2.day)
+                {
+                    return true;
+                }
+                else if (v1.day == v2.day)
+                {
+                    if (v1.hour < v2.hour)
+                    {
+                        return true;
+                    }
+                    else if (v1.hour == v2.hour)
+                    {
+                        if (v1.minute < v2.minute)
+                        {
+                            return true;
+                        }
+                        else if (v1.minute == v2.minute)
+                        {
+                            return v1.second < v2.second;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static bool operator >=(VirtualClock v1, VirtualClock v2)
+    {
+        return (v1 > v2) || (v1 == v2);
+    }
+
+    public static bool operator <=(VirtualClock v1, VirtualClock v2)
+    {
+        return (v1 < v2) || (v1 == v2);
+    }
+    #endregion
+
     private int DaysOfMonth()
     {
         //エラー処理
