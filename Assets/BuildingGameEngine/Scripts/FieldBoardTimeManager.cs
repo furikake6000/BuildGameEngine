@@ -10,9 +10,6 @@ public class FieldBoardTimeManager : MonoBehaviour {
     [SerializeField]
     private VirtualClock startTime;  //初期時間
     [SerializeField]
-    private bool yearEventActivate, monthEventActivate, dailyEventActivate,
-        hourEventActivate, minuteEventActivate, secondEventActivate;
-    [SerializeField]
     private VirtualClockSpan fieldTimeUpdateAddSpan;  //フィールド時間を更新するたびに加算される時間
 
     [SerializeField]
@@ -32,12 +29,24 @@ public class FieldBoardTimeManager : MonoBehaviour {
     [SerializeField]
     private Text timeLabel;    //時間表示窓
 
-    private VirtualClock fieldTime; //フィールド上の時間データ
+    private static VirtualClock fieldTime; //フィールド上の時間データ
+    public static VirtualClock FieldTime
+    {
+        get
+        {
+            return fieldTime;
+        }
+
+        set
+        {
+            fieldTime = value;
+        }
+    }
 
     private void Awake()
     {
         //時間は2000年1月1日にリセット
-        fieldTime = startTime;
+        FieldTime = startTime;
         RefreshClockView();
         RefreshBackImage();
     }
@@ -63,20 +72,8 @@ public class FieldBoardTimeManager : MonoBehaviour {
             }
             
             //時間の加算
-            fieldTime.Add(fieldTimeUpdateAddSpan);
+            FieldTime.Add(fieldTimeUpdateAddSpan);
             RefreshBackImage();
-
-            //毎年行われる処理
-
-            //毎月行われる処理
-
-            //毎日行われる処理
-
-            //毎時行われる処理
-
-            //毎分行われる処理
-
-            //毎秒行われる処理
 
             yield return new WaitForSeconds(fieldTimeUpdateFreq);
         }
@@ -86,48 +83,48 @@ public class FieldBoardTimeManager : MonoBehaviour {
     public void RefreshClockView()
     {
         //表示変更
-        dateLabel.text = fieldTime.month + "月" + fieldTime.day + "日";
-        timeLabel.text = fieldTime.hour + ":" + fieldTime.minute.ToString("D2");
+        dateLabel.text = FieldTime.month + "月" + FieldTime.day + "日";
+        timeLabel.text = FieldTime.hour + ":" + FieldTime.minute.ToString("D2");
     }
 
     public void RefreshBackImage()
     {
-        if(fieldTime.hour < morningHour || fieldTime.hour >= nightHour)
+        if(FieldTime.hour < morningHour || FieldTime.hour >= nightHour)
         {
             //よる
             backImage.sprite = nightBack;
-            if(fieldTime.hour == morningHour - 1)
+            if(FieldTime.hour == morningHour - 1)
             {
                 backImageFade.sprite = morningBack;
-                backImageFade.color = new Color(1f, 1f, 1f, (float)fieldTime.minute / 60f);
+                backImageFade.color = new Color(1f, 1f, 1f, (float)FieldTime.minute / 60f);
             }
             else
             {
                 backImageFade.color = new Color(1f, 1f, 1f, 0f);
             }
         }
-        else if(fieldTime.hour < dayHour)
+        else if(FieldTime.hour < dayHour)
         {
             //あさ
             backImage.sprite = morningBack;
-            if (fieldTime.hour == dayHour - 1)
+            if (FieldTime.hour == dayHour - 1)
             {
                 backImageFade.sprite = dayBack;
-                backImageFade.color = new Color(1f, 1f, 1f, (float)fieldTime.minute / 60f);
+                backImageFade.color = new Color(1f, 1f, 1f, (float)FieldTime.minute / 60f);
             }
             else
             {
                 backImageFade.color = new Color(1f, 1f, 1f, 0f);
             }
         }
-        else if(fieldTime.hour < eveningHour)
+        else if(FieldTime.hour < eveningHour)
         {
             //ひる
             backImage.sprite = dayBack;
-            if (fieldTime.hour == eveningHour - 1)
+            if (FieldTime.hour == eveningHour - 1)
             {
                 backImageFade.sprite = eveningBack;
-                backImageFade.color = new Color(1f, 1f, 1f, (float)fieldTime.minute / 60f);
+                backImageFade.color = new Color(1f, 1f, 1f, (float)FieldTime.minute / 60f);
             }
             else
             {
@@ -138,10 +135,10 @@ public class FieldBoardTimeManager : MonoBehaviour {
         {
             //ゆうがた
             backImage.sprite = eveningBack;
-            if (fieldTime.hour == nightHour - 1)
+            if (FieldTime.hour == nightHour - 1)
             {
                 backImageFade.sprite = nightBack;
-                backImageFade.color = new Color(1f, 1f, 1f, (float)fieldTime.minute / 60f);
+                backImageFade.color = new Color(1f, 1f, 1f, (float)FieldTime.minute / 60f);
             }
             else
             {
