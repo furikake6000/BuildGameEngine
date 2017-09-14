@@ -1,9 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FieldBoardTimeManager : MonoBehaviour {
+public class FieldTimeManager : MonoBehaviour {
     
     [SerializeField]
     private float fieldTimeUpdateFreq;  //フィールド時間を更新する頻度(秒)
@@ -83,8 +82,8 @@ public class FieldBoardTimeManager : MonoBehaviour {
     public void RefreshClockView()
     {
         //表示変更
-        dateLabel.text = FieldTime.month + "月" + FieldTime.day + "日";
-        timeLabel.text = FieldTime.hour + ":" + FieldTime.minute.ToString("D2");
+        if(dateLabel != null)dateLabel.text = FieldTime.month + "月" + FieldTime.day + "日";
+        if(timeLabel != null)timeLabel.text = FieldTime.hour + ":" + FieldTime.minute.ToString("D2");
     }
 
     public void RefreshBackImage()
