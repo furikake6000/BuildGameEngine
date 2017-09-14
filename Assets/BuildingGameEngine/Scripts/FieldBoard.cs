@@ -67,7 +67,7 @@ public class FieldBoard : MonoBehaviour {
     private MeshFilter gridMeshFilter; //グリッド用メッシュフィルタ保存用
     private MeshRenderer gridMeshRenderer; //グリッド用メッシュレンダラ保存用
 
-    private FieldBoardTimeManager timeManager;  //タイムマネジャ保存用
+    private FieldTimeManager timeManager;  //タイムマネジャ保存用
 
     private float heightOfTile; //WidthとAspectから算出したマス高さ
     
@@ -91,7 +91,7 @@ public class FieldBoard : MonoBehaviour {
         //GetComponent系
         fieldMeshFilter = GetComponent<MeshFilter>();
         fieldMeshRenderer = GetComponent<MeshRenderer>();
-        timeManager = GetComponent<FieldBoardTimeManager>();
+        timeManager = GetComponent<FieldTimeManager>();
         //子オブジェクトとしてフィールドグリッドオブジェクト作成
         fieldGrid = new GameObject("FieldGrid");
         fieldGrid.transform.parent = this.transform;
@@ -111,7 +111,7 @@ public class FieldBoard : MonoBehaviour {
     void Update () {
 
         //資金表示
-        moneyLabel.text = Money + "円";
+        if(moneyLabel != null)moneyLabel.text = Money + "円";
         timeManager.RefreshClockView();
 	}
     #endregion

@@ -99,6 +99,9 @@ public class FieldBoardBuilder : MonoBehaviour {
                 }
             }
 
+            //Facility側に自己の座標を通知
+            newFacility.Position = location;
+
             //金銭処理
             myBoard.Money -= facilityPrefab.Cost;
 
