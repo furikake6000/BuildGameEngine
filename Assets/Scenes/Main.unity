@@ -2211,6 +2211,10 @@ Prefab:
       propertyPath: backImageFade
       value: 
       objectReference: {fileID: 1604073405}
+    - target: {fileID: 1219329832940856, guid: ddee5db59499c7a43a5c600986d702ff, type: 2}
+      propertyPath: m_TagString
+      value: FieldBoard
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ddee5db59499c7a43a5c600986d702ff, type: 2}
   m_IsPrefabParent: 0

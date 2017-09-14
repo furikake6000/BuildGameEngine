@@ -47,8 +47,22 @@ public class Facility : MonoBehaviour {
             cost = value;
         }
     }
-
+    
     #endregion
+
+    private Vector2Int position;
+    public Vector2Int Position
+    {
+        get
+        {
+            return position;
+        }
+
+        set
+        {
+            position = value;
+        }
+    }
 
     // Use this for initialization
     void Start () {

@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114741082872754746}
   m_Layer: 0
   m_Name: FieldBoard
-  m_TagString: FieldGrid
+  m_TagString: FieldBoard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,30 +132,26 @@ MonoBehaviour:
     year: 2000
     month: 1
     day: 1
-    hour: 0
+    hour: 6
     minute: 0
     second: 0
-  yearEventActivate: 0
-  monthEventActivate: 0
-  dailyEventActivate: 0
-  hourEventActivate: 0
-  minuteEventActivate: 0
-  secondEventActivate: 0
   fieldTimeUpdateAddSpan:
     year: 0
     month: 0
     day: 0
     hour: 0
-    minute: 0
+    minute: 15
     second: 0
+  backImage: {fileID: 0}
+  backImageFade: {fileID: 0}
   morningHour: 6
   dayHour: 8
   eveningHour: 18
   nightHour: 20
-  morningBack: {fileID: 0}
-  dayBack: {fileID: 0}
-  eveningBack: {fileID: 0}
-  nightBack: {fileID: 0}
-  fieldTimeEnabled: 0
+  morningBack: {fileID: 21300000, guid: ce9801c6e4efb5f4fac5869c68970b74, type: 3}
+  dayBack: {fileID: 21300000, guid: 862478a0de6a42a498ee96aef96c7ae1, type: 3}
+  eveningBack: {fileID: 21300000, guid: 2b25f9f7f5c6da64b8d69b2e1d028566, type: 3}
+  nightBack: {fileID: 21300000, guid: 627da197aeedc264a914256c5051c11a, type: 3}
+  fieldTimeEnabled: 1
   dateLabel: {fileID: 0}
   timeLabel: {fileID: 0}

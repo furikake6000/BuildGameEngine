@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4651087172471164}
   - component: {fileID: 212395700892205114}
   - component: {fileID: 95650988226135792}
+  - component: {fileID: 114587170394367616}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -58,6 +59,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114587170394367616
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1410513827216524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8754866a7509bdf4885d65ba2a306517, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creatureName: Slime
 --- !u!212 &212395700892205114
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -89,7 +102,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300002, guid: 6b66247b2db7a0347b554435189ea331, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
