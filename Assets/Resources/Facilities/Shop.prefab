@@ -57,6 +57,8 @@ MonoBehaviour:
     x: 2
     y: 1
   cost: 100
+  passable: 0
+  buildable: 1
 --- !u!212 &212078155196303644
 SpriteRenderer:
   m_ObjectHideFlags: 1

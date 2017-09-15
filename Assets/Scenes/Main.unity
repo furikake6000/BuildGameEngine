@@ -108,6 +108,64 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &252644155
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4651087172471164, guid: 0e94e9ce7f3fab94ebb7323040accda9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4651087172471164, guid: 0e94e9ce7f3fab94ebb7323040accda9, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4651087172471164, guid: 0e94e9ce7f3fab94ebb7323040accda9, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4651087172471164, guid: 0e94e9ce7f3fab94ebb7323040accda9, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4651087172471164, guid: 0e94e9ce7f3fab94ebb7323040accda9, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4651087172471164, guid: 0e94e9ce7f3fab94ebb7323040accda9, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4651087172471164, guid: 0e94e9ce7f3fab94ebb7323040accda9, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4651087172471164, guid: 0e94e9ce7f3fab94ebb7323040accda9, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 212395700892205114, guid: 0e94e9ce7f3fab94ebb7323040accda9,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 886bb40a6686bfb4db34ec6d5c159d6d,
+        type: 3}
+    - target: {fileID: 1410513827216524, guid: 0e94e9ce7f3fab94ebb7323040accda9, type: 2}
+      propertyPath: m_Name
+      value: Human
+      objectReference: {fileID: 0}
+    - target: {fileID: 212395700892205114, guid: 0e94e9ce7f3fab94ebb7323040accda9,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0.39215687
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114587170394367616, guid: 0e94e9ce7f3fab94ebb7323040accda9, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: 0e94e9ce7f3fab94ebb7323040accda9, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &318977755
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,7 +1271,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1253,7 +1311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edd9a1057c95c0b498d090bc803135b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camSizeMin: 2
+  camSizeMin: 1
   camSizeMax: 5
   zoomRate: 0.01
   moveRate: 0.05

@@ -24,7 +24,12 @@ public class BuildPanelManager : MonoBehaviour {
 
         //登録されているFaciitiesを一括取得
         //同時にボタンを作成
-        facilityPrefabs = Resources.LoadAll<Facility>("Facilities");
+        List<Facility> allFacilityPrefabs = new List<Facility>(Resources.LoadAll<Facility>("Facilities"));
+        for(var i = allFacilityPrefabs.Count - 1; i >= 0; i--)
+        {
+            if (!allFacilityPrefabs[i].Buildable) allFacilityPrefabs.RemoveAt(i);
+        }
+        facilityPrefabs = allFacilityPrefabs.ToArray();
         facilityButtons = new BuildButton[facilityPrefabs.Length];
         facilityButtonTransform = new RectTransform[facilityPrefabs.Length];
         for(var i = 0; i < facilityPrefabs.Length; i++)
@@ -80,5 +85,8 @@ public class BuildPanelManager : MonoBehaviour {
     {
         isOpen = false;
         panelAnimator.SetBool("open", false);
+
+        //Facility未選択状態に
+        FieldBoardBuilder.SelectedFacility = null;
     }
 }

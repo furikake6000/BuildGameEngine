@@ -102,9 +102,7 @@ public class FieldBoard : MonoBehaviour {
 
         //メッシュのリフレッシュ
         RefreshMeshes();
-
-        ////Menuシーンの読み込み
-        //SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
+        
     }
 
     // Update is called once per frame
@@ -113,7 +111,7 @@ public class FieldBoard : MonoBehaviour {
         //資金表示
         if(moneyLabel != null)moneyLabel.text = Money + "円";
         timeManager.RefreshClockView();
-	}
+    }
     #endregion
 
     #region 自作メソッド
@@ -316,5 +314,128 @@ public class FieldBoard : MonoBehaviour {
 
         return newFacilityPos;
     }
+    
+    /// <summary>
+    /// 指定座標が通行可か返す
+    /// </summary>
+    /// <param name="location">座標</param>
+    /// <returns>通過可能か否か</returns>
+    public bool CanIGoThrough(Vector2Int location)
+    {
+        //範囲外チェック
+        if (
+            location.x > xTileSize ||
+            location.y > yTileSize ||
+            location.x < 0 ||
+            location.y < 0)
+        {
+            return false;
+        }
+
+        if (facilities.ContainsKey(location))
+        {
+            if (facilities[location].Passable)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// ルート検索　Goalが通れない設定だった場合その隣接マスまでの経路を返す
+    /// </summary>
+    /// <param name="start">スタート地点</param>
+    /// <param name="goal">ゴール地点</param>
+    /// <returns></returns>
+    public Stack<Vector2Int> SearchRoute(Vector2Int start, Vector2Int goal)
+    {
+
+        //探索開始
+        //最短距離といっこまえのデータ
+        Dictionary<Vector2Int, RouteConnector> searchData = new Dictionary<Vector2Int, RouteConnector>();
+        searchData.Add(start, new RouteConnector(0, start));
+        //未探索点データ
+        Queue<Vector2Int> searchPoints = new Queue<Vector2Int>();
+        searchPoints.Enqueue(start);
+
+        while(searchPoints.Count != 0)
+        {
+            Vector2Int currentPoint = searchPoints.Dequeue();
+
+            //目的地だった場合はループ抜ける
+            if(currentPoint == goal)
+            {
+                break;
+            }
+
+            //四方向に探索を行う
+            Vector2Int[] nextPoints = new Vector2Int[] { currentPoint + new Vector2Int(-1, 0)
+                                                        ,currentPoint + new Vector2Int(1, 0)
+                                                        ,currentPoint + new Vector2Int(0, -1)
+                                                        ,currentPoint + new Vector2Int(0, 1)};
+
+            foreach(var nextPoint in nextPoints)
+            {
+                if (CanIGoThrough(nextPoint))
+                {
+                    if (!searchData.ContainsKey(nextPoint))
+                    {
+                        //既に到達している痕跡が無かった場合
+                        //最短データ新規作成
+                        searchData.Add(nextPoint, new RouteConnector((searchData[currentPoint].minDist + 1), currentPoint));
+
+                        //次探索キューに追加
+                        searchPoints.Enqueue(nextPoint);
+                    }
+                    else if (searchData[nextPoint].minDist > searchData[currentPoint].minDist + 1)
+                    {
+                        //既に到達している上でより良い結果に更新できる場合
+                        //最短データ更新
+                        searchData[nextPoint].minDist = searchData[currentPoint].minDist + 1;
+                        searchData[nextPoint].pastPoint = currentPoint;
+
+                        //次探索キューに追加
+                        searchPoints.Enqueue(nextPoint);
+                    }
+                }
+            }
+            
+        }
+
+        //探索されたルートを逆に戻る
+        if (!searchData.ContainsKey(goal))
+        {
+            //探索失敗
+            return new Stack<Vector2Int>(); //空のStackを返す
+        }
+        Stack<Vector2Int> route = new Stack<Vector2Int>();
+        for(Vector2Int p = goal; p != start; p = searchData[p].pastPoint)
+        {
+            //元に戻る点を次々に入れていく
+            route.Push(p);
+        }
+        return route;
+    }
+
     #endregion
+}
+
+class RouteConnector
+{
+    public int minDist;
+    public Vector2Int pastPoint;
+
+    public RouteConnector(int minDist, Vector2 pastPoint)
+    {
+        this.minDist = minDist;
+        this.pastPoint = pastPoint;
+    }
 }
