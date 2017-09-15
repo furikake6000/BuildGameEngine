@@ -76,7 +76,7 @@ public class FieldBoardBuilder : MonoBehaviour {
                 Touch t1 = Input.GetTouch(0);
                 Vector2Int nowPointingLocation = Vector2Int.Sishagonyu(myBoard.WorldPosToMapPos(Camera.main.ScreenToWorldPoint(t1.position)));
 
-                if (myBoard.CanIPutFacility(SelectedFacility, nowPointingLocation))
+                if (t1.position.y >= Screen.width / 2 && myBoard.CanIPutFacility(SelectedFacility, nowPointingLocation))
                 {
                     previewFacilityObject.transform.position = myBoard.CalcFacilityWorldPos(SelectedFacility, nowPointingLocation);
 

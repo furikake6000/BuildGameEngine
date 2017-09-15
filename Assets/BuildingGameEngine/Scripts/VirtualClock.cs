@@ -316,6 +316,21 @@ public class VirtualClock : System.Object {
     }
     #endregion
 
+    public VirtualClock Clone()
+    {
+        return new VirtualClock(year, month, day, hour, minute, second, useRealCalender);
+    }
+
+    public void Set(VirtualClock source)
+    {
+        year = source.year;
+        month = source.month;
+        day = source.day;
+        hour = source.hour;
+        minute = source.minute;
+        second = source.second;
+    }
+
     private int DaysOfMonth()
     {
         //エラー処理

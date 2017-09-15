@@ -11,12 +11,12 @@ public class Fence : MonoBehaviour {
 
     private Creature creature;  //クリーチャー
 
-    private FieldBoard board;
+    private static FieldBoard board;
     private Facility facility;
 
 	// Use this for initialization
 	void Start () {
-        board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
+        if(board == null)board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
         facility = GetComponent<Facility>();
 
         creature = null;
@@ -31,7 +31,11 @@ public class Fence : MonoBehaviour {
             creature = GameObject.Instantiate(creaturePrefab, 
                 board.MapPosToWorldPos(facility.Position) + Vector3.back * 0.01001f, 
                 Quaternion.identity).GetComponent<Creature>();
+            creature.ResetPos(facility.Position);
 
+            //ボードに登録
+            board.Creatures.Add(creature);
+            
             //メッセージも流しとけ
             MessageManager.PutMessage(creature.CreatureName + " が新しく配置されました！", MessageManager.MessagePriority.High);
         }

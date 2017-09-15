@@ -41,6 +41,21 @@ public class FieldTimeManager : MonoBehaviour {
             fieldTime = value;
         }
     }
+    private static VirtualClock fieldTimeNow,fieldTimePast; //1フレーム前のフィールド上の時間データ
+    public static VirtualClock FieldTimePast
+    {
+        get
+        {
+            return fieldTimePast;
+        }
+    }
+    public static VirtualClock FieldTimeNow
+    {
+        get
+        {
+            return fieldTimeNow;
+        }
+    }
 
     private void Awake()
     {
@@ -48,12 +63,22 @@ public class FieldTimeManager : MonoBehaviour {
         FieldTime = startTime;
         RefreshClockView();
         RefreshBackImage();
+        
+        fieldTimePast = startTime.Clone();
+        fieldTimeNow = startTime.Clone();
     }
 
     // Use this for initialization
     void Start () {
         //時間アップデートコルーチン開始
         StartCoroutine(FieldTimeUpdate());
+    }
+
+    private void Update()
+    {
+        //fieldTimeNow,Pastの更新
+        fieldTimePast.Set(fieldTimeNow);
+        fieldTimeNow.Set(fieldTime);
     }
 
     #region 独自時間コルーチン

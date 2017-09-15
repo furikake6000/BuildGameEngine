@@ -60,6 +60,20 @@ public class FieldBoard : MonoBehaviour {
         }
     }
 
+    private List<Creature> creatures;   //クリーチャー
+    public List<Creature> Creatures
+    {
+        get
+        {
+            return creatures;
+        }
+
+        set
+        {
+            creatures = value;
+        }
+    }
+
     //エンジン基盤部
     private MeshFilter fieldMeshFilter; //メッシュフィルタ保存用
     private MeshRenderer fieldMeshRenderer; //メッシュレンダラ保存用
@@ -79,6 +93,7 @@ public class FieldBoard : MonoBehaviour {
     {
         //施設データリセット
         facilities = new Dictionary<Vector2Int, Facility>();
+        creatures = new List<Creature>();
 
         //マス高さ算出
         heightOfTile = widthOfTile * aspectRatioOfTile;
@@ -384,7 +399,7 @@ public class FieldBoard : MonoBehaviour {
 
             foreach(var nextPoint in nextPoints)
             {
-                if (CanIGoThrough(nextPoint))
+                if (CanIGoThrough(nextPoint) || nextPoint == goal)
                 {
                     if (!searchData.ContainsKey(nextPoint))
                     {
@@ -419,10 +434,11 @@ public class FieldBoard : MonoBehaviour {
         Stack<Vector2Int> route = new Stack<Vector2Int>();
         for(Vector2Int p = goal; p != start; p = searchData[p].pastPoint)
         {
-            //元に戻る点を次々に入れていく
-            route.Push(p);
+            //元に戻る点を次々に入れていく(ただし、終点であるgoalが進入不可の場合それは入れない)
+            if(CanIGoThrough(p))route.Push(p);
         }
         return route;
+        
     }
 
     #endregion
