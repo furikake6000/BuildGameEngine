@@ -47,7 +47,35 @@ public class Facility : MonoBehaviour {
             cost = value;
         }
     }
-    
+    [SerializeField]
+    private bool passable;  //通過可能か
+    public bool Passable
+    {
+        get
+        {
+            return passable;
+        }
+
+        set
+        {
+            passable = value;
+        }
+    }
+    [SerializeField]
+    private bool buildable; //建設可能か
+    public bool Buildable
+    {
+        get
+        {
+            return buildable;
+        }
+
+        set
+        {
+            buildable = value;
+        }
+    }
+
     #endregion
 
     private Vector2Int position;
@@ -63,7 +91,7 @@ public class Facility : MonoBehaviour {
             position = value;
         }
     }
-
+    
     // Use this for initialization
     void Start () {
 		

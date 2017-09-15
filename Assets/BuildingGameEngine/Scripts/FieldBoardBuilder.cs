@@ -53,21 +53,43 @@ public class FieldBoardBuilder : MonoBehaviour {
         //なんらかのFacilityを選択していれば
         if(SelectedFacility != null)
         {
-            //マウスが指している場所が設置可能領域だったらプレビュ表示
-            Vector2Int nowPointingLocation = Vector2Int.Sishagonyu(myBoard.WorldPosToMapPos(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
-            if (myBoard.CanIPutFacility(SelectedFacility, nowPointingLocation))
+            ////マウスが指している場所が設置可能領域だったらプレビュ表示
+            //Vector2Int nowPointingLocation = Vector2Int.Sishagonyu(myBoard.WorldPosToMapPos(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+            //if (myBoard.CanIPutFacility(SelectedFacility, nowPointingLocation))
+            //{
+            //    previewFacilityObject.transform.position = myBoard.CalcFacilityWorldPos(SelectedFacility, nowPointingLocation);
+
+            //    //マウスが押されていたら施設配置
+            //    if (Input.GetMouseButton(0))
+            //    {
+            //        PutFacility(SelectedFacility, nowPointingLocation);
+            //    }
+            //}
+            //else
+            //{
+            //    previewFacilityObject.transform.position = HidePosition;
+            //}
+
+            //タッチ数をカウント
+            if(Input.touchCount >= 1)
             {
-                previewFacilityObject.transform.position = myBoard.CalcFacilityWorldPos(SelectedFacility, nowPointingLocation);
-                
-                //マウスが押されていたら施設配置
-                if (Input.GetMouseButton(0))
+                Touch t1 = Input.GetTouch(0);
+                Vector2Int nowPointingLocation = Vector2Int.Sishagonyu(myBoard.WorldPosToMapPos(Camera.main.ScreenToWorldPoint(t1.position)));
+
+                if (myBoard.CanIPutFacility(SelectedFacility, nowPointingLocation))
                 {
-                    PutFacility(SelectedFacility, nowPointingLocation);
+                    previewFacilityObject.transform.position = myBoard.CalcFacilityWorldPos(SelectedFacility, nowPointingLocation);
+
+                    //タッチが離されたら施設配置
+                    if (t1.phase == TouchPhase.Ended)
+                    {
+                        PutFacility(SelectedFacility, nowPointingLocation);
+                    }
                 }
-            }
-            else
-            {
-                previewFacilityObject.transform.position = HidePosition;
+                else
+                {
+                    previewFacilityObject.transform.position = HidePosition;
+                }
             }
         }
     }
