@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildOperations:
-  - facilityPrefab: {fileID: 1696151188730062, guid: 9237268394940cc478943c66271744d2,
+  - facilityPrefab: {fileID: 1989743557890046, guid: 8bb84a3e399f15449b89231679499002,
       type: 2}
     location:
       x: 2
@@ -135,7 +135,7 @@ MonoBehaviour:
     location:
       x: 0
       y: 1
-  - facilityPrefab: {fileID: 1445717235180794, guid: 9850c6e2a7a578f41acba04f6a72140c,
+  - facilityPrefab: {fileID: 1143093878119858, guid: ea40604d13651094da0b6f55b3c6951c,
       type: 2}
     location:
       x: 2
@@ -145,12 +145,12 @@ MonoBehaviour:
     location:
       x: 5
       y: 1
-  - facilityPrefab: {fileID: 1332771235377884, guid: 82d35376d06a9a14ca578bcce3cb3bfe,
+  - facilityPrefab: {fileID: 1670218580694094, guid: 689f6700332653f4eb85438d0f16b087,
       type: 2}
     location:
       x: 0
       y: 3
-  - facilityPrefab: {fileID: 1445717235180794, guid: 9850c6e2a7a578f41acba04f6a72140c,
+  - facilityPrefab: {fileID: 1143093878119858, guid: ea40604d13651094da0b6f55b3c6951c,
       type: 2}
     location:
       x: 5

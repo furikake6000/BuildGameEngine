@@ -37,7 +37,7 @@ public class Fence : MonoBehaviour {
             board.Creatures.Add(creature);
             
             //メッセージも流しとけ
-            MessageManager.PutMessage(creature.CreatureName + " が新しく配置されました！", MessageManager.MessagePriority.High);
+            MessageManager.PutMessage(creature.CreatureName + " が新しく配置されました！", MessageManager.MessagePriority.Middle);
         }
 	}
 }

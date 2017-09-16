@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Visitor : MonoBehaviour {
@@ -21,35 +19,51 @@ public class Visitor : MonoBehaviour {
     private List<Creature> unVisitedCreatures = new List<Creature>();
 
     private bool isReturningHome;   //帰宅中か否か
-    
+
+    public Vector2 Position
+    {
+        get
+        {
+            return position;
+        }
+    }
+
     public void ResetPos(Vector2Int location)
     {
         startPos = location;
         position = startPos;
+        nextPoint = location;
     }
 
     // Use this for initialization
     void Start () {
-        if (board == null) board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
+        if(board == null)board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
 
         unVisitedCreatures = new List<Creature>(board.Creatures);
         ////シャッフル
         //unVisitedCreatures = (List<Creature>)unVisitedCreatures.OrderBy(i => Guid.NewGuid());
+        
+        board.Visitors.Add(this);
 
         ResetGoal();
     }
 	
 	// Update is called once per frame
 	void Update () {
+        //時間経過取得
+        int deltaMinute;  //Update内で何分が経過したか
+        deltaMinute = FieldTimeManager.FieldTimeNow.minute - FieldTimeManager.FieldTimePast.minute;
+        if (deltaMinute < 0) deltaMinute += 60;
+
         //移動
-        float remainSpeed = speed;
+        float remainSpeed = speed * deltaMinute;
         while(true)
         {
-            float distToNext = Vector2.Distance(position, nextPoint);
+            float distToNext = Vector2.Distance(Position, nextPoint);
             if (remainSpeed < distToNext)
             {
                 //次の点に着くまでにスピード使い切る
-                position += (nextPoint - position) / distToNext * remainSpeed;
+                position += (nextPoint - Position) / distToNext * remainSpeed;
                 break;
             }
             else
@@ -68,6 +82,7 @@ public class Visitor : MonoBehaviour {
                     //帰宅中なら自己を破棄
                     if (isReturningHome)
                     {
+                        board.Visitors.Remove(this);
                         Destroy(gameObject);
                     }
                     //新しい目的地を確定
@@ -78,7 +93,7 @@ public class Visitor : MonoBehaviour {
         }
 
         //Positionを実座標に反映
-        transform.position = board.MapPosToWorldPos(position);
+        transform.position = board.MapPosToWorldPos(Position);
 	}
 
     void ResetGoal()
@@ -86,13 +101,13 @@ public class Visitor : MonoBehaviour {
         if(FieldTimeManager.FieldTime.hour >= 17 || unVisitedCreatures.Count == 0)
         {
             //17時以降か全ての動物を訪れたなら帰宅
-            visitPoints = board.SearchRoute(Vector2Int.Sishagonyu(position), startPos);
+            visitPoints = board.SearchRoute(Vector2Int.Sishagonyu(Position), startPos);
             isReturningHome = true;
         }
         else
         {
             //任意の動物を訪れる
-            visitPoints = board.SearchRoute(Vector2Int.Sishagonyu(position), unVisitedCreatures[0].Position);
+            visitPoints = board.SearchRoute(Vector2Int.Sishagonyu(Position), unVisitedCreatures[0].Position);
             unVisitedCreatures.RemoveAt(0);
         }
         if(visitPoints.Count != 0)nextPoint = (Vector2)visitPoints.Pop() + new Vector2(UnityEngine.Random.value - 0.5f, UnityEngine.Random.value - 0.5f);

@@ -21,7 +21,7 @@ public class FieldTimeManager : MonoBehaviour {
     private Sprite morningBack, dayBack, eveningBack, nightBack;    //それぞれの背景
 
     [SerializeField]
-    private bool fieldTimeEnabled;  //フィールド時間が動いているか止まっているか
+    private static bool fieldTimeEnabled;  //フィールド時間が動いているか止まっているか
     
     [SerializeField]
     private Text dateLabel;    //日付表示窓
@@ -172,6 +172,11 @@ public class FieldTimeManager : MonoBehaviour {
     }
 
     public void ToggleClockEnabled()
+    {
+        fieldTimeEnabled = !fieldTimeEnabled;
+    }
+
+    public static void ToggleClockEnabledStatic()
     {
         fieldTimeEnabled = !fieldTimeEnabled;
     }

@@ -379,7 +379,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 5}
+  m_AnchoredPosition: {x: -1500, y: 5}
   m_SizeDelta: {x: 0, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &745107628
@@ -403,7 +403,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 74
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 7
@@ -587,7 +587,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 74
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2168,7 +2168,7 @@ Prefab:
     - target: {fileID: 114741082872754746, guid: ddee5db59499c7a43a5c600986d702ff,
         type: 2}
       propertyPath: fieldTimeUpdateFreq
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114741082872754746, guid: ddee5db59499c7a43a5c600986d702ff,
         type: 2}
@@ -2178,7 +2178,7 @@ Prefab:
     - target: {fileID: 114741082872754746, guid: ddee5db59499c7a43a5c600986d702ff,
         type: 2}
       propertyPath: fieldTimeUpdateAddSpan.minute
-      value: 15
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114741082872754746, guid: ddee5db59499c7a43a5c600986d702ff,
         type: 2}

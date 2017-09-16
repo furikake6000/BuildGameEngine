@@ -74,6 +74,21 @@ public class FieldBoard : MonoBehaviour {
         }
     }
 
+    public List<Visitor> Visitors
+    {
+        get
+        {
+            return visitors;
+        }
+
+        set
+        {
+            visitors = value;
+        }
+    }
+    private List<Visitor> visitors; //観客
+
+
     //エンジン基盤部
     private MeshFilter fieldMeshFilter; //メッシュフィルタ保存用
     private MeshRenderer fieldMeshRenderer; //メッシュレンダラ保存用
@@ -91,9 +106,10 @@ public class FieldBoard : MonoBehaviour {
     // 初期化関数
     private void Awake()
     {
-        //施設データリセット
+        //各種一覧データリセット
         facilities = new Dictionary<Vector2Int, Facility>();
         creatures = new List<Creature>();
+        visitors = new List<Visitor>();
 
         //マス高さ算出
         heightOfTile = widthOfTile * aspectRatioOfTile;
@@ -125,6 +141,8 @@ public class FieldBoard : MonoBehaviour {
 
         //資金表示
         if(moneyLabel != null)moneyLabel.text = Money + "円";
+        //来客者数表示
+        if (statisticLabel != null) statisticLabel.text = Visitors.Count + "人";
         timeManager.RefreshClockView();
     }
     #endregion

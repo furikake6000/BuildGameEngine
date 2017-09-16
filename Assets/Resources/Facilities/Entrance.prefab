@@ -55,7 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visitorPrefab: {fileID: 1196086035111106, guid: a0d36f893654d4f44b114f4bf2bfc1d3,
     type: 2}
-  visitorCreateNumPerHour: 10
+  visitorCreateNumPerHour: 2
 --- !u!114 &114404889443071350
 MonoBehaviour:
   m_ObjectHideFlags: 1

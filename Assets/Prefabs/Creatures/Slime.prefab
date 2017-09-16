@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creatureName: Slime
-  speed: 0.01
+  speed: 0.02
   maxHp: 10
   state: 0
 --- !u!212 &212141607877126380
