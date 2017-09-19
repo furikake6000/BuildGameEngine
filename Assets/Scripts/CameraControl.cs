@@ -29,7 +29,7 @@ public class CameraControl : MonoBehaviour {
                 //スライド処理
                 Touch touchPoint = Input.GetTouch(0);
 
-                if (touchPoint.phase != TouchPhase.Began)
+                if (touchPoint.phase != TouchPhase.Ended)
                 {
                     //カメラの座標ベクトルを作成
                     Vector3 deltaVec = new Vector3(touchPoint.deltaPosition.x, touchPoint.deltaPosition.y, 0f);

@@ -109,10 +109,12 @@ public class Tutorial1 : MonoBehaviour {
                     FieldTimeManager.ToggleClockEnabledStatic();
                     TutorialManager.PutMessage("...............", 4);
                     TutorialManager.PutMessage("あ、終わりです。もう何もありませんよ？", 2);
-                    TutorialManager.PutMessage("...ええ。お察しの通りですが、わりと進捗ダメでしたこれ", 1);
-                    TutorialManager.PutMessage("何がいけなかったんでしょうかね～...やっぱり直前にSteamのセール漁ったのが悪k", 1);
+                    TutorialManager.PutMessage("...「これだけ？」って目をしてますね。これだけです。申し訳ありません。", 1);
+                    TutorialManager.PutMessage("そもそも私だって発表当日の朝にいきなり用意されたキャラですし、何分見切り発車が多過g", 1);
                     TutorialManager.PutMessage("(どこかから降ってきたタライ)グワッシャァァァン", 5);
+                    TutorialManager.PutMessage("......................", 5);
                     TutorialManager.PutMessage("(......ぱたん)", 6);
+                    TutorialManager.PutMessage("", 6);
                     TutorialManager.PutMessage("プレイありがとうございました。現時点での改善点など頂ければ幸いです。", 6);
 
 
