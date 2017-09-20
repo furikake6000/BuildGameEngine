@@ -33,7 +33,7 @@ public class CameraControl : MonoBehaviour {
                 {
                     //カメラの座標ベクトルを作成
                     Vector3 deltaVec = new Vector3(touchPoint.deltaPosition.x, touchPoint.deltaPosition.y, 0f);
-                    deltaVec = -deltaVec * moveRate / Camera.main.orthographicSize;
+                    deltaVec = -deltaVec * moveRate * Camera.main.orthographicSize;
 
                     //カメラ移動
                     Camera.main.transform.position += deltaVec;

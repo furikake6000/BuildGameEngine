@@ -54,7 +54,7 @@ public class TutorialManager : MonoBehaviour {
 
 		if(Enable && Input.touchCount >= 1)
         {
-            if(Input.GetTouch(0).phase == TouchPhase.Began)
+            if(Input.GetTouch(0).phase == TouchPhase.Ended)
             {
                 //ページ送り
                 if (!TextUpdate())
