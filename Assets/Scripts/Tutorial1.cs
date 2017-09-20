@@ -13,6 +13,7 @@ public class Tutorial1 : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        state = 0;
         board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
 
         TutorialManager.PutMessage("はじめまして！", 0);
@@ -153,7 +154,6 @@ public class Tutorial1 : MonoBehaviour {
                 
                 break;
             case 100:
-                state = 0;
                 SceneManager.LoadScene("Title");
                 break;
         }
