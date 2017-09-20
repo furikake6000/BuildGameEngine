@@ -52,9 +52,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f52b3e8c26c48342a5967cf898979d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colRange: 0.3
+  collisionRange: 0.3
   damage: 1
   speed: 0.1
+  range: 2
 --- !u!212 &212173259922951760
 SpriteRenderer:
   m_ObjectHideFlags: 1
