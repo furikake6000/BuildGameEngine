@@ -13,10 +13,22 @@ public class CameraControl : MonoBehaviour {
 
     private Touch[] pastTouch = new Touch[2];  //1フレーム前のタッチ情報
 
+    //このコンポーネントは原則cameraにしか使わない唯一のものだからstaticで重複防止は不要
+    private FieldBoard board;
+    private float topLimit, bottomLimit, leftLimit, rightLimit;
+
 	// Use this for initialization
-	void Start () {
-		
-	}
+	void Start ()
+    {
+        board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
+
+        //枠のはじっこを取得
+        topLimit = board.MapPosToWorldPos(new Vector2(0, 0)).y;
+        bottomLimit = board.MapPosToWorldPos(new Vector2(board.MapWidth, board.MapHeight)).y;
+        leftLimit = board.MapPosToWorldPos(new Vector2(board.MapWidth, 0)).x;
+        rightLimit = board.MapPosToWorldPos(new Vector2(0, board.MapHeight)).x;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -36,7 +48,16 @@ public class CameraControl : MonoBehaviour {
                     deltaVec = -deltaVec * moveRate * Camera.main.orthographicSize;
 
                     //カメラ移動
-                    Camera.main.transform.position += deltaVec;
+                    Vector3 newCamPos = Camera.main.transform.position + deltaVec;
+
+                    //四隅移動制限処理
+                    if (newCamPos.y > topLimit) newCamPos.y = topLimit;
+                    if (newCamPos.y < bottomLimit) newCamPos.y = bottomLimit;
+                    if (newCamPos.x < leftLimit) newCamPos.x = leftLimit;
+                    if (newCamPos.x > rightLimit) newCamPos.x = rightLimit;
+
+                    //座標に適用
+                    Camera.main.transform.position = newCamPos;
                 }
 
                 pastTouch[0] = touchPoint;
