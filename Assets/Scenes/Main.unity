@@ -1535,8 +1535,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camSizeMin: 1
   camSizeMax: 7
-  zoomRate: 0.005
-  moveRate: 0.02
+  zoomRate: 0.01
+  moveRate: 0.005
 --- !u!1 &1869376817
 GameObject:
   m_ObjectHideFlags: 0
@@ -2545,6 +2545,21 @@ Prefab:
     - target: {fileID: 1219329832940856, guid: ddee5db59499c7a43a5c600986d702ff, type: 2}
       propertyPath: m_TagString
       value: FieldBoard
+      objectReference: {fileID: 0}
+    - target: {fileID: 114043828405313740, guid: ddee5db59499c7a43a5c600986d702ff,
+        type: 2}
+      propertyPath: mapWidth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114043828405313740, guid: ddee5db59499c7a43a5c600986d702ff,
+        type: 2}
+      propertyPath: mapHeight
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114043828405313740, guid: ddee5db59499c7a43a5c600986d702ff,
+        type: 2}
+      propertyPath: sizeOfTile
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ddee5db59499c7a43a5c600986d702ff, type: 2}
