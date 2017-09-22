@@ -351,10 +351,10 @@ public class FieldBoard : MonoBehaviour {
     /// <param name="facilityPrefab">施設のPrefab</param>
     /// <param name="location">設置する位置（Vector2Int）</param>
     /// <returns>施設の置くべきWorld座標</returns>
-    public Vector3 CalcFacilityWorldPos(Facility facilityPrefab, Vector2Int location)
+    public Vector3 CalcFacilityWorldPos(Facility facilityPrefab, Vector2 location)
     {
         //設置座標の計算(facility自体のサイズも考慮)
-        Vector3 newFacilityPos = MapPosToWorldPos((Vector2)location + (Vector2)(facilityPrefab.Size - new Vector2Int(1, 1)) / 2);
+        Vector3 newFacilityPos = MapPosToWorldPos(location + (Vector2)(facilityPrefab.Size - new Vector2Int(1, 1)) / 2);
         //縦向きのズレを算出
         SpriteRenderer facilityPrefabRenderer = facilityPrefab.gameObject.GetComponent<SpriteRenderer>();
         float yGap = (facilityPrefabRenderer.bounds.size.y - facilityPrefabRenderer.bounds.size.x * aspectRatioOfTile) / 2 * sizeOfTile;
@@ -418,7 +418,7 @@ public class FieldBoard : MonoBehaviour {
     {
 
         //探索開始
-        //最短距離といっこまえのデータ
+        //ルートコネクタ...そのマスまでの最短距離とそのマスに到達する一つ前のマスのデータのセット
         Dictionary<Vector2Int, RouteConnector> searchData = new Dictionary<Vector2Int, RouteConnector>();
         searchData.Add(start, new RouteConnector(0, start));
         //未探索点データ
@@ -468,7 +468,8 @@ public class FieldBoard : MonoBehaviour {
             }
             
         }
-
+        
+        //探索終了　パスデータ取得
         //探索されたルートを逆に戻る
         if (!searchData.ContainsKey(goal))
         {

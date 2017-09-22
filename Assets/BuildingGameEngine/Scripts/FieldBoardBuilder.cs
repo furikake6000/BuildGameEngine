@@ -7,6 +7,9 @@ public class FieldBoardBuilder : MonoBehaviour {
     //オブジェクトを視認外に移動させたい時の座標（定数）
     private static readonly Vector3 HidePosition = new Vector3(-999f, -999f, -999f);
 
+    private static readonly Color previewFacilityColor = new Color(1f, 1f, 1f, 0.5f); //プレビュオブジェクトの色
+    private static readonly Color previewFacilityDisableColor = new Color(1f, 0.5f, 0.5f, 0.5f); //設置不可時色
+
     private static FieldBoard myBoard; //自分のFieldBoardコンポーネント
     private static Facility selectedFacility;   //現在設置選択しているファシリティ
     public static Facility SelectedFacility
@@ -30,13 +33,16 @@ public class FieldBoardBuilder : MonoBehaviour {
             {
                 //インスタンティエイト（視認外座標に生成）
                 previewFacilityObject = GameObject.Instantiate(selectedFacility.gameObject, HidePosition, Quaternion.identity);
+                //レンダラ読み込み
+                previewFacilityRenderer = previewFacilityObject.GetComponent<SpriteRenderer>();
                 //半透明に
-                previewFacilityObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
+                previewFacilityRenderer.color = new Color(1f, 1f, 1f, 0.5f);
             }
         }
     }
 
     private static GameObject previewFacilityObject; //プレビューのファシリティ
+    private static SpriteRenderer previewFacilityRenderer;  //プレビューファシリティのレンダラ
 
     // Use this for initialization
     void Start () {
@@ -45,7 +51,6 @@ public class FieldBoardBuilder : MonoBehaviour {
 
         //無を選択
         SelectedFacility = null;
-        
     }
 	
 	// Update is called once per frame
@@ -74,11 +79,13 @@ public class FieldBoardBuilder : MonoBehaviour {
             if(Input.touchCount >= 1)
             {
                 Touch t1 = Input.GetTouch(0);
-                Vector2Int nowPointingLocation = Vector2Int.Sishagonyu(myBoard.WorldPosToMapPos(Camera.main.ScreenToWorldPoint(t1.position)));
+                Vector2 nowPointingPosition = myBoard.WorldPosToMapPos(Camera.main.ScreenToWorldPoint(t1.position));
+                Vector2Int nowPointingLocation = Vector2Int.Sishagonyu(nowPointingPosition);
 
                 if (t1.position.y >= Screen.width / 2 && myBoard.CanIPutFacility(SelectedFacility, nowPointingLocation))
                 {
                     previewFacilityObject.transform.position = myBoard.CalcFacilityWorldPos(SelectedFacility, nowPointingLocation);
+                    previewFacilityRenderer.color = previewFacilityColor;
 
                     //タッチが離されたら施設配置
                     if (t1.phase == TouchPhase.Ended)
@@ -88,8 +95,14 @@ public class FieldBoardBuilder : MonoBehaviour {
                 }
                 else
                 {
-                    previewFacilityObject.transform.position = HidePosition;
+                    previewFacilityObject.transform.position = myBoard.CalcFacilityWorldPos(SelectedFacility, nowPointingPosition);
+                    previewFacilityRenderer.color = previewFacilityDisableColor;
                 }
+            }
+            else
+            {
+                //非タッチ時には非表示
+                previewFacilityObject.transform.position = HidePosition;
             }
         }
     }
