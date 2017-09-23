@@ -53,12 +53,7 @@ public class Bullet : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        //時間経過取得
-        int deltaMinute;  //Update内で何分が経過したか
-        deltaMinute = FieldTimeManager.FieldTimeNow.minute - FieldTimeManager.FieldTimePast.minute;
-        if (deltaMinute < 0) deltaMinute += 60;
-
-        position += Vec * speed * deltaMinute;
+        position += Vec * speed * FieldTimeManager.DeltaSecond / 60.0f;
 
         //敵当たり判定
 		foreach(var enemy in board.Creatures)

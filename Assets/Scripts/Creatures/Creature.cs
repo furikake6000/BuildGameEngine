@@ -83,7 +83,7 @@ public class Creature : MonoBehaviour {
         if (board == null) board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
         state = CreatureState.Normal;
 
-        //逃走口を探索
+        //逃走口がどこにあるか取得
         if(escapeGoal == null)
         {
             Facility entrance = GameObject.FindGameObjectWithTag("Entrance").GetComponent<Facility>();
@@ -93,11 +93,6 @@ public class Creature : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //時間経過取得
-        int deltaMinute;  //Update内で何分が経過したか
-        deltaMinute = FieldTimeManager.FieldTimeNow.minute - FieldTimeManager.FieldTimePast.minute;
-        if (deltaMinute < 0) deltaMinute += 60;
-
         //Positionを実座標に反映
         transform.position = board.MapPosToWorldPos(position) + Vector3.back * 0.01001f;
 
@@ -114,7 +109,7 @@ public class Creature : MonoBehaviour {
         if(state == CreatureState.Escaping)
         {
             //移動
-            float remainSpeed = speed * deltaMinute;
+            float remainSpeed = speed * FieldTimeManager.DeltaSecond / 60.0f;
             while (true)
             {
                 float distToNext = Vector2.Distance(position, nextPoint);

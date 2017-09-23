@@ -20,17 +20,14 @@ public class Entrance : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        int deltaMinute;  //Update内で何分が経過したか
-        deltaMinute = FieldTimeManager.FieldTimeNow.minute - FieldTimeManager.FieldTimePast.minute;
-        if (deltaMinute < 0) deltaMinute += 60;
 
         //6-17時の間ならばVisitor生成
         if (FieldTimeManager.FieldTime.hour >= 6 && FieldTimeManager.FieldTime.hour <= 17)
         {
-            if (deltaMinute * visitorCreateNumPerHour / 60.0f < 1f)
+            if (FieldTimeManager.DeltaMinute * visitorCreateNumPerHour / 60.0f < 1f)
             {
                 //確率で生成
-                if (Random.value < deltaMinute * visitorCreateNumPerHour / 60.0f)
+                if (Random.value < FieldTimeManager.DeltaMinute * visitorCreateNumPerHour / 60.0f)
                 {
                     Visitor newVisitor = GameObject.Instantiate(visitorPrefab, HidePosition, Quaternion.identity).GetComponent<Visitor>();
                     newVisitor.ResetPos(myFacility.Position + new Vector2Int(1, 3));
@@ -39,7 +36,7 @@ public class Entrance : MonoBehaviour {
             else
             {
                 //複数個まとめて生成
-                for (var i = 0; i < (int)(deltaMinute * visitorCreateNumPerHour / 60.0f); i++)
+                for (var i = 0; i < (int)(FieldTimeManager.DeltaMinute * visitorCreateNumPerHour / 60.0f); i++)
                 {
                     Visitor newVisitor = GameObject.Instantiate(visitorPrefab, HidePosition, Quaternion.identity).GetComponent<Visitor>();
                     newVisitor.ResetPos(myFacility.Position + new Vector2Int(1, 3));

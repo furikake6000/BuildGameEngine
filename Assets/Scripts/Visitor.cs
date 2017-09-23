@@ -50,14 +50,8 @@ public class Visitor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //時間経過取得
-        int deltaSecond;  //Update内で何秒が経過したか
-        deltaSecond = ( FieldTimeManager.FieldTimeNow.minute - FieldTimeManager.FieldTimePast.minute) * 60
-                        + ( FieldTimeManager.FieldTimeNow.second - FieldTimeManager.FieldTimePast.second);
-        if (deltaSecond < 0) deltaSecond += 3600;
-
         //移動
-        float remainSpeed = speed * deltaSecond / 60.0f;
+        float remainSpeed = speed * FieldTimeManager.DeltaSecond / 60.0f;
         while(true)
         {
             float distToNext = Vector2.Distance(Position, nextPoint);

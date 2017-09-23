@@ -61,6 +61,21 @@ public class FieldTimeManager : MonoBehaviour {
             return fieldTimeNow;
         }
     }
+    private static int deltaMinute, deltaSecond;    //何分、何秒経過したか
+    public static int DeltaMinute
+    {
+        get
+        {
+            return deltaMinute;
+        }
+    }
+    public static int DeltaSecond
+    {
+        get
+        {
+            return deltaSecond;
+        }
+    }
 
     private void Awake()
     {
@@ -84,6 +99,12 @@ public class FieldTimeManager : MonoBehaviour {
         //fieldTimeNow,Pastの更新
         fieldTimePast.Set(fieldTimeNow);
         fieldTimeNow.Set(fieldTime);
+
+        //deltaMinute, deltaSecondの更新
+        deltaMinute = FieldTimeNow.minute - FieldTimePast.minute;
+        if (deltaMinute < 0) deltaMinute += 60;
+        deltaSecond = deltaMinute * 60 + (FieldTimeNow.second - FieldTimePast.second);
+
     }
 
     #region 独自時間コルーチン

@@ -29,11 +29,6 @@ public class Turret : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //時間経過取得
-        int deltaMinute;  //Update内で何分が経過したか
-        deltaMinute = FieldTimeManager.FieldTimeNow.minute - FieldTimeManager.FieldTimePast.minute;
-        if (deltaMinute < 0) deltaMinute += 60;
-
         foreach (var enemy in board.Creatures)
         {
             if (enemy.state == Creature.CreatureState.Escaping && coolTime < 0f && Vector2.Distance(enemy.Position, myFacility.Position) < range)
@@ -46,6 +41,6 @@ public class Turret : MonoBehaviour {
                 coolTime = 1f / fireRate;
             }
         }
-        coolTime -= deltaMinute;
+        coolTime -= FieldTimeManager.DeltaSecond / 60.0f;
 	}
 }
