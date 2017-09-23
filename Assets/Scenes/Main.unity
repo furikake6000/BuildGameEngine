@@ -2472,7 +2472,7 @@ Prefab:
     - target: {fileID: 114741082872754746, guid: ddee5db59499c7a43a5c600986d702ff,
         type: 2}
       propertyPath: fieldTimeUpdateFreq
-      value: 0
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 114741082872754746, guid: ddee5db59499c7a43a5c600986d702ff,
         type: 2}
