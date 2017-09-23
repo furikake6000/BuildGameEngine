@@ -52,9 +52,10 @@ public class TutorialManager : MonoBehaviour {
             }
         }
 
-		if(Enable && Input.touchCount >= 1)
+		if(Enable)
         {
-            if(Input.GetTouch(0).phase == TouchPhase.Ended)
+            if((Input.touchCount >= 1 && Input.GetTouch(Input.touchCount - 1).phase == TouchPhase.Ended)
+                || Input.GetKeyDown(KeyCode.Return))
             {
                 //ページ送り
                 if (!TextUpdate())
