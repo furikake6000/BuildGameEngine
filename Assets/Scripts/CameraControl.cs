@@ -15,12 +15,14 @@ public class CameraControl : MonoBehaviour {
 
     //このコンポーネントは原則cameraにしか使わない唯一のものだからstaticで重複防止は不要
     private FieldBoard board;
+    private FieldBoardBuilder builder;
     private float topLimit, bottomLimit, leftLimit, rightLimit;
 
 	// Use this for initialization
 	void Start ()
     {
         board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
+        builder = board.gameObject.GetComponent<FieldBoardBuilder>();
 
         //枠のはじっこを取得
         topLimit = board.MapPosToWorldPos(new Vector2(0, 0)).y;
@@ -34,7 +36,7 @@ public class CameraControl : MonoBehaviour {
 	void Update () {
 		
         //ビルダーの選択がない時だけ実行
-        if(FieldBoardBuilder.SelectedFacility == null)
+        if(builder.SelectedFacility == null)
         {
             if (Input.touchCount == 1)
             {

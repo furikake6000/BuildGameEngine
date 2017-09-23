@@ -10,9 +10,9 @@ public class FieldBoardBuilder : MonoBehaviour {
     private static readonly Color previewFacilityColor = new Color(1f, 1f, 1f, 0.5f); //プレビュオブジェクトの色
     private static readonly Color previewFacilityDisableColor = new Color(1f, 0.5f, 0.5f, 0.5f); //設置不可時色
 
-    private static FieldBoard myBoard; //自分のFieldBoardコンポーネント
-    private static Facility selectedFacility;   //現在設置選択しているファシリティ
-    public static Facility SelectedFacility
+    private FieldBoard myBoard; //自分のFieldBoardコンポーネント
+    private Facility selectedFacility;   //現在設置選択しているファシリティ
+    public Facility SelectedFacility
     {
         get
         {
@@ -41,8 +41,8 @@ public class FieldBoardBuilder : MonoBehaviour {
         }
     }
 
-    private static GameObject previewFacilityObject; //プレビューのファシリティ
-    private static SpriteRenderer previewFacilityRenderer;  //プレビューファシリティのレンダラ
+    private GameObject previewFacilityObject; //プレビューのファシリティ
+    private SpriteRenderer previewFacilityRenderer;  //プレビューファシリティのレンダラ
 
     // Use this for initialization
     void Start () {

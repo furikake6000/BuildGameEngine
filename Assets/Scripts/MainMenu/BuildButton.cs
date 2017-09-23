@@ -9,6 +9,8 @@ public class BuildButton : MonoBehaviour {
     private Image facilityImage;
     private Text facilityText;
 
+    private static FieldBoardBuilder builder;
+
     public Facility Facility
     {
         get
@@ -40,6 +42,8 @@ public class BuildButton : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
+        if(builder == null) builder = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoardBuilder>();
+
         //自分のボタンイベントの設定
         Button myButton = GetComponent<Button>();
         myButton.onClick.AddListener(OnPressed);
@@ -54,6 +58,6 @@ public class BuildButton : MonoBehaviour {
     public void OnPressed()
     {
         //自分のボタンに該当する施設を選択する
-        FieldBoardBuilder.SelectedFacility = facility;
+        builder.SelectedFacility = facility;
     }
 }

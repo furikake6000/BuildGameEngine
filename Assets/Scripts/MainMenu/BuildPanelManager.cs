@@ -18,9 +18,12 @@ public class BuildPanelManager : MonoBehaviour {
     [SerializeField]
     private GameObject facilityButtonPrefab;    //ボタンのプレハブ
 
+    private FieldBoardBuilder builder;
+
     private void Start()
     {
         panelAnimator = this.GetComponent<Animator>();
+        builder = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoardBuilder>();
 
         //登録されているFaciitiesを一括取得
         //同時にボタンを作成
@@ -87,6 +90,6 @@ public class BuildPanelManager : MonoBehaviour {
         panelAnimator.SetBool("open", false);
 
         //Facility未選択状態に
-        FieldBoardBuilder.SelectedFacility = null;
+        builder.SelectedFacility = null;
     }
 }
