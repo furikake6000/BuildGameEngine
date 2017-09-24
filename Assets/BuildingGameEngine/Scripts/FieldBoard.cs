@@ -416,7 +416,6 @@ public class FieldBoard : MonoBehaviour {
     /// <returns></returns>
     public Stack<Vector2Int> SearchRoute(Vector2Int start, Vector2Int goal)
     {
-
         //探索開始
         //ルートコネクタ...そのマスまでの最短距離とそのマスに到達する一つ前のマスのデータのセット
         Dictionary<Vector2Int, RouteConnector> searchData = new Dictionary<Vector2Int, RouteConnector>();

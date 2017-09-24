@@ -11,7 +11,6 @@ public class Entrance : FacilityBehaviour {
     GameObject visitorPrefab;
     [SerializeField]
     float visitorCreateNumPerHour;  //1hに何人の観客を生成するか
-    Facility myFacility;
 
 	// Use this for initialization
 	protected override void Start () {

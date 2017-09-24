@@ -37,6 +37,12 @@ public class FieldBoardBuilder : MonoBehaviour {
                 previewFacilityRenderer = previewFacilityObject.GetComponent<SpriteRenderer>();
                 //半透明に
                 previewFacilityRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+
+                //プレビュオブジェクトのFacilityBehaviourを全て停止
+                foreach(var facilityBehaviour in previewFacilityObject.GetComponents<FacilityBehaviour>())
+                {
+                    facilityBehaviour.enabled = false;
+                }
             }
         }
     }

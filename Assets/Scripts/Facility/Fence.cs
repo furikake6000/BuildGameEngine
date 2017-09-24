@@ -13,12 +13,17 @@ public class Fence : FacilityBehaviour {
 
 	// Use this for initialization
 	protected override void Start () {
+        //必ずFacilityBehaviourのStart関数を最初に実行する
+        base.Start();
         creature = null;
 	}
 	
 	// Update is called once per frame
-	protected override void Update () {
-        
+	protected override void Update ()
+    {
+        //必ずFacilityBehaviourのUpdate関数を最初に実行する
+        base.Update();
+
         if (FieldTimeManager.FieldTime >= creationDate && creature == null)
         {
             //時間を過ぎていたらクリーチャー生成
@@ -26,6 +31,7 @@ public class Fence : FacilityBehaviour {
                 board.MapPosToWorldPos(myFacility.Position) + Vector3.back * 0.01001f, 
                 Quaternion.identity).GetComponent<Creature>();
             creature.ResetPos(myFacility.Position);
+            creature.MyFence = this;
 
             //ボードに登録
             board.Creatures.Add(creature);

@@ -37,22 +37,23 @@ public class Creature : MonoBehaviour {
             position = value;
         }
     }
+    
+    private Stack<Vector2Int> visitPoints = new Stack<Vector2Int>();
+    private Vector2 nextPoint;
 
-    public float Hp
+    private Fence myFence;  //自分が格納されているフェンス
+    public Fence MyFence
     {
         get
         {
-            return hp;
+            return myFence;
         }
 
         set
         {
-            hp = value;
+            myFence = value;
         }
     }
-
-    private Stack<Vector2Int> visitPoints = new Stack<Vector2Int>();
-    private Vector2 nextPoint;
 
     private static FieldBoard board;
     private static Vector2Int escapeGoal;
@@ -66,6 +67,18 @@ public class Creature : MonoBehaviour {
     }
 
     private float hp;
+    public float Hp
+    {
+        get
+        {
+            return hp;
+        }
+
+        set
+        {
+            hp = value;
+        }
+    }
 
     public void ResetPos(Vector2Int location)
     {
@@ -100,6 +113,7 @@ public class Creature : MonoBehaviour {
         if((FieldTimeManager.FieldTime.hour <= 5 || FieldTimeManager.FieldTime.hour >= 20) && state == CreatureState.Normal)
         {
             state = CreatureState.Escaping;
+            //逃亡ルート策定
             visitPoints = board.SearchRoute((Vector2Int)position, escapeGoal);
             nextPoint = visitPoints.Pop();
 
