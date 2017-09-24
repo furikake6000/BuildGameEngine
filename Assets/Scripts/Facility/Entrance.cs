@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entrance : MonoBehaviour {
+public class Entrance : FacilityBehaviour {
 
     //オブジェクトを視認外に移動させたい時の座標（定数）
     private static readonly Vector3 HidePosition = new Vector3(-9999f, -9999f, -9999f);
@@ -14,12 +14,17 @@ public class Entrance : MonoBehaviour {
     Facility myFacility;
 
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
+        //必ずFacilityBehaviourのStart関数を最初に実行する
+        base.Start();
+
         myFacility = GetComponent<Facility>();
     }
 
     // Update is called once per frame
-    void Update () {
+    protected override void Update () {
+        //必ずFacilityBehaviourのUpdate関数を最初に実行する
+        base.Update();
 
         //6-17時の間ならばVisitor生成
         if (FieldTimeManager.FieldTime.hour >= 6 && FieldTimeManager.FieldTime.hour <= 17)

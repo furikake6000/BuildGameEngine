@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fence : MonoBehaviour {
+public class Fence : FacilityBehaviour {
 
     [SerializeField]
     GameObject creaturePrefab;  //クリーチャーのプレハブ
@@ -11,27 +11,21 @@ public class Fence : MonoBehaviour {
 
     private Creature creature;  //クリーチャー
 
-    private static FieldBoard board;
-    private Facility facility;
-
 	// Use this for initialization
-	void Start () {
-        if(board == null)board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
-        facility = GetComponent<Facility>();
-
+	protected override void Start () {
         creature = null;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
         
         if (FieldTimeManager.FieldTime >= creationDate && creature == null)
         {
             //時間を過ぎていたらクリーチャー生成
             creature = GameObject.Instantiate(creaturePrefab, 
-                board.MapPosToWorldPos(facility.Position) + Vector3.back * 0.01001f, 
+                board.MapPosToWorldPos(myFacility.Position) + Vector3.back * 0.01001f, 
                 Quaternion.identity).GetComponent<Creature>();
-            creature.ResetPos(facility.Position);
+            creature.ResetPos(myFacility.Position);
 
             //ボードに登録
             board.Creatures.Add(creature);
