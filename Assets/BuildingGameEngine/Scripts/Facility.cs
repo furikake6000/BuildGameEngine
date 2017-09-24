@@ -13,11 +13,6 @@ public class Facility : MonoBehaviour {
         {
             return facilityName;
         }
-
-        set
-        {
-            facilityName = value;
-        }
     }
     [SerializeField]
     private Vector2Int size = new Vector2Int(1,1); //施設のサイズ
@@ -26,11 +21,6 @@ public class Facility : MonoBehaviour {
         get
         {
             return size;
-        }
-
-        set
-        {
-            size = value;
         }
     }
     [SerializeField]
@@ -41,11 +31,6 @@ public class Facility : MonoBehaviour {
         {
             return cost;
         }
-
-        set
-        {
-            cost = value;
-        }
     }
     [SerializeField]
     private bool passable;  //通過可能か
@@ -54,11 +39,6 @@ public class Facility : MonoBehaviour {
         get
         {
             return passable;
-        }
-
-        set
-        {
-            passable = value;
         }
     }
     [SerializeField]
@@ -69,13 +49,16 @@ public class Facility : MonoBehaviour {
         {
             return buildable;
         }
-
-        set
-        {
-            buildable = value;
-        }
     }
 
+    private List<Vector2Int> accessablePoints;  //外部との隣接点（経路探索に必要）
+    public List<Vector2Int> AccessablePoints
+    {
+        get
+        {
+            return accessablePoints;
+        }
+    }
     #endregion
 
     private Vector2Int position;

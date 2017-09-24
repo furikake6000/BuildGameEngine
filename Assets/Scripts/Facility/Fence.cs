@@ -28,9 +28,9 @@ public class Fence : FacilityBehaviour {
         {
             //時間を過ぎていたらクリーチャー生成
             creature = GameObject.Instantiate(creaturePrefab, 
-                board.MapPosToWorldPos(myFacility.Position) + Vector3.back * 0.01001f, 
+                board.MapPosToWorldPos(MyFacility.Position) + Vector3.back * 0.01001f, 
                 Quaternion.identity).GetComponent<Creature>();
-            creature.ResetPos(myFacility.Position);
+            creature.ResetPos(MyFacility.Position);
             creature.MyFence = this;
 
             //ボードに登録

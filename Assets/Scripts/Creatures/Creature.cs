@@ -38,7 +38,7 @@ public class Creature : MonoBehaviour {
         }
     }
     
-    private Stack<Vector2Int> visitPoints = new Stack<Vector2Int>();
+    private List<Vector2Int> route = new List<Vector2Int>();
     private Vector2 nextPoint;
 
     private Fence myFence;  //自分が格納されているフェンス
@@ -56,7 +56,7 @@ public class Creature : MonoBehaviour {
     }
 
     private static FieldBoard board;
-    private static Vector2Int escapeGoal;
+    private static Facility entrance;
 
     public CreatureState state;
     public enum CreatureState
@@ -97,10 +97,9 @@ public class Creature : MonoBehaviour {
         state = CreatureState.Normal;
 
         //逃走口がどこにあるか取得
-        if(escapeGoal == null)
+        if(entrance == null)
         {
-            Facility entrance = GameObject.FindGameObjectWithTag("Entrance").GetComponent<Facility>();
-            escapeGoal = entrance.Position + new Vector2Int(1, 3);
+            entrance = GameObject.FindGameObjectWithTag("Entrance").GetComponent<Facility>();
         }
     }
 	
@@ -114,8 +113,9 @@ public class Creature : MonoBehaviour {
         {
             state = CreatureState.Escaping;
             //逃亡ルート策定
-            visitPoints = board.SearchRoute((Vector2Int)position, escapeGoal);
-            nextPoint = visitPoints.Pop();
+            route = board.SearchRoute(myFence.MyFacility, entrance);
+            nextPoint = route[0];
+            route.RemoveAt(0);
 
             MessageManager.PutMessage(creatureName + "が逃げ出しました!!", MessageManager.MessagePriority.High);
         }
@@ -146,12 +146,11 @@ public class Creature : MonoBehaviour {
                         Destroy(this.gameObject);
                     }
 
-                    if (visitPoints.Count != 0)
+                    if (route.Count != 0)
                     {
-                        //毎度ルート探索（途中で障害物置くことを考慮）
-                        visitPoints = board.SearchRoute((Vector2Int)position, escapeGoal);
                         //次の点を決定(VisitPointsから取り、0.5f四方の誤差を追加)
-                        nextPoint = (Vector2)visitPoints.Pop() + new Vector2(UnityEngine.Random.value - 0.5f, UnityEngine.Random.value - 0.5f);
+                        nextPoint = (Vector2)route[0] + new Vector2(UnityEngine.Random.value - 0.5f, UnityEngine.Random.value - 0.5f);
+                        route.RemoveAt(0);
                     }
                     else
                     {
@@ -176,8 +175,8 @@ public class Creature : MonoBehaviour {
             {
                 Hp = maxHp;
                 state = CreatureState.Escaping;
-                visitPoints = board.SearchRoute((Vector2Int)position, escapeGoal);
-                nextPoint = visitPoints.Pop();
+                route = board.SearchRoute((Vector2Int)position, escapeGoal);
+                nextPoint = route.Pop();
 
                 MessageManager.PutMessage(creatureName + "が逃げ出しました!!", MessageManager.MessagePriority.High);
             }

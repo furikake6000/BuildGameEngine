@@ -34,7 +34,7 @@ public class Entrance : FacilityBehaviour {
                 if (Random.value < FieldTimeManager.DeltaMinute * visitorCreateNumPerHour / 60.0f)
                 {
                     Visitor newVisitor = GameObject.Instantiate(visitorPrefab, HidePosition, Quaternion.identity).GetComponent<Visitor>();
-                    newVisitor.ResetPos(myFacility.Position + new Vector2Int(1, 3));
+                    newVisitor.ResetPos(MyFacility.Position + new Vector2Int(1, 3));
                 }
             }
             else
@@ -43,7 +43,7 @@ public class Entrance : FacilityBehaviour {
                 for (var i = 0; i < (int)(FieldTimeManager.DeltaMinute * visitorCreateNumPerHour / 60.0f); i++)
                 {
                     Visitor newVisitor = GameObject.Instantiate(visitorPrefab, HidePosition, Quaternion.identity).GetComponent<Visitor>();
-                    newVisitor.ResetPos(myFacility.Position + new Vector2Int(1, 3));
+                    newVisitor.ResetPos(MyFacility.Position + new Vector2Int(1, 3));
                 }
             }
         }
