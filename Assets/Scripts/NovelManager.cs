@@ -1,16 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TutorialManager : MonoBehaviour {
+public class NovelManager : MonoBehaviour {
 
     [SerializeField]
     Text messageWindow;
     [SerializeField]
     Image faceImage;
     [SerializeField]
-    RectTransform backPanel;
+    GameObject novelParent;  //UIセットの親オブジェクト（表示・非表示に使用）
 
     [SerializeField]
     Sprite[] faces; //表情差分
@@ -18,8 +19,9 @@ public class TutorialManager : MonoBehaviour {
     private static Queue<int> faceID = new Queue<int>();
     private static Queue<string> message = new Queue<string>();
 
-    private bool enable;
+    private float timeSinceDisplayStart;    //現在の文字列表示を開始した時間
 
+    private bool enable;
     public bool Enable
     {
         get
@@ -36,7 +38,7 @@ public class TutorialManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        backPanel.localPosition = Vector3.up * 9999f;
+        novelParent.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -46,7 +48,7 @@ public class TutorialManager : MonoBehaviour {
             if(message.Count >= 1)
             {
                 //メッセージ開始
-                backPanel.localPosition = Vector3.zero;
+                novelParent.SetActive(true);
                 TextUpdate();
                 Enable = true;
             }
@@ -61,7 +63,7 @@ public class TutorialManager : MonoBehaviour {
                 if (!TextUpdate())
                 {
                     //メッセージ終了
-                    backPanel.localPosition = Vector3.up * 9999f;
+                    novelParent.SetActive(false);
                     Enable = false;
                     Tutorial1.FinishTutorial();
                 }
