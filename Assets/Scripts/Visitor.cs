@@ -71,9 +71,6 @@ public class Visitor : Character {
                 }
             }
         }
-
-        //Positionを実座標に反映
-        transform.position = board.MapPosToWorldPos(Position);
 	}
 
     void ResetGoal()

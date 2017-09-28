@@ -90,8 +90,6 @@ public class Alien : Character {
     // Update is called once per frame
     void Update()
     {
-        //Positionを実座標に反映
-        transform.Position = board.MapPosToWorldPos(Position) + Vector3.back * 0.01001f;
 
         //時間外なら逃走
         if ((FieldTimeManager.FieldTime.hour <= 5 || FieldTimeManager.FieldTime.hour >= 20) && state == AlienState.Normal)

@@ -42,8 +42,9 @@ public class Character : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        //Positionを実座標に反映
+        transform.position = board.MapPosToWorldPos(Position) + Vector3.back * 0.01001f;
+    }
 
     #region ルート探索関係基本関数
 
