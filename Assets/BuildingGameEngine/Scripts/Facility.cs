@@ -33,12 +33,19 @@ public class Facility : MonoBehaviour {
         }
     }
     [SerializeField]
-    private bool passable;  //通過可能か
-    public bool Passable
+    private bool playerPassable, enemyPassable;  //通過可能か（敵・味方で違ってくる）
+    public bool PlayerPassable
     {
         get
         {
-            return passable;
+            return playerPassable;
+        }
+    }
+    public bool EnemyPassable
+    {
+        get
+        {
+            return enemyPassable;
         }
     }
     [SerializeField]
@@ -74,7 +81,7 @@ public class Facility : MonoBehaviour {
             position = value;
         }
     }
-    
+
     // Use this for initialization
     void Start () {
 		
