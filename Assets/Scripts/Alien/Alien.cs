@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Creature : MonoBehaviour {
-
+public class Alien : Character {
     [SerializeField]
     private string creatureName;
     [SerializeField]
@@ -24,22 +24,6 @@ public class Creature : MonoBehaviour {
     }
 
     private Vector2Int housePos;
-    private Vector2 position;
-    public Vector2 Position
-    {
-        get
-        {
-            return position;
-        }
-
-        set
-        {
-            position = value;
-        }
-    }
-    
-    private List<Vector2Int> route = new List<Vector2Int>();
-    private Vector2 nextPoint;
 
     private Fence myFence;  //自分が格納されているフェンス
     public Fence MyFence
@@ -83,12 +67,12 @@ public class Creature : MonoBehaviour {
     public void ResetPos(Vector2Int location)
     {
         housePos = location;
-        position = housePos;
+        Position = housePos;
         nextPoint = location;   //袋小路に陥った時に0,0に行かないように
     }
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         //HP設定
         Hp = maxHp;
@@ -97,19 +81,20 @@ public class Creature : MonoBehaviour {
         state = CreatureState.Normal;
 
         //逃走口がどこにあるか取得
-        if(entrance == null)
+        if (entrance == null)
         {
             entrance = GameObject.FindGameObjectWithTag("Entrance").GetComponent<Facility>();
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         //Positionを実座標に反映
-        transform.position = board.MapPosToWorldPos(position) + Vector3.back * 0.01001f;
+        transform.Position = board.MapPosToWorldPos(Position) + Vector3.back * 0.01001f;
 
         //時間外なら逃走
-        if((FieldTimeManager.FieldTime.hour <= 5 || FieldTimeManager.FieldTime.hour >= 20) && state == CreatureState.Normal)
+        if ((FieldTimeManager.FieldTime.hour <= 5 || FieldTimeManager.FieldTime.hour >= 20) && state == CreatureState.Normal)
         {
             state = CreatureState.Escaping;
             //逃亡ルート策定
@@ -119,27 +104,27 @@ public class Creature : MonoBehaviour {
 
             MessageManager.PutMessage(creatureName + "が逃げ出しました!!", MessageManager.MessagePriority.High);
         }
-        
-        if(state == CreatureState.Escaping)
+
+        if (state == CreatureState.Escaping)
         {
             //移動
             float remainSpeed = speed * FieldTimeManager.DeltaSecond / 60.0f;
             while (true)
             {
-                float distToNext = Vector2.Distance(position, nextPoint);
+                float distToNext = Vector2.Distance(Position, nextPoint);
                 if (remainSpeed < distToNext)
                 {
                     //次の点に着くまでにスピード使い切る
-                    position += (nextPoint - position) / distToNext * remainSpeed;
+                    Position += (nextPoint - Position) / distToNext * remainSpeed;
                     break;
                 }
                 else
                 {
                     //次の点に着くまでにスピード使い切らない
                     remainSpeed -= distToNext;
-                    position = nextPoint;
+                    Position = nextPoint;
 
-                    if(Vector2Int.Sishagonyu(position) == escapeGoal)
+                    if (Vector2Int.Sishagonyu(Position) == escapeGoal)
                     {
                         MessageManager.PutMessage(creatureName + "が園外に脱走してしまいました...5000円の損失です。", MessageManager.MessagePriority.High);
                         board.Money -= 5000;
@@ -164,18 +149,18 @@ public class Creature : MonoBehaviour {
             {
                 //HP0になれば沈静化
                 state = CreatureState.Subsided;
-                position = housePos;
+                Position = housePos;
             }
-            
+
         }
 
-        if(state == CreatureState.Subsided)
+        if (state == CreatureState.Subsided)
         {
-            if(Random.value < 0.001f)
+            if (Random.value < 0.001f)
             {
                 Hp = maxHp;
                 state = CreatureState.Escaping;
-                route = board.SearchRoute((Vector2Int)position, escapeGoal);
+                route = board.SearchRoute((Vector2Int)Position, escapeGoal);
                 nextPoint = route.Pop();
 
                 MessageManager.PutMessage(creatureName + "が逃げ出しました!!", MessageManager.MessagePriority.High);
@@ -183,10 +168,10 @@ public class Creature : MonoBehaviour {
         }
 
         //朝になればリセット
-        if((state == CreatureState.Escaping || state == CreatureState.Subsided) && (FieldTimeManager.FieldTime.hour >= 6 && FieldTimeManager.FieldTime.hour <= 17))
+        if ((state == CreatureState.Escaping || state == CreatureState.Subsided) && (FieldTimeManager.FieldTime.hour >= 6 && FieldTimeManager.FieldTime.hour <= 17))
         {
             state = CreatureState.Normal;
-            position = housePos;
+            Position = housePos;
             Hp = maxHp;
         }
     }
