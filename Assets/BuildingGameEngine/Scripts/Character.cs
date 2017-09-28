@@ -45,7 +45,7 @@ public class Character : MonoBehaviour {
 		
 	}
 
-    #region ルート探索関係関数
+    #region ルート探索関係基本関数
 
     /// <summary>
     /// 指定座標が通行可か返す
@@ -249,6 +249,43 @@ public class Character : MonoBehaviour {
         //ここまで来た場合、ゴールが見つからなかった　空を返す
         return null;
 
+    }
+
+    #endregion
+
+    #region 経路探索関係チェックポイント制御系関数
+
+    /// <summary>
+    /// 新しく目的地を追加する
+    /// </summary>
+    /// <param name="point">目的地</param>
+    public void AddCheckpoint(Vector2Int point)
+    {
+        checkPoints.Add(point);
+
+        //routeリストに、routeの最後尾点から新しい目的地への経路配列パーツを追加
+        List<Vector2Int> newRoutePart = SearchRoute(route[route.Count - 1], point);
+        //新しい経路配列パーツを現在のrouteの末尾に追加
+        route.AddRange(newRoutePart);
+    }
+
+    /// <summary>
+    /// 全てのルートを再計算
+    /// (とりあえず困ったらこれ打っとけ(重くなるけど))
+    /// </summary>
+    private void RecalculateRoute()
+    {
+        route.Clear();
+        //現在地をrouteの終端に追加
+        route.Add((Vector2Int)position);
+        //チェックポイントに沿って次々経路探索
+        foreach(var checkPoint in checkPoints)
+        {
+            //routeリストに、routeの最後尾点から新しい目的地への経路配列パーツを追加
+            List<Vector2Int> newRoutePart = SearchRoute(route[route.Count - 1], checkPoint);
+            //新しい経路配列パーツを現在のrouteの末尾に追加
+            route.AddRange(newRoutePart);
+        }
     }
 
     #endregion
