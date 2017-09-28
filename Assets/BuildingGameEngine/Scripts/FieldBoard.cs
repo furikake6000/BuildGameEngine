@@ -85,17 +85,17 @@ public class FieldBoard : MonoBehaviour {
         }
     }
 
-    private List<Creature> creatures;   //クリーチャー
-    public List<Creature> Creatures
+    private List<Alien> aliens;   //クリーチャー
+    public List<Alien> Aliens
     {
         get
         {
-            return creatures;
+            return aliens;
         }
 
         set
         {
-            creatures = value;
+            aliens = value;
         }
     }
 
@@ -134,7 +134,7 @@ public class FieldBoard : MonoBehaviour {
     {
         //各種一覧データリセット
         facilities = new Dictionary<Vector2Int, Facility>();
-        creatures = new List<Creature>();
+        aliens = new List<Alien>();
         visitors = new List<Visitor>();
 
         //マス高さ算出

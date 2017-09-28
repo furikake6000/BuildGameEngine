@@ -1,37 +1,22 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Visitor : MonoBehaviour {
+public class Visitor : Character {
 
-    private Vector2 position;
-
-    private Vector2Int startPos;    //初期段階での位置
-
-    [SerializeField]
-    private float speed;
+    private Vector2Int startPos;    //初期段階での位置を保存する
 
     private Stack<Vector2Int> visitPoints = new Stack<Vector2Int>();
 
     private Vector2 nextPoint;
 
-    private static FieldBoard board;
-
-    private List<Creature> unVisitedCreatures = new List<Creature>();
+    private List<Alien> unVisitedCreatures = new List<Alien>();
 
     private bool isReturningHome;   //帰宅中か否か
-
-    public Vector2 Position
-    {
-        get
-        {
-            return position;
-        }
-    }
 
     public void ResetPos(Vector2Int location)
     {
         startPos = location;
-        position = startPos;
+        Position = startPos;
         nextPoint = location;
     }
 
@@ -39,7 +24,7 @@ public class Visitor : MonoBehaviour {
     void Start () {
         if(board == null)board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
 
-        unVisitedCreatures = new List<Creature>(board.Creatures);
+        unVisitedCreatures = new List<Alien>(board.Aliens);
         ////シャッフル
         //unVisitedCreatures = (List<Creature>)unVisitedCreatures.OrderBy(i => Guid.NewGuid());
         

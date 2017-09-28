@@ -42,8 +42,8 @@ public class Alien : Character {
     private static FieldBoard board;
     private static Facility entrance;
 
-    public CreatureState state;
-    public enum CreatureState
+    public AlienState state;
+    public enum AlienState
     {
         Normal,
         Escaping,
@@ -78,7 +78,7 @@ public class Alien : Character {
         Hp = maxHp;
 
         if (board == null) board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
-        state = CreatureState.Normal;
+        state = AlienState.Normal;
 
         //逃走口がどこにあるか取得
         if (entrance == null)
@@ -94,9 +94,9 @@ public class Alien : Character {
         transform.Position = board.MapPosToWorldPos(Position) + Vector3.back * 0.01001f;
 
         //時間外なら逃走
-        if ((FieldTimeManager.FieldTime.hour <= 5 || FieldTimeManager.FieldTime.hour >= 20) && state == CreatureState.Normal)
+        if ((FieldTimeManager.FieldTime.hour <= 5 || FieldTimeManager.FieldTime.hour >= 20) && state == AlienState.Normal)
         {
-            state = CreatureState.Escaping;
+            state = AlienState.Escaping;
             //逃亡ルート策定
             route = board.SearchRoute(myFence.MyFacility, entrance);
             nextPoint = route[0];
@@ -105,7 +105,7 @@ public class Alien : Character {
             MessageManager.PutMessage(creatureName + "が逃げ出しました!!", MessageManager.MessagePriority.High);
         }
 
-        if (state == CreatureState.Escaping)
+        if (state == AlienState.Escaping)
         {
             //移動
             float remainSpeed = speed * FieldTimeManager.DeltaSecond / 60.0f;
@@ -148,18 +148,18 @@ public class Alien : Character {
             if (Hp <= 0.0f)
             {
                 //HP0になれば沈静化
-                state = CreatureState.Subsided;
+                state = AlienState.Subsided;
                 Position = housePos;
             }
 
         }
 
-        if (state == CreatureState.Subsided)
+        if (state == AlienState.Subsided)
         {
             if (Random.value < 0.001f)
             {
                 Hp = maxHp;
-                state = CreatureState.Escaping;
+                state = AlienState.Escaping;
                 route = board.SearchRoute((Vector2Int)Position, escapeGoal);
                 nextPoint = route.Pop();
 
@@ -168,9 +168,9 @@ public class Alien : Character {
         }
 
         //朝になればリセット
-        if ((state == CreatureState.Escaping || state == CreatureState.Subsided) && (FieldTimeManager.FieldTime.hour >= 6 && FieldTimeManager.FieldTime.hour <= 17))
+        if ((state == AlienState.Escaping || state == AlienState.Subsided) && (FieldTimeManager.FieldTime.hour >= 6 && FieldTimeManager.FieldTime.hour <= 17))
         {
-            state = CreatureState.Normal;
+            state = AlienState.Normal;
             Position = housePos;
             Hp = maxHp;
         }

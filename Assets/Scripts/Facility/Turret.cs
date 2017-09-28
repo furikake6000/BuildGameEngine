@@ -29,9 +29,9 @@ public class Turret : FacilityBehaviour {
         //必ずFacilityBehaviourのUpdate関数を最初に実行する
         base.Update();
 
-        foreach (var enemy in board.Creatures)
+        foreach (var enemy in board.Aliens)
         {
-            if (enemy.state == Creature.CreatureState.Escaping && coolTime < 0f && Vector2.Distance(enemy.Position, MyFacility.Position) < range)
+            if (enemy.state == Alien.AlienState.Escaping && coolTime < 0f && Vector2.Distance(enemy.Position, MyFacility.Position) < range)
             {
                 //弾発射
                 Bullet newBullet = GameObject.Instantiate(bulletPrefab, HidePosition, Quaternion.identity).GetComponent<Bullet>();

@@ -56,7 +56,7 @@ public class Bullet : MonoBehaviour {
         position += Vec * speed * FieldTimeManager.DeltaSecond / 60.0f;
 
         //敵当たり判定
-		foreach(var enemy in board.Creatures)
+		foreach(var enemy in board.Aliens)
         {
             if((enemy.Position - position).magnitude < collisionRange)
             {
