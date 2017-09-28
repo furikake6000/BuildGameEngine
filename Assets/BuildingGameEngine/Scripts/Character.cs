@@ -21,16 +21,19 @@ public class Character : MonoBehaviour {
     [SerializeField]
     private float speed;
     [SerializeField]
-    private float hp;
+    protected float hp;
     [SerializeField]
-    private CharacterFaction faction;
+    protected CharacterFaction faction;
     public enum CharacterFaction
     {
         player,
         enemy
     }
 
-    private static FieldBoard board;
+    protected static FieldBoard board;
+
+    private List<Vector2Int> checkPoints;    //目的地一覧
+    private List<Vector2Int> route; //これからの経路
 
     // Use this for initialization
     void Start () {
