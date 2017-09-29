@@ -5,7 +5,7 @@ using UnityEngine;
 public class Fence : FacilityBehaviour {
 
     [SerializeField]
-    GameObject creaturePrefab;  //クリーチャーのプレハブ
+    GameObject alienPrefab;  //エイリアンのプレハブ
     [SerializeField]
     VirtualClock creationDate;  //生成日時
 
@@ -24,10 +24,10 @@ public class Fence : FacilityBehaviour {
         //必ずFacilityBehaviourのUpdate関数を最初に実行する
         base.Update();
 
-        if (FieldTimeManager.FieldTime >= creationDate && creature == null)
+        if (FieldTimeManager.FieldTime >= creationDate && alien == null)
         {
             //時間を過ぎていたらクリーチャー生成
-            alien = GameObject.Instantiate(creaturePrefab, 
+            alien = GameObject.Instantiate(alienPrefab, 
                 board.MapPosToWorldPos(MyFacility.Position) + Vector3.back * 0.01001f, 
                 Quaternion.identity).GetComponent<Alien>();
             alien.ResetPos(MyFacility.Position);

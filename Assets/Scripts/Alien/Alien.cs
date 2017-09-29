@@ -104,7 +104,7 @@ public class Alien : Character {
 
         if (state == AlienState.Escaping)
         {
-            if (!AmIMoving)
+            if (!Moving)
             {
                 //移動完了？
 
