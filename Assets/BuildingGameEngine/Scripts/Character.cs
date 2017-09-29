@@ -97,6 +97,11 @@ public class Character : MonoBehaviour {
     {
         hp = maxHp;
     }
+
+    public void Damage(float damageValue)
+    {
+        hp -= damageValue;
+    }
     #endregion
 
     #region ルート探索関係基本関数

@@ -60,7 +60,7 @@ public class Bullet : MonoBehaviour {
         {
             if((enemy.Position - position).magnitude < collisionRange)
             {
-                enemy.Hp -= damage;
+                enemy.Damage(damage);
                 Destroy(gameObject);
             }
         }
