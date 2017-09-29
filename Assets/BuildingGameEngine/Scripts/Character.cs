@@ -17,7 +17,7 @@ public class Character : MonoBehaviour {
             position = value;
         }
     }
-    
+
     [SerializeField]
     private float speed;
     [SerializeField]
@@ -35,6 +35,15 @@ public class Character : MonoBehaviour {
     private List<Vector2Int> checkPoints;    //目的地一覧
     private List<Vector2Int> route; //これからの経路
     private Vector2 nextPoint;  //実際に移動する移動先
+
+    private bool amIMoving; //今現在移動しているか
+    public bool AmIMoving
+    {
+        get
+        {
+            return amIMoving;
+        }
+    }
 
     // Use this for initialization
     void Start () {
@@ -76,7 +85,7 @@ public class Character : MonoBehaviour {
                 {
                     //要素が1個の場合（現在地のみ：今後のルート設定なし）
                     //現在地点で停止
-                    
+                    amIMoving = false;
                 }
             }
         }
@@ -304,6 +313,9 @@ public class Character : MonoBehaviour {
         List<Vector2Int> newRoutePart = SearchRoute(route[route.Count - 1], point);
         //新しい経路配列パーツを現在のrouteの末尾に追加
         route.AddRange(newRoutePart);
+        
+        //移動中パラメータをONに
+        amIMoving = true;
     }
 
     /// <summary>
@@ -331,6 +343,15 @@ public class Character : MonoBehaviour {
         //（その場に立ち止まる）
         checkPoints.Clear();
         RecalculateRoute();
+    }
+
+    /// <summary>
+    /// 現在止まっているか(チェックポイントが設定されていないか)
+    /// </summary>
+    /// <returns>結果</returns>
+    public bool IsStopping()
+    {
+        return (route.Count == 1);
     }
 
     #endregion
