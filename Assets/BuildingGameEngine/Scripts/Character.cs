@@ -15,8 +15,6 @@ public class Character : MonoBehaviour {
         set
         {
             position = value;
-            //Positionを実座標に反映
-            transform.position = board.MapPosToWorldPos(position) + Vector3.back * 0.01001f;
         }
     }
 
@@ -35,8 +33,8 @@ public class Character : MonoBehaviour {
 
     protected static FieldBoard board;
 
-    private List<Vector2Int> checkPoints;    //目的地一覧
-    private List<Vector2Int> route; //これからの経路
+    private List<Vector2Int> checkPoints = new List<Vector2Int>();    //目的地一覧
+    private List<Vector2Int> route = new List<Vector2Int>(); //これからの経路
     private Vector2 nextPoint;  //実際に移動する移動先
 
     private bool moving; //今現在移動しているか
@@ -49,12 +47,16 @@ public class Character : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    protected virtual void Start () {
         ResetHp();
+        RecalculateRoute();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    protected virtual void Update ()
+    {
+        //Positionを実座標に反映
+        transform.position = board.MapPosToWorldPos(position) + Vector3.back * 0.01001f;
 
         //移動
         //routeの前から順に点を次々に取っていき、
@@ -325,7 +327,7 @@ public class Character : MonoBehaviour {
         //routeリストに、routeの最後尾点から新しい目的地への経路配列パーツを追加
         List<Vector2Int> newRoutePart = SearchRoute(route[route.Count - 1], point);
         //新しい経路配列パーツを現在のrouteの末尾に追加
-        route.AddRange(newRoutePart);
+        if (newRoutePart != null)route.AddRange(newRoutePart);
         //移動中パラメータ
         moving = true;
     }

@@ -54,8 +54,10 @@ public class Alien : Character {
     }
 
     // Use this for initialization
-    void Start()
+    protected override void Start()
     {
+        //必ずCharacterのStart関数を最初に実行する
+        base.Start();
 
         if (board == null) board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
         state = AlienState.Normal;
@@ -68,8 +70,10 @@ public class Alien : Character {
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        //必ずCharacterのUpdate関数を最初に実行する
+        base.Update();
 
         //時間外なら逃走
         if ((FieldTimeManager.FieldTime.hour <= 5 || FieldTimeManager.FieldTime.hour >= 20) && state == AlienState.Normal)

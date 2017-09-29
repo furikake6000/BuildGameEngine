@@ -19,8 +19,11 @@ public class Visitor : Character {
     }
 
     // Use this for initialization
-    void Start () {
-        if(board == null)board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
+    protected override void Start () {
+        //必ずCharacterのStart関数を最初に実行する
+        base.Start();
+
+        if (board == null)board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
 
         //ルート策定（全ての動物をランダムな順で回る）
         unVisitedAliens = new List<Alien>(board.Aliens);
@@ -32,7 +35,10 @@ public class Visitor : Character {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
+        //必ずCharacterのUpdate関数を最初に実行する
+        base.Update();
+
         if (HasReachedGoal())
         {
             //最終ゴール（入り口）に戻ったなら自己を破棄
