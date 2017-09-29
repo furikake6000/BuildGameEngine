@@ -34,6 +34,7 @@ public class Character : MonoBehaviour {
 
     private List<Vector2Int> checkPoints;    //目的地一覧
     private List<Vector2Int> route; //これからの経路
+    private Vector2 nextPoint;  //実際に移動する移動先
 
     // Use this for initialization
     void Start () {
@@ -44,6 +45,41 @@ public class Character : MonoBehaviour {
 	void Update () {
         //Positionを実座標に反映
         transform.position = board.MapPosToWorldPos(Position) + Vector3.back * 0.01001f;
+
+        //移動
+        //routeの前から順に点を次々に取っていき、
+        float remainSpeed = speed * FieldTimeManager.DeltaSecond / 60.0f;
+        while (true)
+        {
+            //nextPoint向きに進行
+            float distToNext = Vector2.Distance(Position, nextPoint);
+            if (remainSpeed < distToNext)
+            {
+                //次の点に着くまでにスピード使い切る
+                Position += (nextPoint - Position) / distToNext * remainSpeed;
+                break;
+            }
+            else
+            {
+                //次の点に着くまでにスピード使い切らない
+                remainSpeed -= distToNext;
+                Position = nextPoint;
+
+                if (route.Count > 1)
+                {
+                    //過去のrouteの点を削除
+                    route.RemoveAt(0);
+                    //次の点を決定(route[0]を読取り、0.5f四方の誤差を追加)
+                    nextPoint = (Vector2)route[0] + new Vector2(UnityEngine.Random.value - 0.5f, UnityEngine.Random.value - 0.5f);
+                }
+                else
+                {
+                    //要素が1個の場合（現在地のみ：今後のルート設定なし）
+                    //現在地点で停止
+                    
+                }
+            }
+        }
     }
 
     #region ルート探索関係基本関数
