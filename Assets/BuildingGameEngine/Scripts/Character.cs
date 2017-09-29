@@ -15,6 +15,8 @@ public class Character : MonoBehaviour {
         set
         {
             position = value;
+            //Positionを実座標に反映
+            transform.position = board.MapPosToWorldPos(position) + Vector3.back * 0.01001f;
         }
     }
 
@@ -36,12 +38,12 @@ public class Character : MonoBehaviour {
     private List<Vector2Int> route; //これからの経路
     private Vector2 nextPoint;  //実際に移動する移動先
 
-    private bool amIMoving; //今現在移動しているか
-    public bool AmIMoving
+    private bool moving; //今現在移動しているか
+    public bool Moving
     {
         get
         {
-            return amIMoving;
+            return moving;
         }
     }
 
@@ -52,8 +54,6 @@ public class Character : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //Positionを実座標に反映
-        transform.position = board.MapPosToWorldPos(Position) + Vector3.back * 0.01001f;
 
         //移動
         //routeの前から順に点を次々に取っていき、
@@ -85,7 +85,7 @@ public class Character : MonoBehaviour {
                 {
                     //要素が1個の場合（現在地のみ：今後のルート設定なし）
                     //現在地点で停止
-                    amIMoving = false;
+                    moving = false;
                 }
             }
         }
@@ -313,9 +313,8 @@ public class Character : MonoBehaviour {
         List<Vector2Int> newRoutePart = SearchRoute(route[route.Count - 1], point);
         //新しい経路配列パーツを現在のrouteの末尾に追加
         route.AddRange(newRoutePart);
-        
-        //移動中パラメータをONに
-        amIMoving = true;
+        //移動中パラメータ
+        moving = true;
     }
 
     /// <summary>
@@ -326,7 +325,7 @@ public class Character : MonoBehaviour {
     {
         route.Clear();
         //現在地をrouteの終端に追加
-        route.Add(position);
+        route.Add(Vector2Int.Sishagonyu(Position));
         //チェックポイントに沿って次々経路探索
         foreach(var checkPoint in checkPoints)
         {
@@ -349,9 +348,9 @@ public class Character : MonoBehaviour {
     /// 現在止まっているか(チェックポイントが設定されていないか)
     /// </summary>
     /// <returns>結果</returns>
-    public bool IsStopping()
+    public bool HasReachedGoal()
     {
-        return (route.Count == 1);
+        return !moving && (Vector2Int.Sishagonyu(position) == checkPoints[checkPoints.Count - 1]);
     }
 
     #endregion
