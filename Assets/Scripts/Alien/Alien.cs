@@ -66,9 +66,10 @@ public class Alien : Character {
 
     public void ResetPos(Vector2Int location)
     {
+        //引数locationをhouse(自分の巣)として設定、そこにワープ
         housePos = location;
         Position = housePos;
-        nextPoint = location;   //袋小路に陥った時に0,0に行かないように
+        ClearCheckPoints();
     }
 
     // Use this for initialization
@@ -96,52 +97,17 @@ public class Alien : Character {
         {
             state = AlienState.Escaping;
             //逃亡ルート策定
-            route = board.SearchRoute(myFence.MyFacility, entrance);
-            nextPoint = route[0];
-            route.RemoveAt(0);
+            AddCheckpoint(entrance);
 
             MessageManager.PutMessage(creatureName + "が逃げ出しました!!", MessageManager.MessagePriority.High);
         }
 
         if (state == AlienState.Escaping)
         {
-            //移動
-            float remainSpeed = speed * FieldTimeManager.DeltaSecond / 60.0f;
-            while (true)
+            if (!AmIMoving)
             {
-                float distToNext = Vector2.Distance(Position, nextPoint);
-                if (remainSpeed < distToNext)
-                {
-                    //次の点に着くまでにスピード使い切る
-                    Position += (nextPoint - Position) / distToNext * remainSpeed;
-                    break;
-                }
-                else
-                {
-                    //次の点に着くまでにスピード使い切らない
-                    remainSpeed -= distToNext;
-                    Position = nextPoint;
+                //移動完了？
 
-                    if (Vector2Int.Sishagonyu(Position) == escapeGoal)
-                    {
-                        MessageManager.PutMessage(creatureName + "が園外に脱走してしまいました...5000円の損失です。", MessageManager.MessagePriority.High);
-                        board.Money -= 5000;
-                        Destroy(this.gameObject);
-                    }
-
-                    if (route.Count != 0)
-                    {
-                        //次の点を決定(VisitPointsから取り、0.5f四方の誤差を追加)
-                        nextPoint = (Vector2)route[0] + new Vector2(UnityEngine.Random.value - 0.5f, UnityEngine.Random.value - 0.5f);
-                        route.RemoveAt(0);
-                    }
-                    else
-                    {
-                        //逃走確定
-                        //ゲームオーバー
-                        break;
-                    }
-                }
             }
             if (Hp <= 0.0f)
             {
@@ -158,8 +124,8 @@ public class Alien : Character {
             {
                 Hp = maxHp;
                 state = AlienState.Escaping;
-                route = board.SearchRoute((Vector2Int)Position, escapeGoal);
-                nextPoint = route.Pop();
+                //逃亡ルート策定
+                AddCheckpoint(entrance);
 
                 MessageManager.PutMessage(creatureName + "が逃げ出しました!!", MessageManager.MessagePriority.High);
             }
