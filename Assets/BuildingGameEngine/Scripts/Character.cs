@@ -310,11 +310,11 @@ public class Character : MonoBehaviour {
     /// 全てのルートを再計算
     /// (とりあえず困ったらこれ打っとけ(重くなるけど))
     /// </summary>
-    private void RecalculateRoute()
+    public void RecalculateRoute()
     {
         route.Clear();
         //現在地をrouteの終端に追加
-        route.Add((Vector2Int)position);
+        route.Add(position);
         //チェックポイントに沿って次々経路探索
         foreach(var checkPoint in checkPoints)
         {
@@ -323,6 +323,14 @@ public class Character : MonoBehaviour {
             //新しい経路配列パーツを現在のrouteの末尾に追加
             route.AddRange(newRoutePart);
         }
+    }
+
+    public void ClearCheckPoints()
+    {
+        //すべてのポイントを削除
+        //（その場に立ち止まる）
+        checkPoints.Clear();
+        RecalculateRoute();
     }
 
     #endregion
