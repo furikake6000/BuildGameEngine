@@ -5,10 +5,6 @@ using UnityEngine;
 public class Alien : Character {
     [SerializeField]
     private string creatureName;
-    [SerializeField]
-    private float speed;
-    [SerializeField]
-    private float maxHp;
 
     public string CreatureName
     {
@@ -38,8 +34,7 @@ public class Alien : Character {
             myFence = value;
         }
     }
-
-    private static FieldBoard board;
+    
     private static Facility entrance;
 
     public AlienState state;
@@ -48,20 +43,6 @@ public class Alien : Character {
         Normal,
         Escaping,
         Subsided
-    }
-
-    private float hp;
-    public float Hp
-    {
-        get
-        {
-            return hp;
-        }
-
-        set
-        {
-            hp = value;
-        }
     }
 
     public void ResetPos(Vector2Int location)
@@ -75,8 +56,6 @@ public class Alien : Character {
     // Use this for initialization
     void Start()
     {
-        //HP設定
-        Hp = maxHp;
 
         if (board == null) board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
         state = AlienState.Normal;
@@ -109,7 +88,7 @@ public class Alien : Character {
                 //移動完了？
 
             }
-            if (Hp <= 0.0f)
+            if (hp <= 0.0f)
             {
                 //HP0になれば沈静化
                 state = AlienState.Subsided;
@@ -122,7 +101,7 @@ public class Alien : Character {
         {
             if (Random.value < 0.001f)
             {
-                Hp = maxHp;
+                ResetHp();
                 state = AlienState.Escaping;
                 //逃亡ルート策定
                 AddCheckpoint(entrance);
@@ -136,7 +115,7 @@ public class Alien : Character {
         {
             state = AlienState.Normal;
             Position = housePos;
-            Hp = maxHp;
+            ResetHp();
         }
     }
 }

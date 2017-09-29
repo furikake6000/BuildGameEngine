@@ -11,8 +11,6 @@ public class Visitor : Character {
 
     private List<Alien> unVisitedAliens = new List<Alien>();
 
-    private bool isReturningHome;   //帰宅中か否か
-
     public void ResetPos(Vector2Int location)
     {
         startPos = location;

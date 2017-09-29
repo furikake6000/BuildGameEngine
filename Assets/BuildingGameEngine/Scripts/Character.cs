@@ -23,6 +23,7 @@ public class Character : MonoBehaviour {
     [SerializeField]
     private float speed;
     [SerializeField]
+    protected float maxHp;
     protected float hp;
     [SerializeField]
     protected CharacterFaction faction;
@@ -49,7 +50,7 @@ public class Character : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
+        ResetHp();
 	}
 	
 	// Update is called once per frame
@@ -90,6 +91,13 @@ public class Character : MonoBehaviour {
             }
         }
     }
+
+    #region 操作関数
+    public void ResetHp()
+    {
+        hp = maxHp;
+    }
+    #endregion
 
     #region ルート探索関係基本関数
 
