@@ -58,8 +58,6 @@ public class Alien : Character {
     {
         //必ずCharacterのStart関数を最初に実行する
         base.Start();
-
-        if (board == null) board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
         state = AlienState.Normal;
 
         //逃走口がどこにあるか取得

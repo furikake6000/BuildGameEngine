@@ -48,6 +48,10 @@ public class Character : MonoBehaviour {
 
     // Use this for initialization
     protected virtual void Start () {
+
+        if (board == null) board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
+
+
         ResetHp();
         RecalculateRoute();
 	}
