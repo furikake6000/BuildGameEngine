@@ -9,10 +9,13 @@ public class Visitor : Character {
 
     private List<Alien> unVisitedAliens = new List<Alien>();
 
-    public void ResetPos(Vector2Int location)
-    {
-        startPos = location;
-        Position = startPos;
+    // Use this for initialization
+    protected override void Start () {
+        //必ずCharacterのStart関数を最初に実行する
+        base.Start();
+        
+        //始点記憶
+        startPos = Vector2Int.Sishagonyu(Position);
 
         //ルート策定（全ての動物をランダムな順で回る）
         unVisitedAliens = new List<Alien>(board.Aliens);
@@ -22,12 +25,6 @@ public class Visitor : Character {
         //初期位置に戻る
         AddCheckpoint(startPos);
     }
-
-    // Use this for initialization
-    protected override void Start () {
-        //必ずCharacterのStart関数を最初に実行する
-        base.Start();
-   }
 	
 	// Update is called once per frame
 	protected override void Update () {

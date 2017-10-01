@@ -64,38 +64,42 @@ public class Character : MonoBehaviour {
 
         //移動
         //routeの前から順に点を次々に取っていき、
-        float remainSpeed = speed * FieldTimeManager.DeltaSecond / 60.0f;
-        while (true)
+        if (moving)
         {
-            //nextPoint向きに進行
-            float distToNext = Vector2.Distance(Position, nextPoint);
-            if (remainSpeed < distToNext)
+            float remainSpeed = speed * FieldTimeManager.DeltaSecond / 60.0f;
+            while (true)
             {
-                //次の点に着くまでにスピード使い切る
-                Position += (nextPoint - Position) / distToNext * remainSpeed;
-                break;
-            }
-            else
-            {
-                //次の点に着くまでにスピード使い切らない
-                remainSpeed -= distToNext;
-                Position = nextPoint;
-
-                if (route.Count > 1)
+                //nextPoint向きに進行
+                float distToNext = Vector2.Distance(Position, nextPoint);
+                if (remainSpeed < distToNext)
                 {
-                    //過去のrouteの点を削除
-                    route.RemoveAt(0);
-                    //次の点を決定(route[0]を読取り、0.5f四方の誤差を追加)
-                    nextPoint = (Vector2)route[0] + new Vector2(UnityEngine.Random.value - 0.5f, UnityEngine.Random.value - 0.5f);
+                    //次の点に着くまでにスピード使い切る
+                    Position += (nextPoint - Position) / distToNext * remainSpeed;
+                    break;
                 }
                 else
                 {
-                    //要素が1個の場合（現在地のみ：今後のルート設定なし）
-                    //現在地点で停止
-                    moving = false;
+                    //次の点に着くまでにスピード使い切らない
+                    remainSpeed -= distToNext;
+                    Position = nextPoint;
+
+                    if (route.Count > 1)
+                    {
+                        //過去のrouteの点を削除
+                        route.RemoveAt(0);
+                        //次の点を決定(route[0]を読取り、0.5f四方の誤差を追加)
+                        nextPoint = (Vector2)route[0] + new Vector2(UnityEngine.Random.value - 0.5f, UnityEngine.Random.value - 0.5f);
+                    }
+                    else
+                    {
+                        //要素が1個の場合（現在地のみ：今後のルート設定なし）
+                        //現在地点で停止
+                        moving = false;
+                    }
                 }
             }
         }
+        
     }
 
     #region 操作関数
@@ -187,7 +191,7 @@ public class Character : MonoBehaviour {
             foreach (var nextPoint in nextPoints)
             {
                 //通過可能（経路）もしくはその点がゴールの一部（終点）ならば
-                if (CanIGoThrough(nextPoint) || currentPoint == goal)
+                if (CanIGoThrough(nextPoint) || nextPoint == goal)
                 {
                     if (!searchData.ContainsKey(nextPoint))
                     {
