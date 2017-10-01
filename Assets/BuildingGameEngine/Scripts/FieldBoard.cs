@@ -85,17 +85,17 @@ public class FieldBoard : MonoBehaviour {
         }
     }
 
-    private List<Creature> creatures;   //クリーチャー
-    public List<Creature> Creatures
+    private List<Alien> aliens;   //クリーチャー
+    public List<Alien> Aliens
     {
         get
         {
-            return creatures;
+            return aliens;
         }
 
         set
         {
-            creatures = value;
+            aliens = value;
         }
     }
 
@@ -134,7 +134,7 @@ public class FieldBoard : MonoBehaviour {
     {
         //各種一覧データリセット
         facilities = new Dictionary<Vector2Int, Facility>();
-        creatures = new List<Creature>();
+        aliens = new List<Alien>();
         visitors = new List<Visitor>();
 
         //マス高さ算出
@@ -373,118 +373,6 @@ public class FieldBoard : MonoBehaviour {
 
         return newFacilityPos;
     }
-    
-    /// <summary>
-    /// 指定座標が通行可か返す
-    /// </summary>
-    /// <param name="location">座標</param>
-    /// <returns>通過可能か否か</returns>
-    public bool CanIGoThrough(Vector2Int location)
-    {
-        //範囲外チェック
-        if (
-            location.x > MapWidth ||
-            location.y > MapHeight ||
-            location.x < 0 ||
-            location.y < 0)
-        {
-            return false;
-        }
-
-        if (facilities.ContainsKey(location))
-        {
-            if (facilities[location].Passable)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    /// <summary>
-    /// ルート検索　Goalが通れない設定だった場合その隣接マスまでの経路を返す
-    /// </summary>
-    /// <param name="start">スタート地点</param>
-    /// <param name="goal">ゴール地点</param>
-    /// <returns></returns>
-    public Stack<Vector2Int> SearchRoute(Vector2Int start, Vector2Int goal)
-    {
-        //探索開始
-        //ルートコネクタ...そのマスまでの最短距離とそのマスに到達する一つ前のマスのデータのセット
-        Dictionary<Vector2Int, RouteConnector> searchData = new Dictionary<Vector2Int, RouteConnector>();
-        searchData.Add(start, new RouteConnector(0, start));
-        //未探索点データ
-        Queue<Vector2Int> searchPoints = new Queue<Vector2Int>();
-        searchPoints.Enqueue(start);
-
-        while(searchPoints.Count != 0)
-        {
-            Vector2Int currentPoint = searchPoints.Dequeue();
-
-            //目的地だった場合はループ抜ける
-            if(currentPoint == goal)
-            {
-                break;
-            }
-
-            //四方向に探索を行う
-            Vector2Int[] nextPoints = new Vector2Int[] { currentPoint + new Vector2Int(-1, 0)
-                                                        ,currentPoint + new Vector2Int(1, 0)
-                                                        ,currentPoint + new Vector2Int(0, -1)
-                                                        ,currentPoint + new Vector2Int(0, 1)};
-
-            foreach(var nextPoint in nextPoints)
-            {
-                if (CanIGoThrough(nextPoint) || nextPoint == goal)
-                {
-                    if (!searchData.ContainsKey(nextPoint))
-                    {
-                        //既に到達している痕跡が無かった場合
-                        //最短データ新規作成
-                        searchData.Add(nextPoint, new RouteConnector((searchData[currentPoint].minDist + 1), currentPoint));
-
-                        //次探索キューに追加
-                        searchPoints.Enqueue(nextPoint);
-                    }
-                    else if (searchData[nextPoint].minDist > searchData[currentPoint].minDist + 1)
-                    {
-                        //既に到達している上でより良い結果に更新できる場合
-                        //最短データ更新
-                        searchData[nextPoint].minDist = searchData[currentPoint].minDist + 1;
-                        searchData[nextPoint].pastPoint = currentPoint;
-
-                        //次探索キューに追加
-                        searchPoints.Enqueue(nextPoint);
-                    }
-                }
-            }
-            
-        }
-        
-        //探索終了　パスデータ取得
-        //探索されたルートを逆に戻る
-        if (!searchData.ContainsKey(goal))
-        {
-            //探索失敗
-            return new Stack<Vector2Int>(); //空のStackを返す
-        }
-        Stack<Vector2Int> route = new Stack<Vector2Int>();
-        for(Vector2Int p = goal; p != start; p = searchData[p].pastPoint)
-        {
-            //元に戻る点を次々に入れていく(ただし、終点であるgoalが進入不可の場合それは入れない)
-            if(CanIGoThrough(p))route.Push(p);
-        }
-        return route;
-        
-    }
-
     #endregion
 }
 

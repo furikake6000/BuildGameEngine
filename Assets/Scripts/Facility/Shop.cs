@@ -16,8 +16,8 @@ public class Shop : FacilityBehaviour {
         {
             //観客に対し判断
             //自分の前2マスに来ているか否か
-            if(Vector2Int.Sishagonyu(visitor.Position) == myFacility.Position + new Vector2Int(0, 1)
-                || Vector2Int.Sishagonyu(visitor.Position) == myFacility.Position + new Vector2Int(1, 1))
+            if(Vector2Int.Sishagonyu(visitor.Position) == MyFacility.Position + new Vector2Int(0, 1)
+                || Vector2Int.Sishagonyu(visitor.Position) == MyFacility.Position + new Vector2Int(1, 1))
             {
                 //確率で利益を取得
                 if(Random.value < buyRate * FieldTimeManager.DeltaMinute)

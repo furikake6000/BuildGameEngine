@@ -6,6 +6,13 @@ public abstract class FacilityBehaviour : MonoBehaviour {
 
     protected static FieldBoard board;
     protected Facility myFacility;
+    public Facility MyFacility
+    {
+        get
+        {
+            return myFacility;
+        }
+    }
 
     // Use this for initialization
     protected virtual void Start () {
