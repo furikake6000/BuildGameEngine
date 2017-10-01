@@ -78,7 +78,7 @@ public class Alien : Character {
         {
             state = AlienState.Escaping;
             //逃亡ルート策定
-            AddCheckpoint(entrance);
+            AddCheckpointAndCalcRoute(entrance);
 
             MessageManager.PutMessage(creatureName + "が逃げ出しました!!", MessageManager.MessagePriority.High);
         }
@@ -106,7 +106,7 @@ public class Alien : Character {
                 ResetHp();
                 state = AlienState.Escaping;
                 //逃亡ルート策定
-                AddCheckpoint(entrance);
+                AddCheckpointAndCalcRoute(entrance);
 
                 MessageManager.PutMessage(creatureName + "が逃げ出しました!!", MessageManager.MessagePriority.High);
             }

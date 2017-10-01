@@ -50,10 +50,9 @@ public class Character : MonoBehaviour {
     protected virtual void Start () {
 
         if (board == null) board = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoard>();
-
-
+        
         ResetHp();
-        RecalculateRoute();
+        RecalcRoute();
 	}
 
     // Update is called once per frame
@@ -85,21 +84,30 @@ public class Character : MonoBehaviour {
 
                     if (route.Count > 1)
                     {
-                        //過去のrouteの点を削除
-                        route.RemoveAt(0);
-                        //次の点を決定(route[0]を読取り、0.5f四方の誤差を追加)
-                        nextPoint = (Vector2)route[0] + new Vector2(UnityEngine.Random.value - 0.5f, UnityEngine.Random.value - 0.5f);
+                        PopRoutePoint();
                     }
                     else
                     {
                         //要素が1個の場合（現在地のみ：今後のルート設定なし）
                         //現在地点で停止
                         moving = false;
+                        break;
                     }
                 }
             }
         }
         
+    }
+
+    /// <summary>
+    /// Routeに指定された次の点を取得し、現在の点を削除する
+    /// </summary>
+    private void PopRoutePoint()
+    {
+        //過去のrouteの点を削除
+        route.RemoveAt(0);
+        //次の点を決定(route[0]を読取り、0.5f四方の誤差を追加)
+        nextPoint = (Vector2)route[0] + new Vector2(UnityEngine.Random.value - 0.5f, UnityEngine.Random.value - 0.5f);
     }
 
     #region 操作関数
@@ -274,7 +282,7 @@ public class Character : MonoBehaviour {
             foreach (var nextPoint in nextPoints)
             {
                 //通過可能（経路）もしくはその点がゴールの一部（終点）ならば
-                if (CanIGoThrough(nextPoint) || goals.Contains(currentPoint))
+                if (CanIGoThrough(nextPoint) || goals.Contains(nextPoint))
                 {
                     if (!searchData.ContainsKey(nextPoint))
                     {
@@ -332,6 +340,18 @@ public class Character : MonoBehaviour {
     {
         checkPoints.Add(point);
 
+        //移動中パラメータ
+        moving = true;
+    }
+
+    /// <summary>
+    /// 新しく目的地を追加する
+    /// </summary>
+    /// <param name="point">目的地</param>
+    public void AddCheckpointAndCalcRoute(Vector2Int point)
+    {
+        checkPoints.Add(point);
+
         //routeリストに、routeの最後尾点から新しい目的地への経路配列パーツを追加
         List<Vector2Int> newRoutePart = SearchRoute(route[route.Count - 1], point);
         //新しい経路配列パーツを現在のrouteの末尾に追加
@@ -344,7 +364,7 @@ public class Character : MonoBehaviour {
     /// 全てのルートを再計算
     /// (とりあえず困ったらこれ打っとけ(重くなるけど))
     /// </summary>
-    public void RecalculateRoute()
+    public void RecalcRoute()
     {
         route.Clear();
         //現在地をrouteの終端に追加
@@ -357,6 +377,9 @@ public class Character : MonoBehaviour {
             //新しい経路配列パーツを現在のrouteの末尾に追加
             route.AddRange(newRoutePart);
         }
+
+        //routeの0番目の点を現在向かう点に設定
+        nextPoint = (Vector2)route[0] + new Vector2(UnityEngine.Random.value - 0.5f, UnityEngine.Random.value - 0.5f);
     }
 
     public void ClearCheckPoints()
@@ -364,7 +387,7 @@ public class Character : MonoBehaviour {
         //すべてのポイントを削除
         //（その場に立ち止まる）
         checkPoints.Clear();
-        RecalculateRoute();
+        RecalcRoute();
     }
 
     /// <summary>

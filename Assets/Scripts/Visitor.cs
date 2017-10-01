@@ -24,6 +24,9 @@ public class Visitor : Character {
 
         //初期位置に戻る
         AddCheckpoint(startPos);
+
+        //ルート再計算
+        RecalcRoute();
     }
 	
 	// Update is called once per frame
