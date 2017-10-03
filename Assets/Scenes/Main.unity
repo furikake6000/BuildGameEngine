@@ -792,6 +792,11 @@ MonoBehaviour:
     location:
       x: 8
       y: 8
+  - facilityPrefab: {fileID: 1445717235180794, guid: 9850c6e2a7a578f41acba04f6a72140c,
+      type: 2}
+    location:
+      x: 0
+      y: 9
 --- !u!114 &1156557622 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114741082872754746, guid: ddee5db59499c7a43a5c600986d702ff,
@@ -1511,8 +1516,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camSizeMin: 1
   camSizeMax: 7
-  zoomRate: 0.01
-  moveRate: 0.005
+  zoomRate: 0.5
+  moveRate: 0.35
 --- !u!1 &1869376817
 GameObject:
   m_ObjectHideFlags: 0
@@ -2525,12 +2530,12 @@ Prefab:
     - target: {fileID: 114043828405313740, guid: ddee5db59499c7a43a5c600986d702ff,
         type: 2}
       propertyPath: mapWidth
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114043828405313740, guid: ddee5db59499c7a43a5c600986d702ff,
         type: 2}
       propertyPath: mapHeight
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114043828405313740, guid: ddee5db59499c7a43a5c600986d702ff,
         type: 2}
