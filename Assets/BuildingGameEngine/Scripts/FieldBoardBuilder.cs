@@ -70,10 +70,22 @@ public class FieldBoardBuilder : MonoBehaviour
         //なんらかのFacilityを選択していれば
         if (SelectedFacility != null)
         {
-            //現在のイベントデータを取得
-            PointerEventData eventData = new PointerEventData(EventSystem.current);
 
-            Vector2 nowPointingPosition = board.WorldPosToMapPos(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            //触れている座標を取得（タッチされているか否かで場合分け）
+            Vector3 pointerPosition;
+            if (Input.touchCount > 0)
+            {
+                //タッチパネル使用
+                pointerPosition = Input.GetTouch(Input.touchCount - 1).position;
+            }
+            else
+            {
+                //マウス使用
+                pointerPosition = Input.mousePosition;
+            }
+
+            //現在指している場所を取得
+            Vector2 nowPointingPosition = board.WorldPosToMapPos(Camera.main.ScreenToWorldPoint(pointerPosition));
             Vector2Int nowPointingLocation = Vector2Int.Sishagonyu(nowPointingPosition);
 
             if (Input.mousePosition.y >= Screen.width / 2 && board.CanIPutFacility(SelectedFacility, nowPointingLocation))
@@ -88,6 +100,9 @@ public class FieldBoardBuilder : MonoBehaviour
                 previewFacilityObject.transform.position = board.CalcFacilityWorldPos(SelectedFacility, nowPointingPosition);
                 previewFacilityRenderer.color = previewFacilityDisableColor;
             }
+
+            Debug.Log("Touch Count: " + Input.touchCount + "\n" + 
+                    "Touch Position:" + Input.GetTouch(Input.touchCount - 1).position.ToString());
         }
     }
 
