@@ -7,9 +7,9 @@ public class CameraControl : MonoBehaviour {
     [SerializeField]
     private float camSizeMin = 2f, camSizeMax = 5f; //拡大・縮小の極限値
     [SerializeField]
-    private float zoomRate = 0.01f;    //拡大率
+    private float zoomRate = 1f;    //拡大率(1cmあたり)
     [SerializeField]
-    private float moveRate = 0.05f;    //移動速度
+    private float moveRate = 1f;    //移動速度(1cmあたり)
 
     private Touch[] pastTouch = new Touch[2];  //1フレーム前のタッチ情報
 
@@ -17,6 +17,9 @@ public class CameraControl : MonoBehaviour {
     private FieldBoard board;
     private FieldBoardBuilder builder;
     private float topLimit, bottomLimit, leftLimit, rightLimit;
+
+    //1cmあたりのピクセル数を取得
+    private float pixelPerCm;
 
 	// Use this for initialization
 	void Start ()
@@ -30,6 +33,8 @@ public class CameraControl : MonoBehaviour {
         leftLimit = board.MapPosToWorldPos(new Vector2(board.MapWidth, 0)).x;
         rightLimit = board.MapPosToWorldPos(new Vector2(0, board.MapHeight)).x;
 
+        //dpiを取得
+        pixelPerCm = Screen.dpi / 2.54f;
     }
 	
 	// Update is called once per frame
@@ -45,9 +50,9 @@ public class CameraControl : MonoBehaviour {
 
                 if (touchPoint.phase != TouchPhase.Ended)
                 {
-                    //カメラの座標ベクトルを作成
+                    //カメラの座標差分ベクトルを作成
                     Vector3 deltaVec = new Vector3(touchPoint.deltaPosition.x, touchPoint.deltaPosition.y, 0f);
-                    deltaVec = -deltaVec * moveRate * Camera.main.orthographicSize;
+                    deltaVec = -deltaVec * moveRate / pixelPerCm;
 
                     //カメラ移動
                     Vector3 newCamPos = Camera.main.transform.position + deltaVec;
@@ -76,7 +81,7 @@ public class CameraControl : MonoBehaviour {
                     float deltaDist = Vector2.Distance(pastTouch[0].position, pastTouch[1].position)
                                         - Vector2.Distance(t1.position, t2.position);
                     //拡大
-                    Camera.main.orthographicSize += deltaDist * zoomRate;
+                    Camera.main.orthographicSize += deltaDist * zoomRate / pixelPerCm;
                     //最大最小値と照らし合わせる
                     if (Camera.main.orthographicSize > camSizeMax) Camera.main.orthographicSize = camSizeMax;
                     if (Camera.main.orthographicSize < camSizeMin) Camera.main.orthographicSize = camSizeMin;
