@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using FrikLib;
+using UnityEngine.EventSystems;
+using System;
 
-public class FieldBoardBuilder : MonoBehaviour {
+public class FieldBoardBuilder : MonoBehaviour
+{
 
     //オブジェクトを視認外に移動させたい時の座標（定数）
     private static readonly Vector3 HidePosition = new Vector3(-999f, -999f, -999f);
@@ -9,7 +12,7 @@ public class FieldBoardBuilder : MonoBehaviour {
     private static readonly Color previewFacilityColor = new Color(1f, 1f, 1f, 0.5f); //プレビュオブジェクトの色
     private static readonly Color previewFacilityDisableColor = new Color(1f, 0.5f, 0.5f, 0.5f); //設置不可時色
 
-    private FieldBoard myBoard; //自分のFieldBoardコンポーネント
+    private FieldBoard board; //自分のFieldBoardコンポーネント
     private Facility selectedFacility;   //現在設置選択しているファシリティ
     public Facility SelectedFacility
     {
@@ -36,9 +39,11 @@ public class FieldBoardBuilder : MonoBehaviour {
                 previewFacilityRenderer = previewFacilityObject.GetComponent<SpriteRenderer>();
                 //半透明に
                 previewFacilityRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+                //前面に
+                previewFacilityRenderer.sortingOrder = 101;
 
                 //プレビュオブジェクトのFacilityBehaviourを全て停止
-                foreach(var facilityBehaviour in previewFacilityObject.GetComponents<FacilityBehaviour>())
+                foreach (var facilityBehaviour in previewFacilityObject.GetComponents<FacilityBehaviour>())
                 {
                     facilityBehaviour.enabled = false;
                 }
@@ -50,64 +55,38 @@ public class FieldBoardBuilder : MonoBehaviour {
     private SpriteRenderer previewFacilityRenderer;  //プレビューファシリティのレンダラ
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         //ロード系
-        myBoard = this.GetComponent<FieldBoard>();
+        board = this.GetComponent<FieldBoard>();
 
         //無を選択
         SelectedFacility = null;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         //なんらかのFacilityを選択していれば
-        if(SelectedFacility != null)
+        if (SelectedFacility != null)
         {
-            ////マウスが指している場所が設置可能領域だったらプレビュ表示
-            //Vector2Int nowPointingLocation = Vector2Int.Sishagonyu(myBoard.WorldPosToMapPos(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
-            //if (myBoard.CanIPutFacility(SelectedFacility, nowPointingLocation))
-            //{
-            //    previewFacilityObject.transform.position = myBoard.CalcFacilityWorldPos(SelectedFacility, nowPointingLocation);
+            //現在のイベントデータを取得
+            PointerEventData eventData = new PointerEventData(EventSystem.current);
 
-            //    //マウスが押されていたら施設配置
-            //    if (Input.GetMouseButton(0))
-            //    {
-            //        PutFacility(SelectedFacility, nowPointingLocation);
-            //    }
-            //}
-            //else
-            //{
-            //    previewFacilityObject.transform.position = HidePosition;
-            //}
+            Vector2 nowPointingPosition = board.WorldPosToMapPos(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            Vector2Int nowPointingLocation = Vector2Int.Sishagonyu(nowPointingPosition);
 
-            //タッチ数をカウント
-            if(Input.touchCount >= 1)
+            if (Input.mousePosition.y >= Screen.width / 2 && board.CanIPutFacility(SelectedFacility, nowPointingLocation))
             {
-                Touch t1 = Input.GetTouch(0);
-                Vector2 nowPointingPosition = myBoard.WorldPosToMapPos(Camera.main.ScreenToWorldPoint(t1.position));
-                Vector2Int nowPointingLocation = Vector2Int.Sishagonyu(nowPointingPosition);
-
-                if (t1.position.y >= Screen.width / 2 && myBoard.CanIPutFacility(SelectedFacility, nowPointingLocation))
-                {
-                    previewFacilityObject.transform.position = myBoard.CalcFacilityWorldPos(SelectedFacility, nowPointingLocation);
-                    previewFacilityRenderer.color = previewFacilityColor;
-
-                    //タッチが離されたら施設配置
-                    if (t1.phase == TouchPhase.Ended)
-                    {
-                        PutFacility(SelectedFacility, nowPointingLocation);
-                    }
-                }
-                else
-                {
-                    previewFacilityObject.transform.position = myBoard.CalcFacilityWorldPos(SelectedFacility, nowPointingPosition);
-                    previewFacilityRenderer.color = previewFacilityDisableColor;
-                }
+                //設置可能域にあるのならば設置されるマスに半透明のサンプルを配置
+                previewFacilityObject.transform.position = board.CalcFacilityWorldPos(SelectedFacility, nowPointingLocation);
+                previewFacilityRenderer.color = previewFacilityColor;
             }
             else
             {
-                //非タッチ時には非表示
-                previewFacilityObject.transform.position = HidePosition;
+                //配置不可域にあるのならばDisableColorでサンプルを配置
+                previewFacilityObject.transform.position = board.CalcFacilityWorldPos(SelectedFacility, nowPointingPosition);
+                previewFacilityRenderer.color = previewFacilityDisableColor;
             }
         }
     }
@@ -120,12 +99,12 @@ public class FieldBoardBuilder : MonoBehaviour {
     /// <returns>設置成功判定（trueで成功）</returns>
     public bool PutFacility(Facility facilityPrefab, Vector2Int location)
     {
-        if (myBoard.CanIPutFacility(facilityPrefab, location))
+        if (board.CanIPutFacility(facilityPrefab, location))
         {
             //施設設置成功
             Facility newFacility = GameObject.Instantiate(
                 facilityPrefab.gameObject,     //Prefabを複製
-                myBoard.CalcFacilityWorldPos(facilityPrefab, location),    //位置はlocationをWorld変換したもの
+                board.CalcFacilityWorldPos(facilityPrefab, location),    //位置はlocationをWorld変換したもの
                 Quaternion.identity,    //回転はなし
                 this.transform  //親はこのGameObject（FieldBoard）
                 ).GetComponent<Facility>();
@@ -135,7 +114,7 @@ public class FieldBoardBuilder : MonoBehaviour {
             {
                 for (var x = 0; x < newFacility.Size.x; x++)
                 {
-                    myBoard.Facilities.Add(location + new Vector2Int(x, y), newFacility);
+                    board.Facilities.Add(location + new Vector2Int(x, y), newFacility);
                 }
             }
 
@@ -143,7 +122,7 @@ public class FieldBoardBuilder : MonoBehaviour {
             newFacility.Position = location;
 
             //金銭処理
-            myBoard.Money -= facilityPrefab.Cost;
+            board.Money -= facilityPrefab.Cost;
 
             return true;
         }

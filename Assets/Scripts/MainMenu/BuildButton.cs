@@ -1,14 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using FrikLib;
 
-public class BuildButton : MonoBehaviour {
+public class BuildButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+{
 
     private Facility facility;
     private Image facilityImage;
     private Text facilityText;
 
+    private static FieldBoard board;
     private static FieldBoardBuilder builder;
 
     public Facility Facility
@@ -41,23 +46,28 @@ public class BuildButton : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
-        if(builder == null) builder = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoardBuilder>();
-
-        //自分のボタンイベントの設定
-        Button myButton = GetComponent<Button>();
-        myButton.onClick.AddListener(OnPressed);
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+        GameObject boardObj = GameObject.FindGameObjectWithTag("FieldBoard");
+        if(board == null) board = boardObj.GetComponent<FieldBoard>();
+        if(builder == null) builder = boardObj.GetComponent<FieldBoardBuilder>();
 	}
 
-    public void OnPressed()
+    //自分がタップされたら
+    public void OnPointerDown(PointerEventData eventData)
     {
         //自分のボタンに該当する施設を選択する
         builder.SelectedFacility = facility;
+    }
+
+    //自分がタップされた後に離されたら
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        Vector2 nowPointingPosition = board.WorldPosToMapPos(Camera.main.ScreenToWorldPoint(eventData.position));
+        Vector2Int nowPointingLocation = Vector2Int.Sishagonyu(nowPointingPosition);
+
+        //施設設置
+        builder.PutFacility(facility, nowPointingLocation);
+
+        //オブジェクト選択は未選択状態に
+        builder.SelectedFacility = null;
     }
 }
