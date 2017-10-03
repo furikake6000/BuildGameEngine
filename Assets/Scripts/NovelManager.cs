@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using FrikLib.Unity;
 
 public class NovelManager : MonoBehaviour {
 
@@ -43,7 +45,7 @@ public class NovelManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        novelParent.SetActive(false);
+        //novelParent.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -53,7 +55,7 @@ public class NovelManager : MonoBehaviour {
             if(message.Count >= 1)
             {
                 //メッセージ開始
-                novelParent.SetActive(true);
+                //novelParent.SetActive(true);
                 TextUpdate();
                 Enable = true;
             }
@@ -87,9 +89,10 @@ public class NovelManager : MonoBehaviour {
                     if (TextUpdate())
                     {
                         //メッセージ最後まで表示しきったら終了
-                        novelParent.SetActive(false);
+                        //novelParent.SetActive(false);
                         Enable = false;
                         Tutorial1.FinishTutorial();
+                        SceneManager.UnloadSceneAsync("Novel");
                     }
                 }
                 
@@ -99,8 +102,12 @@ public class NovelManager : MonoBehaviour {
 
     public static void PutMessage(string inMessage, int inFaceID)
     {
+        //とりあえずメッセージと顔グラ情報をキューに追加
         message.Enqueue(inMessage);
         faceID.Enqueue(inFaceID);
+
+        //シーンがロードされていなかった場合追加読み込み
+        if(!SceneFunc.HasSceneLoaded("Novel"))SceneManager.LoadScene("Novel", LoadSceneMode.Additive);
     }
 
     /// <summary>
