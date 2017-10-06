@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114043828405313740}
   - component: {fileID: 114332923768178760}
   - component: {fileID: 114741082872754746}
+  - component: {fileID: 114166593414553390}
   m_Layer: 0
   m_Name: FieldBoard
   m_TagString: FieldBoard
@@ -94,9 +95,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c758a837511282469b1ce9343548aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xTileSize: 10
-  yTileSize: 10
-  widthOfTile: 1
+  mapWidth: 0
+  mapHeight: 0
+  sizeOfTile: 0
   aspectRatioOfTile: 0.5
   edgeWeight: 0.05
   fieldMaterial: {fileID: 2100000, guid: 68766cf2c3917154a89429bbef2c9d18, type: 2}
@@ -105,6 +106,21 @@ MonoBehaviour:
   moneyLabel: {fileID: 0}
   statisticLabel: {fileID: 0}
   debugText: {fileID: 0}
+--- !u!114 &114166593414553390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1219329832940856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edd9a1057c95c0b498d090bc803135b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camSizeMin: 1
+  camSizeMax: 10
+  zoomRate: 0.75
+  moveRate: 0.35
 --- !u!114 &114332923768178760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -142,16 +158,5 @@ MonoBehaviour:
     hour: 0
     minute: 15
     second: 0
-  backImage: {fileID: 0}
-  backImageFade: {fileID: 0}
-  morningHour: 6
-  dayHour: 8
-  eveningHour: 18
-  nightHour: 20
-  morningBack: {fileID: 21300000, guid: ce9801c6e4efb5f4fac5869c68970b74, type: 3}
-  dayBack: {fileID: 21300000, guid: 862478a0de6a42a498ee96aef96c7ae1, type: 3}
-  eveningBack: {fileID: 21300000, guid: 2b25f9f7f5c6da64b8d69b2e1d028566, type: 3}
-  nightBack: {fileID: 21300000, guid: 627da197aeedc264a914256c5051c11a, type: 3}
-  fieldTimeEnabled: 1
   dateLabel: {fileID: 0}
   timeLabel: {fileID: 0}

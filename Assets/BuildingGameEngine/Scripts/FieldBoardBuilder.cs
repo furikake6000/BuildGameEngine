@@ -100,9 +100,6 @@ public class FieldBoardBuilder : MonoBehaviour
                 previewFacilityObject.transform.position = board.CalcFacilityWorldPos(SelectedFacility, nowPointingPosition);
                 previewFacilityRenderer.color = previewFacilityDisableColor;
             }
-
-            Debug.Log("Touch Count: " + Input.touchCount + "\n" + 
-                    "Touch Position:" + Input.GetTouch(Input.touchCount - 1).position.ToString());
         }
     }
 
