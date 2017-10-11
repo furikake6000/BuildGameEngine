@@ -10,11 +10,9 @@ using FrikLib.Unity;
 public class NovelManager : MonoBehaviour, IPointerDownHandler {
 
     [SerializeField]
-    Text messageWindow;
+    Text textBox;
     [SerializeField]
     Image faceImage;
-    [SerializeField]
-    GameObject novelParent;  //UIセットの親オブジェクト（表示・非表示に使用）
     [SerializeField]
     float oneCharDispTime = 0.03f;  //一文字が表示されるのにかかる秒数
     [SerializeField]
@@ -29,48 +27,21 @@ public class NovelManager : MonoBehaviour, IPointerDownHandler {
     private string displayingText;  //現在表示しているテキスト
     private float timeSinceDisplayStart;    //現在の文字列表示を開始してからの時間
 
-    private bool enable;
-    public bool Enable
-    {
-        get
-        {
-            return enable;
-        }
-
-        set
-        {
-            enable = value;
-        }
-    }
-
     // Use this for initialization
     void Start ()
     {
-        //novelParent.SetActive(false);
+        //最初のページ送り
+        TextUpdate();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (!Enable)
-        {
-            if(message.Count >= 1)
-            {
-                //メッセージ開始
-                //novelParent.SetActive(true);
-                TextUpdate();
-                Enable = true;
-            }
-        }
+        //経過時間プラス処理
+        timeSinceDisplayStart += Time.deltaTime;
 
-		if(Enable)
-        {
-            //経過時間プラス処理
-            timeSinceDisplayStart += Time.deltaTime;
-
-            //時間に応じて文字列を表示(経過時間/1文字表示時間 文字表示)
-            messageWindow.text = displayingText.Substring(0, Math.Min((int)(timeSinceDisplayStart / oneCharDispTime), displayingText.Length));
-        }
-	}
+        //時間に応じて文字列を表示(経過時間/1文字表示時間 文字表示)
+        textBox.text = displayingText.Substring(0, Math.Min((int)(timeSinceDisplayStart / oneCharDispTime), displayingText.Length));
+    }
 
     public static void PutMessage(string inMessage, int inFaceID)
     {
@@ -79,7 +50,10 @@ public class NovelManager : MonoBehaviour, IPointerDownHandler {
         faceID.Enqueue(inFaceID);
 
         //シーンがロードされていなかった場合追加読み込み
-        if(!SceneFunc.HasSceneLoaded("Novel"))SceneManager.LoadScene("Novel", LoadSceneMode.Additive);
+        if (!SceneFunc.HasSceneLoaded("Novel"))
+        {
+            SceneManager.LoadScene("Novel", LoadSceneMode.Additive);
+        }
     }
 
     /// <summary>
@@ -116,30 +90,24 @@ public class NovelManager : MonoBehaviour, IPointerDownHandler {
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        //システムがONになっていたら
-        if (Enable)
+        //時間で分岐
+        if (timeSinceDisplayStart < oneCharDispTime * displayingText.Length)
         {
-            //時間で分岐
-            if (timeSinceDisplayStart < oneCharDispTime * displayingText.Length)
-            {
-                //まだ完全に表示していない場合
+            //まだ完全に表示していない場合
 
-                //最後まで表示する
-                timeSinceDisplayStart = oneCharDispTime * displayingText.Length;
-            }
-            else if (timeSinceDisplayStart > oneCharDispTime * displayingText.Length + textUpdateMarginTime)
-            {
-                //完全に表示しきって、連続タップ猶予時間も過ぎていた場合
+            //最後まで表示する
+            timeSinceDisplayStart = oneCharDispTime * displayingText.Length;
+        }
+        else if (timeSinceDisplayStart > oneCharDispTime * displayingText.Length + textUpdateMarginTime)
+        {
+            //完全に表示しきって、連続タップ猶予時間も過ぎていた場合
 
-                //ページ送り
-                if (TextUpdate())
-                {
-                    //メッセージ最後まで表示しきったら終了
-                    //novelParent.SetActive(false);
-                    Enable = false;
-                    Tutorial1.FinishTutorial();
-                    SceneManager.UnloadSceneAsync("Novel");
-                }
+            //ページ送り
+            if (TextUpdate())
+            {
+                //メッセージ最後まで表示しきったら終了
+                Tutorial1.FinishTutorial();
+                SceneManager.UnloadSceneAsync("Novel");
             }
         }
     }
