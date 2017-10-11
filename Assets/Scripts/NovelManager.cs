@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using FrikLib.Unity;
 
-public class NovelManager : MonoBehaviour {
+public class NovelManager : MonoBehaviour, IPointerDownHandler {
 
     [SerializeField]
     Text messageWindow;
@@ -68,35 +69,6 @@ public class NovelManager : MonoBehaviour {
 
             //時間に応じて文字列を表示(経過時間/1文字表示時間 文字表示)
             messageWindow.text = displayingText.Substring(0, Math.Min((int)(timeSinceDisplayStart / oneCharDispTime), displayingText.Length));
-
-            //タップされた時の処理
-            if ((Input.touchCount >= 1 && Input.GetTouch(Input.touchCount - 1).phase == TouchPhase.Began)
-                || Input.GetKeyDown(KeyCode.Return))
-            {
-                //時間で分岐
-                if (timeSinceDisplayStart < oneCharDispTime * displayingText.Length)
-                {
-                    //まだ完全に表示していない場合
-
-                    //最後まで表示する
-                    timeSinceDisplayStart = oneCharDispTime * displayingText.Length;
-                }
-                else if(timeSinceDisplayStart > oneCharDispTime * displayingText.Length + textUpdateMarginTime)
-                {
-                    //完全に表示しきって、連続タップ猶予時間も過ぎていた場合
-                    
-                    //ページ送り
-                    if (TextUpdate())
-                    {
-                        //メッセージ最後まで表示しきったら終了
-                        //novelParent.SetActive(false);
-                        Enable = false;
-                        Tutorial1.FinishTutorial();
-                        SceneManager.UnloadSceneAsync("Novel");
-                    }
-                }
-                
-            }
         }
 	}
 
@@ -140,5 +112,35 @@ public class NovelManager : MonoBehaviour {
             return true;
         }
         
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        //システムがONになっていたら
+        if (Enable)
+        {
+            //時間で分岐
+            if (timeSinceDisplayStart < oneCharDispTime * displayingText.Length)
+            {
+                //まだ完全に表示していない場合
+
+                //最後まで表示する
+                timeSinceDisplayStart = oneCharDispTime * displayingText.Length;
+            }
+            else if (timeSinceDisplayStart > oneCharDispTime * displayingText.Length + textUpdateMarginTime)
+            {
+                //完全に表示しきって、連続タップ猶予時間も過ぎていた場合
+
+                //ページ送り
+                if (TextUpdate())
+                {
+                    //メッセージ最後まで表示しきったら終了
+                    //novelParent.SetActive(false);
+                    Enable = false;
+                    Tutorial1.FinishTutorial();
+                    SceneManager.UnloadSceneAsync("Novel");
+                }
+            }
+        }
     }
 }
