@@ -226,7 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -339,7 +339,7 @@ RectTransform:
   m_Children:
   - {fileID: 869132675}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -356,6 +356,7 @@ GameObject:
   - component: {fileID: 1372936601}
   - component: {fileID: 1372936603}
   - component: {fileID: 1372936602}
+  - component: {fileID: 1372936604}
   m_Layer: 5
   m_Name: NovelTextBack
   m_TagString: Untagged
@@ -415,6 +416,29 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1372936600}
+--- !u!114 &1372936604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1372936600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2cb7d2cec7dc94583102f3f7d97ca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textBox: {fileID: 969317125}
+  faceImage: {fileID: 1753634624}
+  oneCharDispTime: 0.03
+  textUpdateMarginTime: 0
+  faces:
+  - {fileID: 21300000, guid: 29809d5409097ea418492a7d92d3e66d, type: 3}
+  - {fileID: 21300000, guid: 4f5d9ce420758f745a23ad8f3b8c3104, type: 3}
+  - {fileID: 21300000, guid: 8f17f4da4589607488001fb5538914e9, type: 3}
+  - {fileID: 21300000, guid: a66ee5d6c6bf3c94485d473079070c43, type: 3}
+  - {fileID: 21300000, guid: e7985fa4b075bb04da112b7ca41358eb, type: 3}
+  - {fileID: 21300000, guid: 39c293fbf69fba94e819946f78b434df, type: 3}
+  - {fileID: 21300000, guid: 4647efe527a618f40bd4d8bdaa523c53, type: 3}
 --- !u!1 &1753634622
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,56 +507,3 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1753634622}
---- !u!1 &2040590362
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2040590366}
-  - component: {fileID: 2040590364}
-  m_Layer: 0
-  m_Name: NovelParent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2040590364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2040590362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef2cb7d2cec7dc94583102f3f7d97ca6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  messageWindow: {fileID: 969317125}
-  faceImage: {fileID: 1753634624}
-  novelParent: {fileID: 1036831647}
-  oneCharDispTime: 0.03
-  textUpdateMarginTime: 0
-  faces:
-  - {fileID: 21300000, guid: 29809d5409097ea418492a7d92d3e66d, type: 3}
-  - {fileID: 21300000, guid: 4f5d9ce420758f745a23ad8f3b8c3104, type: 3}
-  - {fileID: 21300000, guid: 8f17f4da4589607488001fb5538914e9, type: 3}
-  - {fileID: 21300000, guid: a66ee5d6c6bf3c94485d473079070c43, type: 3}
-  - {fileID: 21300000, guid: e7985fa4b075bb04da112b7ca41358eb, type: 3}
-  - {fileID: 21300000, guid: 4647efe527a618f40bd4d8bdaa523c53, type: 3}
-  - {fileID: 21300000, guid: 39c293fbf69fba94e819946f78b434df, type: 3}
---- !u!4 &2040590366
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2040590362}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2815041, y: 1.4904532, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
