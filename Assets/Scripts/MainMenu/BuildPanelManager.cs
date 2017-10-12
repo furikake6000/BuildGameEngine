@@ -5,7 +5,6 @@ using UnityEngine;
 public class BuildPanelManager : MonoBehaviour {
     
     private Animator animator;
-    private bool isOpen, isCompletelyOpen;  //それぞれ「開き始め～閉じ始め」「開き終わり～閉じ始め」にONとなる
 
     [SerializeField]
     private Animator attachedButtonAnimator;
@@ -45,29 +44,26 @@ public class BuildPanelManager : MonoBehaviour {
 
     private void Update()
     {
-        if (!isOpen && attachedButtonAnimator.GetBool("isPressed"))
+        if (!animator.GetBool("open") && attachedButtonAnimator.GetBool("isPressed"))
         {
             //パネル開き始め処理
             OpenPanel();
         }
 
-        if (isOpen && !attachedButtonAnimator.GetBool("isPressed"))
+        if (animator.GetBool("open") && !attachedButtonAnimator.GetBool("isPressed"))
         {
             //パネル閉じ処理
             ClosePanel();
-            isCompletelyOpen = false;
         }
     }
 
     public void OpenPanel()
     {
-        isOpen = true;
         animator.SetBool("open", true);
     }
 
     public void ClosePanel()
     {
-        isOpen = false;
         animator.SetBool("open", false);
 
         //Facility未選択状態に
