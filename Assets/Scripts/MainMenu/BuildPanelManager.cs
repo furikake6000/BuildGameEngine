@@ -5,9 +5,7 @@ using UnityEngine;
 public class BuildPanelManager : MonoBehaviour {
     
     private Animator animator;
-
-    [SerializeField]
-    private Animator attachedButtonAnimator;
+    
     [SerializeField]
     private GameObject facilityButtonPrefab;    //ボタンのプレハブ
 
@@ -39,21 +37,6 @@ public class BuildPanelManager : MonoBehaviour {
             newFacilityButton.Facility = facilityPrefabs[i];
             //座標あわせ
             newFacilityButton.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(-350f + 200f * i, 215f, 0f);
-        }
-    }
-
-    private void Update()
-    {
-        if (!animator.GetBool("open") && attachedButtonAnimator.GetBool("isPressed"))
-        {
-            //パネル開き始め処理
-            OpenPanel();
-        }
-
-        if (animator.GetBool("open") && !attachedButtonAnimator.GetBool("isPressed"))
-        {
-            //パネル閉じ処理
-            ClosePanel();
         }
     }
 

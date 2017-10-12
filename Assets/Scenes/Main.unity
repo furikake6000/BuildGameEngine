@@ -1208,7 +1208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43cf750b2a7f4c6479c8066cc69e6cf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linkedBuildPanel: {fileID: 1468877908}
+  attachedPanel: {fileID: 1468877908}
 --- !u!114 &1604273928
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 public class BuildButton : MonoBehaviour, IPointerDownHandler {
 
     Animator animator;
+    [SerializeField]
+    BuildPanelManager attachedPanel;    //関連するBuildPanelManager
 
     // Use this for initialization
     void Start () {
@@ -16,5 +18,13 @@ public class BuildButton : MonoBehaviour, IPointerDownHandler {
     public void OnPointerDown(PointerEventData eventData)
     {
         animator.SetBool("isPressed", !animator.GetBool("isPressed"));
+        if (animator.GetBool("isPressed"))
+        {
+            attachedPanel.OpenPanel();
+        }
+        else
+        {
+            attachedPanel.ClosePanel();
+        }
     }
 }
