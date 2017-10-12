@@ -881,6 +881,85 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1366098303}
+--- !u!1 &1468877906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1468877907}
+  - component: {fileID: 1468877910}
+  - component: {fileID: 1468877909}
+  - component: {fileID: 1468877908}
+  m_Layer: 0
+  m_Name: BuildingPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1468877907
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1468877906}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1554676207}
+  m_Father: {fileID: 1869376818}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 270, y: 121.49994}
+  m_SizeDelta: {x: 927, y: 329}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &1468877908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1468877906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050e5874aa34afe40b144a09ab6de67e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attachedButtonAnimator: {fileID: 1604273926}
+  facilityButtonPrefab: {fileID: 1087208306219012, guid: 2bfbdea15acef6643a1b59dc8b9eccd5,
+    type: 2}
+--- !u!95 &1468877909
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1468877906}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b0be5d7bf7e9e6a42b2e0d0425f8cc4c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &1468877910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1468877906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -146154839, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1546919403
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,10 +1017,8 @@ GameObject:
   - component: {fileID: 1554676207}
   - component: {fileID: 1554676211}
   - component: {fileID: 1554676210}
-  - component: {fileID: 1554676209}
-  - component: {fileID: 1554676208}
   m_Layer: 0
-  m_Name: BuildingPanel
+  m_Name: BuildingPanelBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -957,45 +1034,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1869376818}
+  m_Father: {fileID: 1468877907}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 270, y: 286}
+  m_AnchoredPosition: {x: 0, y: 164.5}
   m_SizeDelta: {x: 927, y: 329}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1554676208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1554676206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050e5874aa34afe40b144a09ab6de67e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attachedButtonAnimator: {fileID: 1604273926}
-  facilityButtonPrefab: {fileID: 1087208306219012, guid: 2bfbdea15acef6643a1b59dc8b9eccd5,
-    type: 2}
---- !u!95 &1554676209
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1554676206}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b0be5d7bf7e9e6a42b2e0d0425f8cc4c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &1554676210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1356,7 +1402,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1554676207}
+  - {fileID: 1468877907}
   - {fileID: 1604273925}
   m_Father: {fileID: 1974391582}
   m_RootOrder: 3
