@@ -7,8 +7,6 @@ using UnityEngine.EventSystems;
 public class BuildButton : MonoBehaviour, IPointerDownHandler {
 
     Animator animator;
-    [SerializeField]
-    BuildPanelManager linkedBuildPanel; //このボタンを押すことによって開くパネル
 
     // Use this for initialization
     void Start () {
