@@ -7,10 +7,10 @@ public class BuildPanelManager : MonoBehaviour {
     //オブジェクトを視認外に移動させたい時の座標（定数）
     private static readonly Vector3 HidePosition = new Vector3(-9999f, -9999f, -9999f);
 
-    private Animator panelAnimator;
+    private Animator animator;
     private bool isOpen, isCompletelyOpen;  //それぞれ「開き始め～閉じ始め」「開き終わり～閉じ始め」にONとなる
     private Facility[] facilityPrefabs;
-    private BuildButton[] facilityButtons;
+    private BuildPanelButton[] facilityButtons;
     private RectTransform[] facilityButtonTransform;
 
     [SerializeField]
@@ -22,7 +22,7 @@ public class BuildPanelManager : MonoBehaviour {
 
     private void Start()
     {
-        panelAnimator = this.GetComponent<Animator>();
+        animator = this.GetComponent<Animator>();
         builder = GameObject.FindGameObjectWithTag("FieldBoard").GetComponent<FieldBoardBuilder>();
 
         //登録されているFaciitiesを一括取得
@@ -33,11 +33,11 @@ public class BuildPanelManager : MonoBehaviour {
             if (!allFacilityPrefabs[i].Buildable) allFacilityPrefabs.RemoveAt(i);
         }
         facilityPrefabs = allFacilityPrefabs.ToArray();
-        facilityButtons = new BuildButton[facilityPrefabs.Length];
+        facilityButtons = new BuildPanelButton[facilityPrefabs.Length];
         facilityButtonTransform = new RectTransform[facilityPrefabs.Length];
         for(var i = 0; i < facilityPrefabs.Length; i++)
         {
-            facilityButtons[i] = GameObject.Instantiate(facilityButtonPrefab, this.transform).GetComponent<BuildButton>();
+            facilityButtons[i] = GameObject.Instantiate(facilityButtonPrefab, this.transform).GetComponent<BuildPanelButton>();
             //施設セット
             facilityButtons[i].Facility = facilityPrefabs[i];
             //座標あわせ
@@ -81,13 +81,13 @@ public class BuildPanelManager : MonoBehaviour {
     public void OpenPanel()
     {
         isOpen = true;
-        panelAnimator.SetBool("open", true);
+        animator.SetBool("open", true);
     }
 
     public void ClosePanel()
     {
         isOpen = false;
-        panelAnimator.SetBool("open", false);
+        animator.SetBool("open", false);
 
         //Facility未選択状態に
         builder.SelectedFacility = null;

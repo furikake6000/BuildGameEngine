@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using FrikLib;
 
-public class BuildButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class BuildPanelButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
 
     private Facility facility;
