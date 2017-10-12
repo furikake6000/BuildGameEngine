@@ -1153,8 +1153,8 @@ GameObject:
   - component: {fileID: 1604273925}
   - component: {fileID: 1604273929}
   - component: {fileID: 1604273928}
-  - component: {fileID: 1604273927}
   - component: {fileID: 1604273926}
+  - component: {fileID: 1604273927}
   m_Layer: 0
   m_Name: BuildingButton
   m_TagString: Untagged
@@ -1189,10 +1189,10 @@ Animator:
   m_GameObject: {fileID: 1604273924}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a56bfb64e70a50c46ac7d8c76f815874, type: 2}
+  m_Controller: {fileID: 9100000, guid: 845f094ba60592147a2d143d1aab2811, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1205,39 +1205,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1604273924}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 43cf750b2a7f4c6479c8066cc69e6cf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 3
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 21300000, guid: 89bbe3ebb63833d45a94f589045d4d9b, type: 3}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1604273928}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  linkedBuildPanel: {fileID: 1468877908}
 --- !u!114 &1604273928
 MonoBehaviour:
   m_ObjectHideFlags: 0
