@@ -10,7 +10,7 @@ public abstract class ToggleButton : MonoBehaviour, IPointerDownHandler
         animator = GetComponent<Animator>();
     }
 
-    private virtual void Update(){}
+    protected virtual void Update(){}
 
     protected void OnPointerDown(PointerEventData eventData)
     {
