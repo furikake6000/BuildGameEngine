@@ -13,8 +13,7 @@ public class FieldTimeManager : MonoBehaviour {
     [SerializeField]
     private VirtualClockSpan fieldTimeUpdateAddSpan;  //フィールド時間を更新するたびに加算される時間
 
-    [SerializeField]
-    private static bool fieldTimeEnabled;  //フィールド時間が動いているか止まっているか
+    public static bool TimeEnabled;  //フィールド時間が動いているか止まっているか
     
     [SerializeField]
     private Text dateLabel;    //日付表示窓
@@ -116,7 +115,7 @@ public class FieldTimeManager : MonoBehaviour {
         {
 
             //Enabledの判定
-            while (!fieldTimeEnabled)
+            while (!TimeEnabled)
             {
                 //fieldTimeEnabledがfalseなら永遠にここを回り続ける
                 yield return null;
@@ -199,14 +198,9 @@ public class FieldTimeManager : MonoBehaviour {
     //    }
     //}
 
-    public void ToggleClockEnabled()
-    {
-        fieldTimeEnabled = !fieldTimeEnabled;
-    }
-
     public static void ToggleClockEnabledStatic()
     {
-        fieldTimeEnabled = !fieldTimeEnabled;
+        TimeEnabled = !TimeEnabled;
     }
 }
 
