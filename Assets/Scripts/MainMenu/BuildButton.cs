@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BuildButton : ToggleButton, IPointerDownHandler {
+public class BuildButton : ToggleButton {
 
     [SerializeField]
     BuildPanelManager attachedPanel;    //関連するBuildPanelManager
