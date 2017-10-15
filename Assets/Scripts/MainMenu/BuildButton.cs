@@ -9,7 +9,7 @@ public class BuildButton : ToggleButton {
     [SerializeField]
     BuildPanelManager attachedPanel;    //関連するBuildPanelManager
 
-    public override void Action(bool isPressed)
+    protected override void Action(bool isPressed)
     {
         if (isPressed)
         {

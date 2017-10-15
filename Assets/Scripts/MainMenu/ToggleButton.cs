@@ -12,7 +12,7 @@ public abstract class ToggleButton : MonoBehaviour, IPointerDownHandler
 
     protected virtual void Update(){}
 
-    protected void OnPointerDown(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
         animator.SetBool("isPressed", !animator.GetBool("isPressed"));
 
