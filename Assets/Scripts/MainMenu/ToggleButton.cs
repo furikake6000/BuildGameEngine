@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public abstract class ToggleButton : MonoBehaviour, IPointerDownHandler
 {
-    Animator animator;
+    protected Animator animator;
 
     private void Start()
     {
