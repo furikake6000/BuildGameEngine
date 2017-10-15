@@ -5,11 +5,25 @@ public abstract class ToggleButton : MonoBehaviour, IPointerDownHandler
 {
     Animator animator;
 
-    // Use this for initialization
-    void Start()
+    private void Start()
     {
         animator = GetComponent<Animator>();
+
+        MyStart();
     }
+    /// <summary>
+    /// ToggleButtonクラスのStartの後に呼ばれる関数 継承用
+    /// </summary>
+    protected virtual void MyStart(){}
+
+    private void Update()
+    {
+        MyUpdate();
+    }
+    /// <summary>
+    /// ToggleButtonクラスのUpdateの後に呼ばれる関数 継承用
+    /// </summary>
+    protected virtual void MyUpdate(){}
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -22,5 +36,5 @@ public abstract class ToggleButton : MonoBehaviour, IPointerDownHandler
     /// ボタンがタップされた時のアクション
     /// </summary>
     /// <param name="isPressed">タップ後のボタンがPressedになっているか</param>
-    public abstract void Action(bool isPressed);
+    protected abstract void Action(bool isPressed);
 }
