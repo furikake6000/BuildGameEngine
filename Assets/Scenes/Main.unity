@@ -695,6 +695,7 @@ GameObject:
   - component: {fileID: 1314113420}
   - component: {fileID: 1314113419}
   - component: {fileID: 1314113418}
+  - component: {fileID: 1314113421}
   m_Layer: 0
   m_Name: ClockButton
   m_TagString: Untagged
@@ -807,6 +808,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1314113416}
+--- !u!95 &1314113421
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1314113416}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c327802c77d875b42a01e3b5e85f5767, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1366098303
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +947,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 050e5874aa34afe40b144a09ab6de67e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attachedButtonAnimator: {fileID: 1604273926}
   facilityButtonPrefab: {fileID: 1087208306219012, guid: 2bfbdea15acef6643a1b59dc8b9eccd5,
     type: 2}
 --- !u!95 &1468877909
@@ -1192,7 +1209,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 845f094ba60592147a2d143d1aab2811, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
