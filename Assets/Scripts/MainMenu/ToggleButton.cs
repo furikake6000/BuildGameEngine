@@ -3,10 +3,7 @@ using UnityEngine.EventSystems;
 
 public abstract class ToggleButton : MonoBehaviour, IPointerDownHandler
 {
-
     Animator animator;
-    [SerializeField]
-    BuildPanelManager attachedPanel;    //関連するBuildPanelManager
 
     // Use this for initialization
     void Start()
