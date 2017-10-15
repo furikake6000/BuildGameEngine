@@ -4,21 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BuildButton : MonoBehaviour, IPointerDownHandler {
+public class BuildButton : ToggleButton, IPointerDownHandler {
 
-    Animator animator;
     [SerializeField]
     BuildPanelManager attachedPanel;    //関連するBuildPanelManager
 
-    // Use this for initialization
-    void Start () {
-        animator = GetComponent<Animator>();
-	}
-
-    public void OnPointerDown(PointerEventData eventData)
+    public override void Action(bool isPressed)
     {
-        animator.SetBool("isPressed", !animator.GetBool("isPressed"));
-        if (animator.GetBool("isPressed"))
+        if (isPressed)
         {
             attachedPanel.OpenPanel();
         }
