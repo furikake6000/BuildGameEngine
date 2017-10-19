@@ -21,6 +21,8 @@ public class BgmManager : MonoBehaviour {
     {
         //audioSourceが未だロードされてなければ早すぎる呼び出し、不適切
         Assert.IsNotNull(audioSource, "Don't call ChangeBgm() before audioscene loaded!");
+        if (audioSource == null) return;
+
         audioSource.clip = source;
         audioSource.Play();
     }
@@ -32,6 +34,8 @@ public class BgmManager : MonoBehaviour {
     {
         //audioSourceが未だロードされてなければ早すぎる呼び出し、不適切
         Assert.IsNotNull(audioSource, "Don't call StopBgm() before audioscene loaded!");
+        if (audioSource == null) return;
+
         audioSource.Stop();
     }
 }

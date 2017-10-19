@@ -1,17 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Assertions;
 
 public class MasterListener : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if(Camera.main != null)
-        {
-            //カメラが存在すれば、その座標に自らを移動する
-            transform.position = Camera.main.transform.position;
+        Assert.IsNotNull(Camera.main, "Camera does not exist!");
 
-            //※MasterListenerは独立シーンAudioに存在するため子オブジェクトにして追従することは出来ない
-        }
-	}
+        //カメラが存在すれば、その座標に自らを移動する
+        if(Camera.main != null)transform.position = Camera.main.transform.position;
+
+        //※MasterListenerは独立シーンAudioに存在するため子オブジェクトにして追従することは出来ない
+    }
 }
