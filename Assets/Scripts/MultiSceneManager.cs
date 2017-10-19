@@ -8,7 +8,7 @@ public class MultiSceneManager : MonoBehaviour {
     const string MasterSceneName = "Master";    //マスターシーン（このマネジャの存在するシーン）の名前
 
     static MultiSceneManager selfRef;  //Staticメソッドからの自己参照（自己が唯一である原則に基づく）
-    static List<string> loadedScenes;   //現在呼ばれているシーン
+    static List<string> loadedScenes = new List<string>();   //現在呼ばれているシーン
 
     [SerializeField]
     List<string> startingScenes;    //ゲーム起動時に呼ぶシーン（0番から順に）
