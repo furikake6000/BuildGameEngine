@@ -107,7 +107,7 @@ public class NovelManager : MonoBehaviour, IPointerDownHandler {
             {
                 //メッセージ最後まで表示しきったら終了
                 Tutorial1.FinishTutorial();
-                SceneManager.UnloadSceneAsync("Novel");
+                MultiSceneManager.RemoveScene("Novel");
             }
         }
     }
