@@ -50,9 +50,9 @@ public class NovelManager : MonoBehaviour, IPointerDownHandler {
         faceID.Enqueue(inFaceID);
 
         //シーンがロードされていなかった場合追加読み込み
-        if (!SceneFunc.HasSceneLoaded("Novel"))
+        if (!MultiSceneManager.HasScene("Novel"))
         {
-            SceneManager.LoadScene("Novel", LoadSceneMode.Additive);
+            MultiSceneManager.AddScene("Novel");
         }
     }
 
