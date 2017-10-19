@@ -79,7 +79,7 @@ public class Alien : Character {
         {
             state = AlienState.Escaping;
             //逃亡ルート策定
-            AddCheckpointAndCalcRoute(entrance);
+            AddCheckpointAndCalcRoute(entrance.Position + new Vector2Int(2,2));
 
             MessageManager.PutMessage(creatureName + "が逃げ出しました!!", MessageManager.MessagePriority.High);
         }
