@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Novel.unity
     guid: f8589b4227d5b66418154da46f298112
+  - enabled: 1
+    path: Assets/Scenes/Bgm.unity
+    guid: aa65d425b35ec5c4aa7f13a2cce33bdb
   - enabled: 0
     path: 
     guid: c46e0e3d30dabfa40b5514d22c415aa0
