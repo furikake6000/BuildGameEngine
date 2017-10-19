@@ -58,4 +58,14 @@ public class MultiSceneManager : MonoBehaviour {
         SceneManager.UnloadSceneAsync(sceneName);
         yield return null;
     }
+
+    public static void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public static bool HasScene(string sceneName)
+    {
+        return loadedScenes.Contains(sceneName);
+    }
 }
