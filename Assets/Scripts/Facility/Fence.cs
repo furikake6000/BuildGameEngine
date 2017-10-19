@@ -31,6 +31,7 @@ public class Fence : FacilityBehaviour {
                 Quaternion.identity).GetComponent<Alien>();
             alien.ResetPos(MyFacility.Position);
             alien.MyFence = this;
+            alien.transform.parent = this.transform;
 
             //ボードに登録
             board.Aliens.Add(alien);
