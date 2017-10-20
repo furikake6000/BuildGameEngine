@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Audio.unity
     guid: aa65d425b35ec5c4aa7f13a2cce33bdb
+  - enabled: 1
+    path: Assets/Scenes/Setting.unity
+    guid: 03bf92057b27cc847b679d3830665f48
   - enabled: 0
     path: 
     guid: c46e0e3d30dabfa40b5514d22c415aa0
