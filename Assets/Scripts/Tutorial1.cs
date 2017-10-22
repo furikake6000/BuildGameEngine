@@ -152,8 +152,8 @@ public class Tutorial1 : MonoBehaviour {
                 
                 break;
             case 100:
-                MultiSceneManager.AddScene("Title");
-                MultiSceneManager.RemoveScene("Main");
+                MultiSceneManager.AddSubScene("Title");
+                MultiSceneManager.RemoveSubScene("Main");
                 break;
         }
     }
