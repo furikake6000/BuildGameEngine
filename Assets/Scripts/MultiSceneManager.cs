@@ -71,6 +71,7 @@ public class MultiSceneManager : MonoBehaviour {
 
     public static void TransScene(string sceneName)
     {
+        loadedSubScenes.Clear();
         selfRef.StartCoroutine("TransSceneASync", sceneName);
     }
     private IEnumerator TransSceneASync(string sceneName)
