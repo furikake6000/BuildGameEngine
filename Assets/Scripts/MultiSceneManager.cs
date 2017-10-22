@@ -8,54 +8,75 @@ public class MultiSceneManager : MonoBehaviour {
     const string MasterSceneName = "Master";    //マスターシーン（このマネジャの存在するシーン）の名前
 
     static MultiSceneManager selfRef;  //Staticメソッドからの自己参照（自己が唯一である原則に基づく）
-    static List<string> loadedScenes = new List<string>();   //現在呼ばれているシーン
-
+    static List<string> loadedSubScenes = new List<string>();   //現在呼ばれているシーン
+    
     [SerializeField]
-    List<string> startingScenes;    //ゲーム起動時に呼ぶシーン（0番から順に）
+    string startScene;    //ゲーム起動時に呼ぶシーン
+    [SerializeField]
+    List<string> startSubScenes;    //ゲーム起動時に呼ぶサブシーン（0番から順に）
 
-	// Use this for initialization
-	void Start () {
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);    //シーンを駆ける少女
+    }
+
+    // Use this for initialization
+    void Start () {
         selfRef = this;
-        loadedScenes.Add(MasterSceneName);  //自分は既に読まれている
+        loadedSubScenes.Add(MasterSceneName);  //自分は既に読まれている
 
-        //初期読み込みシーンを全てロード
-        foreach(var s in startingScenes)
+        //初期読み込みサブシーンを全てロード
+        foreach(var s in startSubScenes)
         {
-            AddScene(s);
+            AddSubScene(s);
         }
+
+        //最初のシーン遷移
+        TransScene(startScene);
 	}
 	
-	public static void AddScene(string sceneName)
+	public static void AddSubScene(string sceneName)
     {
         //シーン重複検知
-        bool isAlreadyLoaded = loadedScenes.Contains(sceneName);
-        Assert.IsTrue(!isAlreadyLoaded, "Scene " + sceneName + " has already loaded! You have to unload before reload it!");
+        bool isAlreadyLoaded = loadedSubScenes.Contains(sceneName);
+        Assert.IsTrue(!isAlreadyLoaded, "Subscene " + sceneName + " has already loaded! You have to unload before reload it!");
         if (isAlreadyLoaded) return;
 
-        loadedScenes.Add(sceneName);
-        selfRef.StartCoroutine("AddSceneASync", sceneName);
+        loadedSubScenes.Add(sceneName);
+        selfRef.StartCoroutine("AddSubSceneASync", sceneName);
     }
-    private IEnumerator AddSceneASync(string sceneName)
+    private IEnumerator AddSubSceneASync(string sceneName)
     {
         //読み込んだら完了待たずにコルーチン終了
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         yield return null;
     }
 
-    public static void RemoveScene(string sceneName)
+    public static void RemoveSubScene(string sceneName)
     {
         //シーンがもとより存在しない場合を検知
-        bool isNotExist = !loadedScenes.Contains(sceneName);
+        bool isNotExist = !loadedSubScenes.Contains(sceneName);
         Assert.IsTrue(!isNotExist, "Scene " + sceneName + " has not loaded! You have to load before unload it!");
         if (isNotExist) return;
 
-        loadedScenes.Remove(sceneName);
-        selfRef.StartCoroutine("RemoveSceneASync", sceneName);
+        loadedSubScenes.Remove(sceneName);
+        selfRef.StartCoroutine("RemoveSubSceneASync", sceneName);
     }
-    private IEnumerator RemoveSceneASync(string sceneName)
+    private IEnumerator RemoveSubSceneASync(string sceneName)
     {
         //シーン破棄（完了待たずにコルーチン終了）
         SceneManager.UnloadSceneAsync(sceneName);
+        yield return null;
+    }
+
+    public static void TransScene(string sceneName)
+    {
+        selfRef.StartCoroutine("TransSceneASync", sceneName);
+    }
+    private IEnumerator TransSceneASync(string sceneName)
+    {
+        //シーン破棄（完了待たずにコルーチン終了）
+        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         yield return null;
     }
 
@@ -64,8 +85,8 @@ public class MultiSceneManager : MonoBehaviour {
         Application.Quit();
     }
 
-    public static bool HasScene(string sceneName)
+    public static bool HasSubScene(string sceneName)
     {
-        return loadedScenes.Contains(sceneName);
+        return loadedSubScenes.Contains(sceneName);
     }
 }
