@@ -56,6 +56,10 @@ public class BuildPanelButton : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     {
         //自分のボタンに該当する施設を選択する
         builder.SelectedFacility = facility;
+
+        //建築物詳細表示
+        MultiSceneManager.AddSubScene("BuildDetailWindow");
+        BuildDetailWindow.ChangeSelectedFacility(facility);
     }
 
     //自分がタップされた後に離されたら
@@ -66,6 +70,9 @@ public class BuildPanelButton : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
         //施設設置
         builder.PutFacility(facility, nowPointingLocation);
+
+        //詳細表示消す
+        MultiSceneManager.RemoveSubScene("BuildDetailWindow");
 
         //オブジェクト選択は未選択状態に
         builder.SelectedFacility = null;
