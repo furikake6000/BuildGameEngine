@@ -52,4 +52,16 @@ public class BuildPanelManager : MonoBehaviour {
         //Facility未選択状態に
         builder.SelectedFacility = null;
     }
+
+    public void TogglePanel()
+    {
+        if (animator.GetBool("open"))
+        {
+            ClosePanel();
+        }
+        else
+        {
+            OpenPanel();
+        }
+    }
 }

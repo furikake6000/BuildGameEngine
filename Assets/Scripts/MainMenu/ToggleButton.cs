@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public abstract class ToggleButton : MonoBehaviour, IPointerDownHandler
+public class ToggleButton : MonoBehaviour, IPointerDownHandler
 {
     protected Animator animator;
 
@@ -23,5 +24,8 @@ public abstract class ToggleButton : MonoBehaviour, IPointerDownHandler
     /// ボタンがタップされた時のアクション
     /// </summary>
     /// <param name="isPressed">タップ後のボタンがPressedになっているか</param>
-    protected abstract void Action(bool isPressed);
+    protected virtual void Action(bool isPressed)
+    {
+
+    }
 }

@@ -7,7 +7,7 @@ public class ClockButton : ToggleButton {
     
     protected override void Action(bool isPressed)
     {
-        FieldTimeManager.ToggleClockEnabledStatic();
+        //FieldTimeManager.ToggleClockEnabledStatic();
     }
 
     protected override void Update()

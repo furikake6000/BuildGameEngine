@@ -198,6 +198,11 @@ public class FieldTimeManager : MonoBehaviour {
     //    }
     //}
 
+    public void ToggleClockEnabled()
+    {
+        TimeEnabled = !TimeEnabled;
+    }
+
     public static void ToggleClockEnabledStatic()
     {
         TimeEnabled = !TimeEnabled;
