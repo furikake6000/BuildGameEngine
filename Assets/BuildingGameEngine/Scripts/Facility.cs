@@ -16,6 +16,15 @@ public class Facility : MonoBehaviour {
         }
     }
     [SerializeField]
+    private string description;    //説明
+    public string Description
+    {
+        get
+        {
+            return description;
+        }
+    }
+    [SerializeField]
     private Vector2Int size = new Vector2Int(1,1); //施設のサイズ
     public Vector2Int Size
     {
@@ -69,29 +78,7 @@ public class Facility : MonoBehaviour {
     }
     #endregion
 
-    private Vector2Int position;
-    public Vector2Int Position
-    {
-        get
-        {
-            return position;
-        }
-
-        set
-        {
-            position = value;
-        }
-    }
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public Vector2Int Position;
 
     #region オリジナル関数群
 
